@@ -1,0 +1,12 @@
+{
+  "name": "fpk",
+  "private": true,
+  "author": "Tim Smart <hello@timsmart.co>",
+  "license": "MIT",
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "lerna": "^3.21.0"
+  }
+}

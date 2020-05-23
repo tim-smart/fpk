@@ -1,0 +1,27 @@
+{
+  "name": "@fpk/core",
+  "version": "0.1.0",
+  "description": "Functional configuration management",
+  "main": "dist/index.js",
+  "author": "Tim Smart <hello@timsmart.co>",
+  "license": "MIT",
+  "scripts": {
+    "build": "rm -rf dist/ && tsc"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.2.11",
+    "@types/js-yaml": "^3.12.4",
+    "@types/mocha": "^7.0.2",
+    "@types/ramda": "^0.27.6",
+    "chai": "^4.2.0",
+    "mocha": "^7.1.2",
+    "ts-node": "^8.10.1",
+    "typescript": "^3.9.3"
+  },
+  "dependencies": {
+    "fs-tree-diff": "^2.0.1",
+    "js-yaml": "^3.14.0",
+    "ramda": "^0.27.0",
+    "rxjs": "^6.5.5"
+  }
+}
