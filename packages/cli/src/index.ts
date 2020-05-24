@@ -4,6 +4,7 @@ import { availableFormats, generate } from "@fpk/core";
 import { Command, flags } from "@oclif/command";
 import * as fs from "fs/promises";
 import { safeLoad } from "js-yaml";
+import * as path from "path";
 
 class FpkCli extends Command {
   static description = "Generate configuration from an fpk config tree";
@@ -24,7 +25,7 @@ class FpkCli extends Command {
     }),
     context: flags.string({
       char: "c",
-      description: "yaml file to load context configuration from",
+      description: "yaml/json/js file to load context configuration from",
     }),
     format: flags.enum({
       char: "f",
@@ -41,7 +42,21 @@ class FpkCli extends Command {
 
     if (flags.context) {
       const contextBlob = await fs.readFile(flags.context);
-      context = safeLoad(contextBlob.toString("utf8"));
+
+      switch (path.extname(flags.context)) {
+        case ".json":
+          context = JSON.parse(contextBlob.toString("utf8"));
+          break;
+
+        case ".yaml":
+        case ".yml":
+          context = safeLoad(contextBlob.toString("utf8"));
+          break;
+
+        default:
+          const x = require(path.resolve(flags.context));
+          context = x.default || x;
+      }
     }
 
     await generate(flags.source, flags.output, {
