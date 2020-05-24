@@ -1,79 +1,88 @@
 import * as Rx from "rxjs";
 import * as RxOp from "rxjs/operators";
-import * as fs from "fs/promises";
-import * as path from "path";
 import * as R from "ramda";
-import FSTree from "fs-tree-diff";
 import yaml from "js-yaml";
+import * as fs from "fs";
+import { configs$, configsToFiles } from "./internal/config";
+import {
+  toFileTree,
+  IInputContents,
+  calculatePatch,
+  executePatch,
+} from "./internal/fileTrees";
+import { files$ } from "./internal/fs";
+import * as path from "path";
 
-export function files$(dir: string): Rx.Observable<string> {
-  return Rx.from(fs.readdir(dir)).pipe(
-    RxOp.flatMap((f) => f),
-    RxOp.filter((f) => !f.startsWith(".")),
-    RxOp.flatMap((file) =>
-      Rx.from(fs.stat(`${dir}/${file}`)).pipe(
-        RxOp.map((sf) => ({ file, isDir: sf.isDirectory() })),
-      ),
-    ),
-    RxOp.flatMap((f) =>
-      f.isDir ? files$(`${dir}/${f.file}`) : Rx.of(`${dir}/${f.file}`),
-    ),
+export interface IGenerateOpts {
+  context: any;
+  format: string;
+}
+
+export function generate(
+  inputDir: string,
+  outDir: string,
+  opts: Partial<IGenerateOpts> = {},
+) {
+  inputDir = path.resolve(inputDir);
+  outDir = path.resolve(outDir);
+
+  const { context, format } = R.mergeRight(
+    {
+      format: "yaml",
+      context: {},
+    },
+    opts,
   );
-}
 
-export function resolveFile(file: string) {
-  return require(path.resolve(file));
-}
-
-export interface IConfig
-  extends Readonly<{
-    file: string;
-    contents: any;
-  }> {}
-
-export type TFormat = "json" | "yaml";
-
-export const encodeContents = R.curryN(2, (format: TFormat, contents: any) => {
-  if (format === "json") {
-    return JSON.stringify(contents, null, 2);
+  if (!formats.has(format)) {
+    throw new Error(`Format ${format} is not registered.`);
   }
 
-  return yaml.safeDump(contents, { skipInvalid: true });
-});
+  const startDir = process.cwd();
+  process.chdir(inputDir);
 
-export function configs$(
-  dir: string,
-  format: TFormat = "yaml",
-): Rx.Observable<IConfig> {
-  return files$(dir).pipe(
-    RxOp.map((file) => ({
-      file,
-      exports: resolveFile(file),
-    })),
-    RxOp.filter(R.hasPath(["exports", "default"])),
-    RxOp.map(({ file, exports }) => ({
-      basename: R.pipe(
-        R.split("."),
-        R.remove(-1, 1),
-        R.join("."),
-      )(path.relative(dir, file)),
-      contents: exports.default,
-    })),
-    RxOp.flatMap(({ basename, contents }) =>
-      Rx.from(Object.keys(contents)).pipe(
-        RxOp.map((file) => ({
-          file: `${basename}/${file}.${format}`,
-          contents: encodeContents(format, contents[file]),
-        })),
-      ),
-    ),
-  );
+  try {
+    fs.accessSync(outDir, fs.constants.F_OK);
+  } catch (_) {
+    fs.mkdirSync(outDir);
+  }
+
+  const inputConfigs$ = configs$(inputDir, context, formats, format);
+  const inputConfigsArray$ = inputConfigs$.pipe(RxOp.toArray());
+  const outputFT$ = files$(outDir).pipe(toFileTree(outDir));
+  const inputFT$ = inputConfigs$.pipe(configsToFiles(), toFileTree(inputDir));
+
+  return Rx.zip(inputConfigsArray$, inputFT$, outputFT$)
+    .pipe(
+      RxOp.flatMap(([configs, inputFT, outputFT]) => {
+        const contents = R.reduce(
+          (acc, c) => R.set(R.lensProp(c.file), c.contents, acc),
+          {} as IInputContents,
+          configs,
+        );
+
+        const patch = calculatePatch(inputFT, outputFT, {
+          contents,
+          outDir,
+        });
+        return Rx.from(patch).pipe(executePatch(contents, outDir));
+      }),
+    )
+    .toPromise()
+    .finally(() => {
+      process.chdir(startDir);
+    });
 }
 
-export function toFileTree() {
-  return (input$: Rx.Observable<IConfig>) =>
-    input$.pipe(
-      RxOp.toArray(),
-      RxOp.map((configs) => FSTree.fromPaths(R.map((c) => c.file, configs))),
-    );
+export interface IFormat {
+  (js: any): string;
+}
+
+const formats = new Map<string, IFormat>([
+  ["json", (js) => JSON.stringify(js, null, 2)],
+  ["yaml", (js) => yaml.safeDump(js, { skipInvalid: true })],
+]);
+
+export function registerFormat(name: string, dump: IFormat) {
+  formats.set(name, dump);
 }

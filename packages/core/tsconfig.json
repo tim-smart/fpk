@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "lib": ["ES2019"],
+    "outDir": "dist",
+    "target": "ESNext",
+    "lib": ["ESNext"],
     "module": "commonjs",
     "strict": true,
     "esModuleInterop": true
