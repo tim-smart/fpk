@@ -6,7 +6,6 @@ import * as fs from "fs";
 import { sync as rmrf } from "rimraf";
 import { compare } from "dir-compare";
 import ncp from "ncp";
-import * as Rx from "rxjs";
 
 const examples = fs.readdirSync(path.join(__dirname, "examples"));
 
@@ -62,6 +61,27 @@ describe("generate", () => {
     rmrf(genDir);
 
     generate(inDir, genDir, {
+      context: {
+        value: "secret",
+      },
+    })
+      .then(() => compare(genDir, outDir, { compareContent: true }))
+      .then((r) => {
+        expect(r.same).to.equal(true);
+        done();
+      })
+      .catch(done);
+  });
+
+  it("works with json", (done) => {
+    const inDir = path.join(__dirname, "examples/_json-test/in");
+    const genDir = path.join(__dirname, "examples/_json-test/gen");
+    const outDir = path.join(__dirname, "examples/_json-test/out");
+
+    rmrf(genDir);
+
+    generate(inDir, genDir, {
+      format: "json",
       context: {
         value: "secret",
       },
