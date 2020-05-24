@@ -1,4 +1,4 @@
-# @fpk/cli
+# fpk
 
 Functional configuration management.
 
@@ -48,7 +48,3 @@ out
 $ cat out/my-app/00-one.yaml
 key: value
 ```
-
-## More examples
-
-See `test/examples`
