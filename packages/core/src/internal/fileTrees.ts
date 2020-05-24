@@ -4,7 +4,6 @@ import FSTree, { Operation } from "fs-tree-diff";
 import * as fs from "fs";
 import * as fsp from "fs/promises";
 import * as path from "path";
-import rimraf from "rimraf";
 
 export function toFileTree(dir: string) {
   return (input$: Rx.Observable<string>) =>
@@ -42,16 +41,16 @@ export function calculatePatch(
 export function executePatch(contents: IInputContents, outDir: string) {
   return (input$: Rx.Observable<Operation>) =>
     input$.pipe(
-      RxOp.flatMap(([op, file, _entry]) => {
+      RxOp.concatMap(([op, file, _entry]) => {
         const path = `${outDir}/${file}`;
 
         console.log(op.toUpperCase(), file);
 
         switch (op) {
           case "mkdir":
-            return Rx.from(fsp.mkdir(path, { recursive: true }));
+            return Rx.from(fsp.mkdir(path));
           case "rmdir":
-            return Rx.bindNodeCallback(rimraf)(path);
+            return Rx.from(fsp.rmdir(path));
           case "change":
           case "create":
             return Rx.from(fsp.writeFile(path, contents[file]));

@@ -86,3 +86,7 @@ const formats = new Map<string, IFormat>([
 export function registerFormat(name: string, dump: IFormat) {
   formats.set(name, dump);
 }
+
+export function availableFormats() {
+  return Array.from(formats.keys());
+}
