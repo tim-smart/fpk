@@ -1,0 +1,45 @@
+{
+  "name": "@fpk/cli",
+  "description": "CLI for fpk - functional configuration tool",
+  "version": "0.1.0",
+  "author": "Tim Smart <hello@timsmart.co>",
+  "bin": {
+    "fpk": "./bin/run"
+  },
+  "bugs": "https://github.com/tim-smart/fpk/issues",
+  "dependencies": {
+    "@fpk/core": "^0",
+    "@oclif/command": "^1",
+    "@oclif/config": "^1",
+    "@oclif/plugin-help": "^2",
+    "js-yaml": "^3.14.0",
+    "ts-node": "^8",
+    "tslib": "^1",
+    "typescript": "^3.3"
+  },
+  "devDependencies": {
+    "@types/js-yaml": "^3.12.4",
+    "@types/node": "^14.0.5"
+  },
+  "engines": {
+    "node": ">=10.0.0"
+  },
+  "files": [
+    "/bin",
+    "/lib"
+  ],
+  "homepage": "https://github.com/tim-smart/fpk",
+  "keywords": [
+    "oclif"
+  ],
+  "license": "MIT",
+  "oclif": {
+    "bin": "fpk"
+  },
+  "repository": "tim-smart/fpk",
+  "scripts": {
+    "build": "rm -rf lib && tsc -b",
+    "test": "echo NO TESTS"
+  },
+  "types": "lib/index.d.ts"
+}
