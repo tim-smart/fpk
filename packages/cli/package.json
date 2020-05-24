@@ -41,5 +41,6 @@
     "build": "rm -rf lib && tsc -b",
     "test": "echo NO TESTS"
   },
-  "types": "lib/index.d.ts"
+  "types": "lib/index.d.ts",
+  "gitHead": "a5aa6a6e10b62a957de11c4bc55ac4d3ee9a2ece"
 }
