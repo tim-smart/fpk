@@ -5,6 +5,18 @@ export interface IPodTemplateTransformer {
   (spec: PodTemplateSpec): PodTemplateSpec;
 }
 
+/**
+ * Returns a function that will run the given pod transformer over the supplied
+ * resource. Useful for updating pod templates for various resource types.
+ *
+ * ```
+ * const setEmptyContainers = overPodTemplate((pod) => ({...pod, spec: {containers: []}}));
+ *
+ * setEmptyContainers(deployment)
+ * setEmptyContainers(daemonSet)
+ * setEmptyContainers(cronjob)
+ * ```
+ */
 export const overPodTemplate = (fn: IPodTemplateTransformer) => <T>(
   object: T,
 ) => {
@@ -23,12 +35,33 @@ export const overPodTemplate = (fn: IPodTemplateTransformer) => <T>(
   return object;
 };
 
-export const concatPodContainers = (containers: Container[]) => <T>(
-  object: T,
-) =>
+/**
+ * Returns a function that concats a list of containers to the given resource.
+ *
+ * ```
+ * const containerPusher = concatContainers([{ image: "fancyimage" }]);
+ *
+ * containerPusher(deployment);
+ * containerPusher(daemonSet);
+ * ```
+ */
+export const concatContainers = (containers: Container[]) => <T>(object: T) =>
   overPodTemplate(
     R.over(
       R.lensPath(["spec", "containers"]),
       R.pipe(R.defaultTo([]), R.concat(R.__, containers)),
     ),
   )(object);
+
+/**
+ * Returns a function that appends the container to the given resource.
+ *
+ * ```
+ * const containerPusher = appendContainer({ image: "fancyimage" });
+ *
+ * containerPusher(deployment);
+ * containerPusher(daemonSet);
+ * ```
+ */
+export const appendContainer = (container: Container) =>
+  concatContainers([container]);

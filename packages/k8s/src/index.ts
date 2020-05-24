@@ -1,5 +1,12 @@
-export * from "./common";
-export * from "./daemonsets";
+// export * from "./common";
+// export * from "./configmaps";
+// export * from "./daemonsets";
 export * from "./deployments";
+// export * from "./hpa";
+// export * from "./ingress";
+export * from "./namespaces";
 export * from "./podTemplates";
+// export * from "./secrets";
+// export * from "./services";
 export * from "./units";
+// export * from "./vpa";
