@@ -1,0 +1,28 @@
+{
+  "name": "@fpk/k8s",
+  "version": "0.1.0",
+  "description": "Functional configuration helpers for Kubernetes using @fpk/cli",
+  "main": "dist/index.js",
+  "author": "Tim Smart <hello@timsmart.co>",
+  "license": "MIT",
+  "scripts": {
+    "build": "rm -rf dist/ && tsc",
+    "test": "mocha -r ts-node/register test/**/*.test.ts"
+  },
+  "peerDependencies": {
+    "kubernetes-types": "*"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.2.11",
+    "@types/mocha": "^7.0.2",
+    "@types/ramda": "^0.27.6",
+    "chai": "^4.2.0",
+    "kubernetes-types": "^1.17.0-beta.1",
+    "mocha": "^7.2.0",
+    "ts-node": "^8.10.1",
+    "typescript": "^3.9.3"
+  },
+  "dependencies": {
+    "ramda": "^0.27.0"
+  }
+}
