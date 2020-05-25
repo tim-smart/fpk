@@ -5,6 +5,8 @@ import {
   ResourceRequirements,
   EnvFromSource,
   VolumeMount,
+  Probe,
+  HTTPGetAction,
 } from "kubernetes-types/core/v1";
 import * as R from "ramda";
 import { DeepPartial } from "./common";
@@ -132,3 +134,31 @@ export const appendVolumeMount = (
       ),
     ),
   );
+
+const createProbe = (container: Container, toMerge: DeepPartial<Probe> = {}) =>
+  R.pipe(
+    R.when<Probe, Probe>(
+      () => !R.isEmpty(container.ports),
+      R.set(R.lensPath(["httpGet"]), {
+        port: container.ports![0].containerPort,
+        path: "/",
+      } as HTTPGetAction),
+    ),
+    R.mergeDeepLeft(toMerge) as (p: Probe) => Probe,
+  )({});
+
+/**
+ * Returns a function that sets the readinessProbe on a container.
+ */
+export const setReadinessProbe = (probe: DeepPartial<Probe> = {}) => (
+  container: Container,
+) =>
+  R.set(R.lensProp("readinessProbe"), createProbe(container, probe), container);
+
+/**
+ * Returns a function that sets the livenessProbe on a container.
+ */
+export const setLivenessProbe = (probe: DeepPartial<Probe> = {}) => (
+  container: Container,
+) =>
+  R.set(R.lensProp("livenessProbe"), createProbe(container, probe), container);

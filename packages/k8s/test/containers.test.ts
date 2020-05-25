@@ -148,3 +148,43 @@ describe("appendVolumeMount", () =>
       } as Container,
     },
   ]));
+
+describe("setReadinessProbe", () =>
+  runCases([
+    {
+      it: "sets readinessProbe for a container",
+      in: K.containerWithPort("myapp", "image", 80),
+      fn: K.setReadinessProbe({
+        timeoutSeconds: 10,
+      }),
+      diff: {
+        readinessProbe: {
+          httpGet: {
+            port: 80,
+            path: "/",
+          },
+          timeoutSeconds: 10,
+        },
+      } as Container,
+    },
+  ]));
+
+describe("setLivenessProbe", () =>
+  runCases([
+    {
+      it: "sets livenessProbe for a container",
+      in: K.containerWithPort("myapp", "image", 80),
+      fn: K.setLivenessProbe({
+        timeoutSeconds: 10,
+      }),
+      diff: {
+        livenessProbe: {
+          httpGet: {
+            port: 80,
+            path: "/",
+          },
+          timeoutSeconds: 10,
+        },
+      } as Container,
+    },
+  ]));
