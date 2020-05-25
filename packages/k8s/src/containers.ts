@@ -1,4 +1,9 @@
-import { Container, EnvVar, EnvVarSource } from "kubernetes-types/core/v1";
+import {
+  Container,
+  EnvVar,
+  EnvVarSource,
+  ResourceRequirements,
+} from "kubernetes-types/core/v1";
 import * as R from "ramda";
 import { DeepPartial } from "./common";
 
@@ -71,3 +76,29 @@ export const concatEnv = (env: IEnvObject) =>
       ),
     ),
   ) as (c: Container) => Container;
+
+/**
+ * Returns a function thats set resource requests on a container.
+ */
+export const setContainerResourceRequests = (
+  requests: ResourceRequirements["requests"],
+) =>
+  R.over(
+    R.lensProp("resources"),
+    R.mergeLeft({
+      requests,
+    }),
+  );
+
+/**
+ * Returns a function thats set resource limits on a container.
+ */
+export const setContainerResourceLimits = (
+  limits: ResourceRequirements["limits"],
+) =>
+  R.over(
+    R.lensProp("resources"),
+    R.mergeLeft({
+      limits,
+    }),
+  );

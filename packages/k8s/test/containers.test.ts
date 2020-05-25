@@ -68,3 +68,43 @@ describe("concatEnv", () =>
       } as Container,
     },
   ]));
+
+describe("setContainerResourceRequests", () =>
+  runCases([
+    {
+      it: "sets resources.requests",
+      in: K.container("myapp", "image"),
+      fn: K.setContainerResourceRequests({
+        cpu: "0.5",
+        memory: "100M",
+      }),
+      diff: {
+        resources: {
+          requests: {
+            cpu: "0.5",
+            memory: "100M",
+          },
+        },
+      },
+    },
+  ]));
+
+describe("setContainerResourceLimits", () =>
+  runCases([
+    {
+      it: "sets resources.limits",
+      in: K.container("myapp", "image"),
+      fn: K.setContainerResourceLimits({
+        cpu: "0.5",
+        memory: "100M",
+      }),
+      diff: {
+        resources: {
+          limits: {
+            cpu: "0.5",
+            memory: "100M",
+          },
+        },
+      },
+    },
+  ]));

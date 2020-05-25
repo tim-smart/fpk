@@ -1,5 +1,13 @@
-import { PodTemplateSpec, Container } from "kubernetes-types/core/v1";
+import {
+  PodTemplateSpec,
+  Container,
+  ResourceRequirements,
+} from "kubernetes-types/core/v1";
 import * as R from "ramda";
+import {
+  setContainerResourceRequests,
+  setContainerResourceLimits,
+} from "./containers";
 
 export interface IPodTemplateTransformer {
   (spec: PodTemplateSpec): PodTemplateSpec;
@@ -91,3 +99,21 @@ export const overContainer = (
       ),
     ),
   );
+
+/**
+ * Returns a function that finds a container by name, then sets the resource
+ * requests for that container in the provider resource.
+ */
+export const setResourceRequests = (
+  name: string,
+  requests: ResourceRequirements["requests"],
+) => overContainer(name, setContainerResourceRequests(requests));
+
+/**
+ * Returns a function that finds a container by name, then sets the resource
+ * limits for that container in the provider resource.
+ */
+export const setResourceLimits = (
+  name: string,
+  limits: ResourceRequirements["limits"],
+) => overContainer(name, setContainerResourceLimits(limits));

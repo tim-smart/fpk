@@ -86,10 +86,17 @@ describe("overContainer", () =>
   runCases([
     {
       it: "runs the function over the specified container",
-      in: K.deploymentWithContainer({
-        name: "myapp",
-        image: "myimage",
-      }),
+      in: R.pipe(
+        K.appendContainer({
+          name: "secondcontainer",
+          image: "anotherimage",
+        }),
+      )(
+        K.deploymentWithContainer({
+          name: "myapp",
+          image: "myimage",
+        }),
+      ),
       fn: K.overContainer(
         "myapp",
         K.concatEnv({
@@ -103,6 +110,66 @@ describe("overContainer", () =>
               containers: {
                 "0": {
                   env: { "0": { name: "FOO", value: "bar" } },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  ]));
+
+describe("setResourceRequests", () =>
+  runCases([
+    {
+      it: "sets the resource requests for the correct container",
+      in: K.deploymentWithContainer({
+        name: "myapp",
+        image: "myimage",
+      }),
+      fn: K.setResourceRequests("myapp", { cpu: "1", memory: "100M" }),
+      diff: {
+        spec: {
+          template: {
+            spec: {
+              containers: {
+                "0": {
+                  resources: {
+                    requests: {
+                      cpu: "1",
+                      memory: "100M",
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  ]));
+
+describe("setResourceLimits", () =>
+  runCases([
+    {
+      it: "sets the resource limits for the correct container",
+      in: K.deploymentWithContainer({
+        name: "myapp",
+        image: "myimage",
+      }),
+      fn: K.setResourceLimits("myapp", { cpu: "1", memory: "100M" }),
+      diff: {
+        spec: {
+          template: {
+            spec: {
+              containers: {
+                "0": {
+                  resources: {
+                    limits: {
+                      cpu: "1",
+                      memory: "100M",
+                    },
+                  },
                 },
               },
             },
