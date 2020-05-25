@@ -2,12 +2,22 @@
 
 Functional configuration management.
 
-Use Typescript / Javascript to generate yaml or json configuration. Could be
-used for:
+Use Typescript / Javascript to generate yaml or json (or register your own
+format) configuration. Could be used for:
 
 - Generating configuration for Kubernetes
 - Generating configuration for Terraform
 - etc.
+
+## Why?
+
+Functional programming and Typescript have some great traits, which are also
+really beneficial when writing configuration:
+
+- Composition - you can build your configuration like lego.
+- Re-usability - create functions that define entire workloads and reuse them
+  across projects.
+- Type checking - intellisense FTW.
 
 ## Packages
 
@@ -19,15 +29,18 @@ used for:
 
 ## Install
 
-npm install -g @fpk/cli
+```
+$ npm install -g @fpk/cli
+$ fpk --help
+```
 
 ## Kubernetes Example Project
 
 See https://github.com/tim-smart/fpk-k8s-example
 
-## Usage
+## Basic Usage
 
-### Create some config
+### Create some configuration
 
 `src/my-app.ts`
 
