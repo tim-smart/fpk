@@ -69,12 +69,12 @@ describe("concatEnv", () =>
     },
   ]));
 
-describe("setContainerResourceRequests", () =>
+describe("setResourceRequests", () =>
   runCases([
     {
       it: "sets resources.requests",
       in: K.container("myapp", "image"),
-      fn: K.setContainerResourceRequests({
+      fn: K.setResourceRequests({
         cpu: "0.5",
         memory: "100M",
       }),
@@ -89,12 +89,12 @@ describe("setContainerResourceRequests", () =>
     },
   ]));
 
-describe("setContainerResourceLimits", () =>
+describe("setResourceLimits", () =>
   runCases([
     {
       it: "sets resources.limits",
       in: K.container("myapp", "image"),
-      fn: K.setContainerResourceLimits({
+      fn: K.setResourceLimits({
         cpu: "0.5",
         memory: "100M",
       }),
@@ -106,5 +106,27 @@ describe("setContainerResourceLimits", () =>
           },
         },
       },
+    },
+  ]));
+
+describe("appendEnvFrom", () =>
+  runCases([
+    {
+      it: "appends envFrom for a container",
+      in: K.container("myapp", "image"),
+      fn: K.appendEnvFrom({
+        configMapRef: {
+          name: "myconfig",
+        },
+      }),
+      diff: {
+        envFrom: [
+          {
+            configMapRef: {
+              name: "myconfig",
+            },
+          },
+        ],
+      } as Container,
     },
   ]));

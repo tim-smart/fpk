@@ -3,6 +3,7 @@ import {
   EnvVar,
   EnvVarSource,
   ResourceRequirements,
+  EnvFromSource,
 } from "kubernetes-types/core/v1";
 import * as R from "ramda";
 import { DeepPartial } from "./common";
@@ -80,7 +81,7 @@ export const concatEnv = (env: IEnvObject) =>
 /**
  * Returns a function thats set resource requests on a container.
  */
-export const setContainerResourceRequests = (
+export const setResourceRequests = (
   requests: ResourceRequirements["requests"],
 ) =>
   R.over(
@@ -93,12 +94,16 @@ export const setContainerResourceRequests = (
 /**
  * Returns a function thats set resource limits on a container.
  */
-export const setContainerResourceLimits = (
-  limits: ResourceRequirements["limits"],
-) =>
+export const setResourceLimits = (limits: ResourceRequirements["limits"]) =>
   R.over(
     R.lensProp("resources"),
     R.mergeLeft({
       limits,
     }),
   );
+
+/**
+ * Returns a function that sets envFrom for a container
+ */
+export const appendEnvFrom = (envFrom: EnvFromSource) =>
+  R.over(R.lensProp("envFrom"), R.pipe(R.defaultTo([]), R.append(envFrom)));

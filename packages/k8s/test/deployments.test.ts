@@ -86,6 +86,10 @@ describe("deploymentWithContainer", () =>
           env: {
             FOO: "bar",
           },
+          resourceRequests: {
+            cpu: "1",
+            memory: "100M",
+          },
         }),
       diff: {
         spec: {
@@ -98,6 +102,12 @@ describe("deploymentWithContainer", () =>
                   image: "fancyimage",
                   ports: [{ containerPort: 3000 }],
                   env: [{ name: "FOO", value: "bar" }],
+                  resources: {
+                    requests: {
+                      cpu: "1",
+                      memory: "100M",
+                    },
+                  },
                 },
               },
             },

@@ -11,8 +11,10 @@ import {
   container,
   IEnvObject,
   concatEnv,
+  setResourceRequests,
+  setResourceLimits,
 } from "./containers";
-import { Container } from "kubernetes-types/core/v1";
+import { Container, ResourceRequirements } from "kubernetes-types/core/v1";
 
 /**
  * Create a deployment resource with the given name. The second argument is deep
@@ -58,6 +60,9 @@ export interface IDeploymentWithContainerOpts {
   containerPort?: number;
   env?: IEnvObject;
   container?: DeepPartial<Container>;
+
+  resourceRequests?: ResourceRequirements["requests"];
+  resourceLimits?: ResourceRequirements["limits"];
 }
 
 /**
@@ -71,14 +76,20 @@ export const deploymentWithContainer = (
     image,
     containerPort,
     container: containerToMerge,
-    env = {},
+    env,
+    resourceLimits,
+    resourceRequests,
   }: IDeploymentWithContainerOpts,
   toMerge: DeepPartial<Deployment> = {},
 ) =>
   R.pipe(
     setReplicas(replicas),
     appendContainer(
-      R.pipe(concatEnv(env))(
+      R.pipe(
+        R.when(() => !!env, concatEnv(env!)),
+        R.when(() => !!resourceRequests, setResourceRequests(resourceRequests)),
+        R.when(() => !!resourceLimits, setResourceLimits(resourceLimits)),
+      )(
         containerPort
           ? containerWithPort(name, image, containerPort, containerToMerge)
           : container(name, image, containerToMerge),

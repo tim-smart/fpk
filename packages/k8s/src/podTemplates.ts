@@ -1,17 +1,5 @@
-import {
-  PodTemplateSpec,
-  Container,
-  ResourceRequirements,
-} from "kubernetes-types/core/v1";
+import { PodTemplateSpec, Container } from "kubernetes-types/core/v1";
 import * as R from "ramda";
-import {
-  setContainerResourceRequests,
-  setContainerResourceLimits,
-} from "./containers";
-
-export interface IPodTemplateTransformer {
-  (spec: PodTemplateSpec): PodTemplateSpec;
-}
 
 /**
  * Returns a function that will run the given pod transformer over the supplied
@@ -25,9 +13,9 @@ export interface IPodTemplateTransformer {
  * setEmptyContainers(cronjob)
  * ```
  */
-export const overPodTemplate = (fn: IPodTemplateTransformer) => <T>(
-  object: T,
-) => {
+export const overPodTemplate = (
+  fn: (pod: PodTemplateSpec) => PodTemplateSpec,
+) => <T>(object: T) => {
   if ((object as any).kind === "Pod") {
     return fn(object) as T;
   } else if (R.hasPath(["spec", "jobTemplate", "spec", "template"], object)) {
@@ -99,21 +87,3 @@ export const overContainer = (
       ),
     ),
   );
-
-/**
- * Returns a function that finds a container by name, then sets the resource
- * requests for that container in the provider resource.
- */
-export const setResourceRequests = (
-  name: string,
-  requests: ResourceRequirements["requests"],
-) => overContainer(name, setContainerResourceRequests(requests));
-
-/**
- * Returns a function that finds a container by name, then sets the resource
- * limits for that container in the provider resource.
- */
-export const setResourceLimits = (
-  name: string,
-  limits: ResourceRequirements["limits"],
-) => overContainer(name, setContainerResourceLimits(limits));
