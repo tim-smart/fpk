@@ -15,6 +15,7 @@ import {
   setResourceLimits,
 } from "./containers";
 import { Container, ResourceRequirements } from "kubernetes-types/core/v1";
+import { maybeMergeResource, resource } from "./resources";
 
 /**
  * Create a deployment resource with the given name. The second argument is deep
@@ -22,15 +23,10 @@ import { Container, ResourceRequirements } from "kubernetes-types/core/v1";
  */
 export const daemonSet = (
   name: string,
-  toMerge: DeepPartial<DaemonSet> = {},
+  toMerge?: DeepPartial<DaemonSet>,
 ): DaemonSet =>
-  R.mergeDeepRight(
-    {
-      apiVersion: "apps/v1",
-      kind: "DaemonSet",
-      metadata: {
-        name,
-      },
+  maybeMergeResource<DaemonSet>(
+    resource<DaemonSet>("apps/v1", "DaemonSet", name, {
       spec: {
         selector: {
           matchLabels: {
@@ -48,9 +44,9 @@ export const daemonSet = (
           },
         },
       },
-    } as DaemonSet,
+    }),
     toMerge,
-  ) as DaemonSet;
+  );
 
 export interface IDaemonsetWithContainerOpts {
   name: string;

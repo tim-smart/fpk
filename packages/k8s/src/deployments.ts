@@ -15,6 +15,7 @@ import {
   setResourceLimits,
 } from "./containers";
 import { Container, ResourceRequirements } from "kubernetes-types/core/v1";
+import { maybeMergeResource, resource } from "./resources";
 
 /**
  * Create a deployment resource with the given name. The second argument is deep
@@ -22,36 +23,31 @@ import { Container, ResourceRequirements } from "kubernetes-types/core/v1";
  */
 export const deployment = (
   name: string,
-  toMerge: DeepPartial<Deployment> = {},
-): Deployment => {
-  const config: Deployment = {
-    apiVersion: "apps/v1",
-    kind: "Deployment",
-    metadata: {
-      name,
-    },
-    spec: {
-      replicas: 1,
-      selector: {
-        matchLabels: {
-          app: name,
-        },
-      },
-      template: {
-        metadata: {
-          labels: {
+  toMerge?: DeepPartial<Deployment>,
+): Deployment =>
+  maybeMergeResource<Deployment>(
+    resource<Deployment>("apps/v1", "Deployment", name, {
+      spec: {
+        replicas: 1,
+        selector: {
+          matchLabels: {
             app: name,
           },
         },
-        spec: {
-          containers: [],
+        template: {
+          metadata: {
+            labels: {
+              app: name,
+            },
+          },
+          spec: {
+            containers: [],
+          },
         },
       },
-    },
-  };
-
-  return R.mergeDeepRight<any, any>(config, toMerge);
-};
+    }),
+    toMerge,
+  );
 
 export interface IDeploymentWithContainerOpts {
   name: string;
@@ -80,7 +76,7 @@ export const deploymentWithContainer = (
     resourceLimits,
     resourceRequests,
   }: IDeploymentWithContainerOpts,
-  toMerge: DeepPartial<Deployment> = {},
+  toMerge?: DeepPartial<Deployment>,
 ) =>
   R.pipe(
     setReplicas(replicas),
@@ -95,7 +91,7 @@ export const deploymentWithContainer = (
           : container(name, image, containerToMerge),
       ),
     ),
-    R.mergeDeepLeft(toMerge) as (d: Deployment) => Deployment,
+    (d: Deployment) => maybeMergeResource<Deployment>(d, toMerge),
   )(deployment(name));
 
 /**

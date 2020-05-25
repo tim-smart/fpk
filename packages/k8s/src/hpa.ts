@@ -2,22 +2,20 @@ import {
   HorizontalPodAutoscaler,
   HorizontalPodAutoscalerSpec,
 } from "kubernetes-types/autoscaling/v2beta2";
-import * as R from "ramda";
 import { DeepPartial } from "./common";
+import { maybeMergeResource, resource } from "./resources";
 
 export const hpa = (
   name: string,
   spec: HorizontalPodAutoscalerSpec,
-  toMerge: DeepPartial<HorizontalPodAutoscaler> = {},
+  toMerge?: DeepPartial<HorizontalPodAutoscaler>,
 ): HorizontalPodAutoscaler =>
-  R.mergeDeepRight(
-    {
-      apiVersion: "autoscaling/v2beta2",
-      kind: "HorizontalPodAutoscaler",
-      metadata: {
-        name,
-      },
-      spec,
-    } as HorizontalPodAutoscaler,
+  maybeMergeResource<HorizontalPodAutoscaler>(
+    resource<HorizontalPodAutoscaler>(
+      "autoscaling/v2beta2",
+      "HorizontalPodAutoscaler",
+      name,
+      { spec },
+    ),
     toMerge,
-  ) as HorizontalPodAutoscaler;
+  );

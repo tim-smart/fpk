@@ -2,6 +2,7 @@ import { Secret } from "kubernetes-types/core/v1";
 import { DeepPartial } from "./common";
 import * as R from "ramda";
 import { createConfigFromFile } from "./internal/fs";
+import { resource, maybeMergeResource } from "./resources";
 
 /**
  * Creates a secret resource from some data. This function automatically base64
@@ -10,21 +11,16 @@ import { createConfigFromFile } from "./internal/fs";
 export const secret = (
   name: string,
   data: { [name: string]: string },
-  toMerge: DeepPartial<Secret> = {},
+  toMerge?: DeepPartial<Secret>,
 ): Secret =>
-  R.mergeDeepRight(
-    {
-      apiVersion: "v1",
-      kind: "Secret",
-      metadata: {
-        name,
-      },
+  maybeMergeResource<Secret>(
+    resource<Secret>("v1", "Secret", name, {
       data: R.map((v) => Buffer.from(v).toString("base64"), data) as {
         [name: string]: string;
       },
-    },
+    }),
     toMerge,
-  ) as Secret;
+  );
 
 /**
  * Create a secret from a file

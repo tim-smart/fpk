@@ -1,6 +1,7 @@
 import { ServiceSpec, Service } from "kubernetes-types/core/v1";
 import * as R from "ramda";
 import { DeepPartial } from "./common";
+import { maybeMergeResource, resource } from "./resources";
 
 /**
  * Creates a service resource
@@ -8,21 +9,12 @@ import { DeepPartial } from "./common";
 export const service = (
   name: string,
   selector: ServiceSpec["selector"],
-  toMerge: DeepPartial<Service> = {},
+  toMerge?: DeepPartial<Service>,
 ) =>
-  R.mergeDeepRight(
-    {
-      apiVersion: "v1",
-      kind: "Service",
-      metadata: {
-        name,
-      },
-      spec: {
-        selector,
-      },
-    } as Service,
+  maybeMergeResource<Service>(
+    resource<Service>("v1", "Service", name, { spec: { selector } }),
     toMerge,
-  ) as Service;
+  );
 
 export const appendServicePort = (targetPort: number, port: number) =>
   R.over(
@@ -40,5 +32,5 @@ export const serviceWithPort = (
   name: string,
   selector: ServiceSpec["selector"],
   port: number,
-  toMerge: DeepPartial<Service> = {},
+  toMerge?: DeepPartial<Service>,
 ) => R.pipe(appendServicePort(port, port))(service(name, selector, toMerge));

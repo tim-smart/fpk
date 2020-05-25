@@ -10,6 +10,7 @@ import {
 } from "kubernetes-types/core/v1";
 import * as R from "ramda";
 import { DeepPartial } from "./common";
+import { maybeMergeResource } from "./resources";
 
 /**
  * Creates a container with the provided name and image
@@ -17,15 +18,15 @@ import { DeepPartial } from "./common";
 export const container = (
   name: string,
   image: string,
-  toMerge: DeepPartial<Container> = {},
+  toMerge?: DeepPartial<Container>,
 ): Container =>
-  R.mergeDeepRight(
+  maybeMergeResource<Container>(
     {
       name,
       image,
-    } as Container,
+    },
     toMerge,
-  ) as Container;
+  );
 
 /**
  * Creates a container with the provided name, image and port.
@@ -34,16 +35,16 @@ export const containerWithPort = (
   name: string,
   image: string,
   containerPort: number,
-  toMerge: DeepPartial<Container> = {},
+  toMerge?: DeepPartial<Container>,
 ): Container =>
-  R.mergeDeepRight(
+  maybeMergeResource<Container>(
     {
       name,
       image,
       ports: [{ containerPort }],
-    } as Container,
+    },
     toMerge,
-  ) as Container;
+  );
 
 export interface IEnvObject {
   [key: string]: string | EnvVarSource;
@@ -150,7 +151,7 @@ const createProbe = (container: Container, toMerge: DeepPartial<Probe> = {}) =>
 /**
  * Returns a function that sets the readinessProbe on a container.
  */
-export const setReadinessProbe = (probe: DeepPartial<Probe> = {}) => (
+export const setReadinessProbe = (probe?: DeepPartial<Probe>) => (
   container: Container,
 ) =>
   R.set(R.lensProp("readinessProbe"), createProbe(container, probe), container);
@@ -158,7 +159,7 @@ export const setReadinessProbe = (probe: DeepPartial<Probe> = {}) => (
 /**
  * Returns a function that sets the livenessProbe on a container.
  */
-export const setLivenessProbe = (probe: DeepPartial<Probe> = {}) => (
+export const setLivenessProbe = (probe?: DeepPartial<Probe>) => (
   container: Container,
 ) =>
   R.set(R.lensProp("livenessProbe"), createProbe(container, probe), container);
@@ -167,4 +168,14 @@ export const setLivenessProbe = (probe: DeepPartial<Probe> = {}) => (
  * Returns a function that sets the imagePullPolicy on a container.
  */
 export const setImagePullPolicy = (policy: string) =>
-  R.set(R.lensProp("imagePullPolicy"), policy);
+  R.assoc("imagePullPolicy", policy);
+
+/**
+ * Returns a function that sets the command on a container.
+ */
+export const setCommand = (command: string[]) => R.assoc("command", command);
+
+/**
+ * Returns a function that sets the args on a container.
+ */
+export const setArgs = (args: string[]) => R.assoc("args", args);

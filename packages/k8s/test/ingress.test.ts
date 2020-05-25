@@ -1,6 +1,7 @@
 import * as K from "../src/index";
 import { describe } from "mocha";
 import { runCases } from "./helpers";
+import { Ingress } from "kubernetes-types/networking/v1beta1";
 
 describe("ingress", () =>
   runCases([
@@ -78,7 +79,24 @@ describe("ingressFromRules", () =>
             serviceName: "myapp",
             servicePort: 3000,
           },
-          rules: [{ host: "example.com" }],
+          rules: [
+            { host: "simple.example.com" },
+            {
+              host: "example.com",
+              paths: [
+                {
+                  path: "/",
+                },
+                {
+                  path: "/b",
+                  backend: {
+                    serviceName: "myapp2",
+                    servicePort: 4000,
+                  },
+                },
+              ],
+            },
+          ],
         }),
       diff: {
         apiVersion: "networking.k8s.io/v1beta1",
@@ -93,7 +111,7 @@ describe("ingressFromRules", () =>
         spec: {
           rules: [
             {
-              host: "example.com",
+              host: "simple.example.com",
               http: {
                 paths: [
                   {
@@ -105,14 +123,35 @@ describe("ingressFromRules", () =>
                 ],
               },
             },
+            {
+              host: "example.com",
+              http: {
+                paths: [
+                  {
+                    path: "/",
+                    backend: {
+                      serviceName: "myapp",
+                      servicePort: 3000,
+                    },
+                  },
+                  {
+                    path: "/b",
+                    backend: {
+                      serviceName: "myapp2",
+                      servicePort: 4000,
+                    },
+                  },
+                ],
+              },
+            },
           ],
           tls: [
             {
-              hosts: ["example.com"],
+              hosts: ["simple.example.com", "example.com"],
               secretName: "myapp-tls-secret",
             },
           ],
         },
-      },
+      } as Ingress,
     },
   ]));

@@ -3,27 +3,20 @@ import {
   IngressSpec,
   IngressBackend,
   IngressRule,
-  IngressTLS,
 } from "kubernetes-types/networking/v1beta1";
 import * as R from "ramda";
-import { DeepPartial, annotate } from "./common";
+import { DeepPartial } from "./common";
+import { annotate, maybeMergeResource, resource } from "./resources";
 
 export const ingress = (
   name: string,
   spec: IngressSpec,
-  toMerge: DeepPartial<Ingress> = {},
-): Ingress =>
-  R.mergeDeepRight(
-    {
-      apiVersion: "networking.k8s.io/v1beta1",
-      kind: "Ingress",
-      metadata: {
-        name,
-      },
-      spec,
-    } as Ingress,
+  toMerge?: DeepPartial<Ingress>,
+) =>
+  maybeMergeResource<Ingress>(
+    resource<Ingress>("networking.k8s.io/v1beta1", "Ingress", name, { spec }),
     toMerge,
-  ) as Ingress;
+  );
 
 export interface IIngressRules {
   backend: IngressBackend;
@@ -36,7 +29,12 @@ export interface IIngressRules {
 
 export interface IIngressRule {
   host: string;
-  paths?: string[];
+  paths?: IIngressRulePath[];
+}
+
+export interface IIngressRulePath {
+  path: string;
+  backend?: IngressBackend;
 }
 
 type IngressSpecTransformer = (i: IngressSpec) => IngressSpec;
@@ -45,8 +43,6 @@ const rulesToSpec = ({
   backend,
   rules,
   tlsSecretName,
-  tlsAcme,
-  tlsRedirect,
 }: IIngressRules): IngressSpec => {
   const ingress: IngressSpec = {
     rules: R.map(
@@ -56,9 +52,9 @@ const rulesToSpec = ({
           paths: R.ifElse(
             R.isNil,
             () => [{ backend }],
-            R.map((path: string) => ({
+            R.map(({ path, backend: pathBackend }: IIngressRulePath) => ({
               path,
-              backend,
+              backend: pathBackend || backend,
             })),
           )(paths),
         },
@@ -83,7 +79,7 @@ const rulesToSpec = ({
 export const ingressFromRules = (
   name: string,
   rules: IIngressRules,
-  toMerge: DeepPartial<Ingress> = {},
+  toMerge?: DeepPartial<Ingress>,
 ) =>
   R.pipe(
     R.when<Ingress, Ingress>(

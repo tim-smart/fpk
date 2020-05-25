@@ -2,6 +2,7 @@ import { Namespace } from "kubernetes-types/core/v1";
 import * as R from "ramda";
 import { DeepPartial } from "./common";
 import { resolveContents } from "@fpk/core";
+import { maybeMergeResource, resource } from "./resources";
 
 const nonNamespacedResources = [
   "ComponentStatus",
@@ -15,19 +16,14 @@ const nonNamespacedResources = [
  *
  * The second argument is merged into the return value.
  */
-export function namespace(
+export const namespace = (
   name: string,
-  toMerge: DeepPartial<Namespace> = {},
-): Namespace {
-  const ns: Namespace = {
-    apiVersion: "v1",
-    kind: "Namespace",
-    metadata: {
-      name,
-    },
-  };
-  return R.mergeDeepRight(ns, toMerge) as Namespace;
-}
+  toMerge?: DeepPartial<Namespace>,
+): Namespace =>
+  maybeMergeResource<Namespace>(
+    resource<Namespace>("v1", "Namespace", name),
+    toMerge,
+  );
 
 /**
  * Set `metadata.namespace` for the resource. Ignores the following resource
@@ -51,7 +47,7 @@ export const setNamespace = (namespace: string) =>
  * Returns a function that add's a `00-namespace` resource to the object, then
  * adds a matching `metadata.namespace` to each item in the object.
  */
-export const withNamespace = (name: string, toMerge: Namespace = {}) => (
+export const withNamespace = (name: string, toMerge?: Namespace) => (
   object: any,
 ): any =>
   resolveContents({}, object).then(

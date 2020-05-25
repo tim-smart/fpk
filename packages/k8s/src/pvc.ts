@@ -1,19 +1,14 @@
 import { PersistentVolumeClaim } from "kubernetes-types/core/v1";
 import { DeepPartial } from "./common";
-import * as R from "ramda";
+import { maybeMergeResource, resource } from "./resources";
 
 export const pvc = (
   name: string,
   storage: string,
-  toMerge: DeepPartial<PersistentVolumeClaim> = {},
+  toMerge?: DeepPartial<PersistentVolumeClaim>,
 ): PersistentVolumeClaim =>
-  R.mergeDeepRight(
-    {
-      apiVersion: "v1",
-      kind: "PersistentVolumeClaim",
-      metadata: {
-        name,
-      },
+  maybeMergeResource<PersistentVolumeClaim>(
+    resource<PersistentVolumeClaim>("v1", "PersistentVolumeClaim", name, {
       spec: {
         accessModes: ["ReadWriteOnce"],
         resources: {
@@ -22,6 +17,6 @@ export const pvc = (
           },
         },
       },
-    },
+    }),
     toMerge,
-  ) as PersistentVolumeClaim;
+  );

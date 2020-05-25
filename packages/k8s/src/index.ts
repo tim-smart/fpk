@@ -8,6 +8,8 @@ export * from "./ingress";
 export * from "./namespaces";
 export * from "./pvc";
 export * from "./podTemplates";
+export * from "./rbac";
+export * from "./resources";
 export * from "./secrets";
 export * from "./services";
 export * from "./units";
