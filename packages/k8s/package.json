@@ -1,6 +1,6 @@
 {
   "name": "@fpk/k8s",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "description": "Functional configuration helpers for Kubernetes using @fpk/cli",
   "main": "dist/index.js",
   "author": "Tim Smart <hello@timsmart.co>",
