@@ -6,6 +6,7 @@ export * from "./deployments";
 export * from "./hpa";
 export * from "./ingress";
 export * from "./namespaces";
+export * from "./pvc";
 export * from "./podTemplates";
 export * from "./secrets";
 export * from "./services";
