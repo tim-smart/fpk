@@ -1,5 +1,5 @@
 // export * from "./common";
-// export * from "./configmaps";
+export * from "./configmaps";
 export * from "./containers";
 // export * from "./daemonsets";
 export * from "./deployments";
@@ -10,4 +10,4 @@ export * from "./podTemplates";
 // export * from "./secrets";
 // export * from "./services";
 export * from "./units";
-// export * from "./vpa";
+export * from "./vpa";
