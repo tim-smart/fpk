@@ -74,6 +74,7 @@
 							<h3>Interfaces</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/_ingress_.iingressrule.html" class="tsd-kind-icon">IIngress<wbr>Rule</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/_ingress_.iingressrulepath.html" class="tsd-kind-icon">IIngress<wbr>Rule<wbr>Path</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/_ingress_.iingressrules.html" class="tsd-kind-icon">IIngress<wbr>Rules</a></li>
 							</ul>
 						</section>
@@ -102,7 +103,7 @@
 					<div class="tsd-signature tsd-kind-icon">Ingress<wbr>Spec<wbr>Transformer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>i<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IngressSpec</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">IngressSpec</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/7951ad8/packages/k8s/src/ingress.ts#L42">packages/k8s/src/ingress.ts:42</a></li>
+							<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/835c5a2/packages/k8s/src/ingress.ts#L40">packages/k8s/src/ingress.ts:40</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -140,7 +141,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/7951ad8/packages/k8s/src/ingress.ts#L11">packages/k8s/src/ingress.ts:11</a></li>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/835c5a2/packages/k8s/src/ingress.ts#L11">packages/k8s/src/ingress.ts:11</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -152,7 +153,7 @@
 									<h5>spec: <span class="tsd-signature-type">IngressSpec</span></h5>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> toMerge: <a href="_common_.html#deeppartial" class="tsd-signature-type">DeepPartial</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Ingress</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = {}</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> toMerge: <a href="_common_.html#deeppartial" class="tsd-signature-type">DeepPartial</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Ingress</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Ingress</span></h4>
@@ -169,7 +170,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/7951ad8/packages/k8s/src/ingress.ts#L83">packages/k8s/src/ingress.ts:83</a></li>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/835c5a2/packages/k8s/src/ingress.ts#L79">packages/k8s/src/ingress.ts:79</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -181,7 +182,7 @@
 									<h5>rules: <a href="../interfaces/_ingress_.iingressrules.html" class="tsd-signature-type">IIngressRules</a></h5>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> toMerge: <a href="_common_.html#deeppartial" class="tsd-signature-type">DeepPartial</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Ingress</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = {}</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> toMerge: <a href="_common_.html#deeppartial" class="tsd-signature-type">DeepPartial</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Ingress</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Ingress</span></h4>
@@ -192,31 +193,25 @@
 					<a name="rulestospec" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> rules<wbr>ToSpec</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">rules<wbr>ToSpec<span class="tsd-signature-symbol">(</span>__namedParameters<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>backend<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IngressBackend</span><span class="tsd-signature-symbol">; </span>rules<span class="tsd-signature-symbol">: </span><a href="../interfaces/_ingress_.iingressrule.html" class="tsd-signature-type">IIngressRule</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">; </span>tlsAcme<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span><span class="tsd-signature-symbol">; </span>tlsRedirect<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span><span class="tsd-signature-symbol">; </span>tlsSecretName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IngressSpec</span></li>
+						<li class="tsd-signature tsd-kind-icon">rules<wbr>ToSpec<span class="tsd-signature-symbol">(</span>__namedParameters<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>backend<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IngressBackend</span><span class="tsd-signature-symbol">; </span>rules<span class="tsd-signature-symbol">: </span><a href="../interfaces/_ingress_.iingressrule.html" class="tsd-signature-type">IIngressRule</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">; </span>tlsSecretName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IngressSpec</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/7951ad8/packages/k8s/src/ingress.ts#L44">packages/k8s/src/ingress.ts:44</a></li>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/835c5a2/packages/k8s/src/ingress.ts#L42">packages/k8s/src/ingress.ts:42</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>__namedParameters: <span class="tsd-signature-symbol">{ </span>backend<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IngressBackend</span><span class="tsd-signature-symbol">; </span>rules<span class="tsd-signature-symbol">: </span><a href="../interfaces/_ingress_.iingressrule.html" class="tsd-signature-type">IIngressRule</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">; </span>tlsAcme<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span><span class="tsd-signature-symbol">; </span>tlsRedirect<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span><span class="tsd-signature-symbol">; </span>tlsSecretName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span></h5>
+									<h5>__namedParameters: <span class="tsd-signature-symbol">{ </span>backend<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IngressBackend</span><span class="tsd-signature-symbol">; </span>rules<span class="tsd-signature-symbol">: </span><a href="../interfaces/_ingress_.iingressrule.html" class="tsd-signature-type">IIngressRule</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">; </span>tlsSecretName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span></h5>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter">
 											<h5>backend<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IngressBackend</span></h5>
 										</li>
 										<li class="tsd-parameter">
 											<h5>rules<span class="tsd-signature-symbol">: </span><a href="../interfaces/_ingress_.iingressrule.html" class="tsd-signature-type">IIngressRule</a><span class="tsd-signature-symbol">[]</span></h5>
-										</li>
-										<li class="tsd-parameter">
-											<h5>tls<wbr>Acme<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span></h5>
-										</li>
-										<li class="tsd-parameter">
-											<h5>tls<wbr>Redirect<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span></h5>
 										</li>
 										<li class="tsd-parameter">
 											<h5>tls<wbr>Secret<wbr>Name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
@@ -270,6 +265,15 @@
 						<a href="_podtemplates_.html">&quot;pod<wbr>Templates&quot;</a>
 					</li>
 					<li class=" tsd-kind-module">
+						<a href="_pvc_.html">&quot;pvc&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="_rbac_.html">&quot;rbac&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="_resources_.html">&quot;resources&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
 						<a href="_secrets_.html">&quot;secrets&quot;</a>
 					</li>
 					<li class=" tsd-kind-module">
@@ -287,6 +291,9 @@
 				<ul class="before-current">
 					<li class=" tsd-kind-interface tsd-parent-kind-module">
 						<a href="../interfaces/_ingress_.iingressrule.html" class="tsd-kind-icon">IIngress<wbr>Rule</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/_ingress_.iingressrulepath.html" class="tsd-kind-icon">IIngress<wbr>Rule<wbr>Path</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-module">
 						<a href="../interfaces/_ingress_.iingressrules.html" class="tsd-kind-icon">IIngress<wbr>Rules</a>
@@ -315,6 +322,7 @@
 			<ul class="tsd-legend">
 				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
 				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
 				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
 				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
 			</ul>

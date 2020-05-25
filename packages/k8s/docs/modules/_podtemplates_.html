@@ -71,21 +71,15 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Interfaces</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/_podtemplates_.ipodtemplatetransformer.html" class="tsd-kind-icon">IPod<wbr>Template<wbr>Transformer</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section ">
 							<h3>Functions</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_podtemplates_.html#appendcontainer" class="tsd-kind-icon">append<wbr>Container</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_podtemplates_.html#appendvolume" class="tsd-kind-icon">append<wbr>Volume</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_podtemplates_.html#appendvolumeandmount" class="tsd-kind-icon">append<wbr>Volume<wbr>And<wbr>Mount</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_podtemplates_.html#concatcontainers" class="tsd-kind-icon">concat<wbr>Containers</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_podtemplates_.html#overcontainer" class="tsd-kind-icon">over<wbr>Container</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_podtemplates_.html#overcontainers" class="tsd-kind-icon">over<wbr>Containers</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_podtemplates_.html#overpodtemplate" class="tsd-kind-icon">over<wbr>Pod<wbr>Template</a></li>
-								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_podtemplates_.html#setresourcelimits" class="tsd-kind-icon">set<wbr>Resource<wbr>Limits</a></li>
-								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_podtemplates_.html#setresourcerequests" class="tsd-kind-icon">set<wbr>Resource<wbr>Requests</a></li>
 							</ul>
 						</section>
 					</div>
@@ -103,7 +97,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/7951ad8/packages/k8s/src/podTemplates.ts#L74">packages/k8s/src/podTemplates.ts:74</a></li>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/835c5a2/packages/k8s/src/podTemplates.ts#L69">packages/k8s/src/podTemplates.ts:69</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -126,6 +120,86 @@ container<span class="hljs-constructor">Pusher(<span class="hljs-params">daemonS
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="appendvolume" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> append<wbr>Volume</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">append<wbr>Volume<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, volume<span class="tsd-signature-symbol">: </span><a href="_common_.html#deeppartial" class="tsd-signature-type">DeepPartial</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Volume</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">(Anonymous function)</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/835c5a2/packages/k8s/src/podTemplates.ts#L101">packages/k8s/src/podTemplates.ts:101</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns a function that adds a volume to the pod template.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>name: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>volume: <a href="_common_.html#deeppartial" class="tsd-signature-type">DeepPartial</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Volume</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">(Anonymous function)</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="appendvolumeandmount" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> append<wbr>Volume<wbr>And<wbr>Mount</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">append<wbr>Volume<wbr>And<wbr>Mount<span class="tsd-signature-symbol">(</span>__namedParameters<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>containerName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>mount<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">; </span>mountPath<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>volume<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Object</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/835c5a2/packages/k8s/src/podTemplates.ts#L115">packages/k8s/src/podTemplates.ts:115</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns a function that adds a volume and mounts it to a container.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>__namedParameters: <span class="tsd-signature-symbol">{ </span>containerName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>mount<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">; </span>mountPath<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>volume<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol"> }</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter">
+											<h5>container<wbr>Name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+										</li>
+										<li class="tsd-parameter">
+											<h5>mount<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{}</span></h5>
+											<ul class="tsd-parameters">
+											</ul>
+										</li>
+										<li class="tsd-parameter">
+											<h5>mount<wbr>Path<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+										</li>
+										<li class="tsd-parameter">
+											<h5>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+										</li>
+										<li class="tsd-parameter">
+											<h5>volume<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{}</span></h5>
+											<ul class="tsd-parameters">
+											</ul>
+										</li>
+									</ul>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Object</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
 					<a name="concatcontainers" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> concat<wbr>Containers</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
@@ -135,7 +209,7 @@ container<span class="hljs-constructor">Pusher(<span class="hljs-params">daemonS
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/7951ad8/packages/k8s/src/podTemplates.ts#L56">packages/k8s/src/podTemplates.ts:56</a></li>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/835c5a2/packages/k8s/src/podTemplates.ts#L51">packages/k8s/src/podTemplates.ts:51</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -167,7 +241,7 @@ container<span class="hljs-constructor">Pusher(<span class="hljs-params">daemonS
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/7951ad8/packages/k8s/src/podTemplates.ts#L89">packages/k8s/src/podTemplates.ts:89</a></li>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/835c5a2/packages/k8s/src/podTemplates.ts#L84">packages/k8s/src/podTemplates.ts:84</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -217,7 +291,7 @@ container<span class="hljs-constructor">Pusher(<span class="hljs-params">daemonS
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/7951ad8/packages/k8s/src/podTemplates.ts#L80">packages/k8s/src/podTemplates.ts:80</a></li>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/835c5a2/packages/k8s/src/podTemplates.ts#L75">packages/k8s/src/podTemplates.ts:75</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -257,13 +331,13 @@ container<span class="hljs-constructor">Pusher(<span class="hljs-params">daemonS
 					<a name="overpodtemplate" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> over<wbr>Pod<wbr>Template</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">over<wbr>Pod<wbr>Template<span class="tsd-signature-symbol">(</span>fn<span class="tsd-signature-symbol">: </span><a href="../interfaces/_podtemplates_.ipodtemplatetransformer.html" class="tsd-signature-type">IPodTemplateTransformer</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">(Anonymous function)</span></li>
+						<li class="tsd-signature tsd-kind-icon">over<wbr>Pod<wbr>Template<span class="tsd-signature-symbol">(</span>fn<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>pod<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">PodTemplateSpec</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">PodTemplateSpec</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">(Anonymous function)</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/7951ad8/packages/k8s/src/podTemplates.ts#L28">packages/k8s/src/podTemplates.ts:28</a></li>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/835c5a2/packages/k8s/src/podTemplates.ts#L23">packages/k8s/src/podTemplates.ts:23</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -280,71 +354,25 @@ setEmptyContainers(<span class="hljs-name">cronjob</span>)</code></pre>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>fn: <a href="../interfaces/_podtemplates_.ipodtemplatetransformer.html" class="tsd-signature-type">IPodTemplateTransformer</a></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">(Anonymous function)</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
-					<a name="setresourcelimits" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagConst">Const</span> set<wbr>Resource<wbr>Limits</h3>
-					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">set<wbr>Resource<wbr>Limits<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, limits<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ResourceRequirements</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">"limits"</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">(Anonymous function)</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/7951ad8/packages/k8s/src/podTemplates.ts#L116">packages/k8s/src/podTemplates.ts:116</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Returns a function that finds a container by name, then sets the resource
-									limits for that container in the provider resource.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>name: <span class="tsd-signature-type">string</span></h5>
-								</li>
-								<li>
-									<h5>limits: <span class="tsd-signature-type">ResourceRequirements</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">"limits"</span><span class="tsd-signature-symbol">]</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">(Anonymous function)</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
-					<a name="setresourcerequests" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagConst">Const</span> set<wbr>Resource<wbr>Requests</h3>
-					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">set<wbr>Resource<wbr>Requests<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, requests<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ResourceRequirements</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">"requests"</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">(Anonymous function)</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/7951ad8/packages/k8s/src/podTemplates.ts#L107">packages/k8s/src/podTemplates.ts:107</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Returns a function that finds a container by name, then sets the resource
-									requests for that container in the provider resource.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>name: <span class="tsd-signature-type">string</span></h5>
-								</li>
-								<li>
-									<h5>requests: <span class="tsd-signature-type">ResourceRequirements</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">"requests"</span><span class="tsd-signature-symbol">]</span></h5>
+									<h5>fn: <span class="tsd-signature-symbol">(</span>pod<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">PodTemplateSpec</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">PodTemplateSpec</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-signature">
+											<ul class="tsd-signatures tsd-kind-type-literal">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>pod<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">PodTemplateSpec</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">PodTemplateSpec</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>pod: <span class="tsd-signature-type">PodTemplateSpec</span></h5>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">PodTemplateSpec</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">(Anonymous function)</span></h4>
@@ -393,6 +421,15 @@ setEmptyContainers(<span class="hljs-name">cronjob</span>)</code></pre>
 						<a href="_podtemplates_.html">&quot;pod<wbr>Templates&quot;</a>
 					</li>
 					<li class=" tsd-kind-module">
+						<a href="_pvc_.html">&quot;pvc&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="_rbac_.html">&quot;rbac&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="_resources_.html">&quot;resources&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
 						<a href="_secrets_.html">&quot;secrets&quot;</a>
 					</li>
 					<li class=" tsd-kind-module">
@@ -408,11 +445,14 @@ setEmptyContainers(<span class="hljs-name">cronjob</span>)</code></pre>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-interface tsd-parent-kind-module">
-						<a href="../interfaces/_podtemplates_.ipodtemplatetransformer.html" class="tsd-kind-icon">IPod<wbr>Template<wbr>Transformer</a>
-					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
 						<a href="_podtemplates_.html#appendcontainer" class="tsd-kind-icon">append<wbr>Container</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="_podtemplates_.html#appendvolume" class="tsd-kind-icon">append<wbr>Volume</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="_podtemplates_.html#appendvolumeandmount" class="tsd-kind-icon">append<wbr>Volume<wbr>And<wbr>Mount</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
 						<a href="_podtemplates_.html#concatcontainers" class="tsd-kind-icon">concat<wbr>Containers</a>
@@ -426,12 +466,6 @@ setEmptyContainers(<span class="hljs-name">cronjob</span>)</code></pre>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
 						<a href="_podtemplates_.html#overpodtemplate" class="tsd-kind-icon">over<wbr>Pod<wbr>Template</a>
 					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-module">
-						<a href="_podtemplates_.html#setresourcelimits" class="tsd-kind-icon">set<wbr>Resource<wbr>Limits</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-module">
-						<a href="_podtemplates_.html#setresourcerequests" class="tsd-kind-icon">set<wbr>Resource<wbr>Requests</a>
-					</li>
 				</ul>
 			</nav>
 		</div>
@@ -444,6 +478,7 @@ setEmptyContainers(<span class="hljs-name">cronjob</span>)</code></pre>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
 				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
 				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
 				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
 			</ul>

@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>IPodTemplateTransformer | @fpk/k8s</title>
+	<title>&quot;pvc&quot; | @fpk/k8s</title>
 	<meta name="description" content="Documentation for @fpk/k8s">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,48 +56,60 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../modules/_podtemplates_.html">&quot;podTemplates&quot;</a>
-				</li>
-				<li>
-					<a href="_podtemplates_.ipodtemplatetransformer.html">IPodTemplateTransformer</a>
+					<a href="_pvc_.html">&quot;pvc&quot;</a>
 				</li>
 			</ul>
-			<h1>Interface IPodTemplateTransformer</h1>
+			<h1>Module &quot;pvc&quot;</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<section class="tsd-panel tsd-hierarchy">
-				<h3>Hierarchy</h3>
-				<ul class="tsd-hierarchy">
-					<li>
-						<span class="target">IPodTemplateTransformer</span>
-					</li>
-				</ul>
-			</section>
-			<section class="tsd-panel">
-				<h3 class="tsd-before-signature">Callable</h3>
-				<ul class="tsd-signatures tsd-kind-interface tsd-parent-kind-module">
-					<li class="tsd-signature tsd-kind-icon">__call<span class="tsd-signature-symbol">(</span>spec<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">PodTemplateSpec</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">PodTemplateSpec</span></li>
-				</ul>
-				<ul class="tsd-descriptions">
-					<li class="tsd-description">
-						<aside class="tsd-sources">
-							<ul>
-								<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/7951ad8/packages/k8s/src/podTemplates.ts#L12">packages/k8s/src/podTemplates.ts:12</a></li>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Functions</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_pvc_.html#pvc" class="tsd-kind-icon">pvc</a></li>
 							</ul>
-						</aside>
-						<h4 class="tsd-parameters-title">Parameters</h4>
-						<ul class="tsd-parameters">
-							<li>
-								<h5>spec: <span class="tsd-signature-type">PodTemplateSpec</span></h5>
-							</li>
-						</ul>
-						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">PodTemplateSpec</span></h4>
-					</li>
-				</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Functions</h2>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="pvc" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> pvc</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">pvc<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, storage<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, toMerge<span class="tsd-signature-symbol">?: </span><a href="_common_.html#deeppartial" class="tsd-signature-type">DeepPartial</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">PersistentVolumeClaim</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">PersistentVolumeClaim</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/835c5a2/packages/k8s/src/pvc.ts#L5">packages/k8s/src/pvc.ts:5</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>name: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>storage: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> toMerge: <a href="_common_.html#deeppartial" class="tsd-signature-type">DeepPartial</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">PersistentVolumeClaim</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">PersistentVolumeClaim</span></h4>
+						</li>
+					</ul>
+				</section>
 			</section>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
@@ -107,81 +119,65 @@
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="../modules/_common_.html">&quot;common&quot;</a>
+						<a href="_common_.html">&quot;common&quot;</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="../modules/_configmaps_.html">&quot;configmaps&quot;</a>
+						<a href="_configmaps_.html">&quot;configmaps&quot;</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="../modules/_containers_.html">&quot;containers&quot;</a>
+						<a href="_containers_.html">&quot;containers&quot;</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="../modules/_daemonsets_.html">&quot;daemonsets&quot;</a>
+						<a href="_daemonsets_.html">&quot;daemonsets&quot;</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="../modules/_deployments_.html">&quot;deployments&quot;</a>
+						<a href="_deployments_.html">&quot;deployments&quot;</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="../modules/_hpa_.html">&quot;hpa&quot;</a>
+						<a href="_hpa_.html">&quot;hpa&quot;</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="../modules/_index_.html">&quot;index&quot;</a>
+						<a href="_index_.html">&quot;index&quot;</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="../modules/_ingress_.html">&quot;ingress&quot;</a>
+						<a href="_ingress_.html">&quot;ingress&quot;</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="../modules/_internal_fs_.html">&quot;internal/fs&quot;</a>
+						<a href="_internal_fs_.html">&quot;internal/fs&quot;</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="../modules/_namespaces_.html">&quot;namespaces&quot;</a>
+						<a href="_namespaces_.html">&quot;namespaces&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="_podtemplates_.html">&quot;pod<wbr>Templates&quot;</a>
 					</li>
 					<li class="current tsd-kind-module">
-						<a href="../modules/_podtemplates_.html">&quot;pod<wbr>Templates&quot;</a>
+						<a href="_pvc_.html">&quot;pvc&quot;</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="../modules/_secrets_.html">&quot;secrets&quot;</a>
+						<a href="_rbac_.html">&quot;rbac&quot;</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="../modules/_services_.html">&quot;services&quot;</a>
+						<a href="_resources_.html">&quot;resources&quot;</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="../modules/_units_.html">&quot;units&quot;</a>
+						<a href="_secrets_.html">&quot;secrets&quot;</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="../modules/_vpa_.html">&quot;vpa&quot;</a>
+						<a href="_services_.html">&quot;services&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="_units_.html">&quot;units&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="_vpa_.html">&quot;vpa&quot;</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-				</ul>
-				<ul class="current">
-					<li class="current tsd-kind-interface tsd-parent-kind-module">
-						<a href="_podtemplates_.ipodtemplatetransformer.html" class="tsd-kind-icon">IPod<wbr>Template<wbr>Transformer</a>
-					</li>
-				</ul>
-				<ul class="after-current">
 					<li class=" tsd-kind-function tsd-parent-kind-module">
-						<a href="../modules/_podtemplates_.html#appendcontainer" class="tsd-kind-icon">append<wbr>Container</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-module">
-						<a href="../modules/_podtemplates_.html#concatcontainers" class="tsd-kind-icon">concat<wbr>Containers</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-module">
-						<a href="../modules/_podtemplates_.html#overcontainer" class="tsd-kind-icon">over<wbr>Container</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-module">
-						<a href="../modules/_podtemplates_.html#overcontainers" class="tsd-kind-icon">over<wbr>Containers</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-module">
-						<a href="../modules/_podtemplates_.html#overpodtemplate" class="tsd-kind-icon">over<wbr>Pod<wbr>Template</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-module">
-						<a href="../modules/_podtemplates_.html#setresourcelimits" class="tsd-kind-icon">set<wbr>Resource<wbr>Limits</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-module">
-						<a href="../modules/_podtemplates_.html#setresourcerequests" class="tsd-kind-icon">set<wbr>Resource<wbr>Requests</a>
+						<a href="_pvc_.html#pvc" class="tsd-kind-icon">pvc</a>
 					</li>
 				</ul>
 			</nav>
@@ -195,6 +191,7 @@
 			<ul class="tsd-legend">
 				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
 				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
 				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
 				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
 			</ul>

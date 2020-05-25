@@ -8,7 +8,7 @@
   "scripts": {
     "build": "rm -rf dist/ && tsc",
     "test": "mocha -r ts-node/register test/**/*.test.ts",
-    "docs": "rm -rf docs/ && typedoc --out docs"
+    "docs": "typedoc --out docs"
   },
   "peerDependencies": {
     "kubernetes-types": "*"
