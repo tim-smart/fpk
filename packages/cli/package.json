@@ -1,7 +1,7 @@
 {
   "name": "@fpk/cli",
   "description": "CLI for fpk - functional configuration tool",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "author": "Tim Smart <hello@timsmart.co>",
   "bin": {
     "fpk": "./bin/run"
