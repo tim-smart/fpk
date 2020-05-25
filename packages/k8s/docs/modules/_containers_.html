@@ -82,6 +82,8 @@
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_containers_.html#concatenv" class="tsd-kind-icon">concat<wbr>Env</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_containers_.html#container" class="tsd-kind-icon">container</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_containers_.html#containerwithport" class="tsd-kind-icon">container<wbr>With<wbr>Port</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_containers_.html#setcontainerresourcelimits" class="tsd-kind-icon">set<wbr>Container<wbr>Resource<wbr>Limits</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_containers_.html#setcontainerresourcerequests" class="tsd-kind-icon">set<wbr>Container<wbr>Resource<wbr>Requests</a></li>
 							</ul>
 						</section>
 					</div>
@@ -99,7 +101,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/673a31a/packages/k8s/src/containers.ts#L47">packages/k8s/src/containers.ts:47</a></li>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/7951ad8/packages/k8s/src/containers.ts#L52">packages/k8s/src/containers.ts:52</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -146,7 +148,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/673a31a/packages/k8s/src/containers.ts#L8">packages/k8s/src/containers.ts:8</a></li>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/7951ad8/packages/k8s/src/containers.ts#L13">packages/k8s/src/containers.ts:13</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -180,7 +182,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/673a31a/packages/k8s/src/containers.ts#L24">packages/k8s/src/containers.ts:24</a></li>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/7951ad8/packages/k8s/src/containers.ts#L29">packages/k8s/src/containers.ts:29</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -204,6 +206,110 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Container</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="setcontainerresourcelimits" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> set<wbr>Container<wbr>Resource<wbr>Limits</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Container<wbr>Resource<wbr>Limits<span class="tsd-signature-symbol">(</span>limits<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ResourceRequirements</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">"limits"</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span>&lt;T&gt;<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">T</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/7951ad8/packages/k8s/src/containers.ts#L96">packages/k8s/src/containers.ts:96</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns a function thats set resource limits on a container.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>limits: <span class="tsd-signature-type">ResourceRequirements</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">"limits"</span><span class="tsd-signature-symbol">]</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns &lt;T&gt;<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">T</span></h4>
+							<ul class="tsd-parameters">
+								<li class="tsd-parameter-signature">
+									<ul class="tsd-signatures tsd-kind-type-literal tsd-has-type-parameter">
+										<li class="tsd-signature tsd-kind-icon">&lt;T&gt;<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span></li>
+									</ul>
+									<ul class="tsd-descriptions">
+										<li class="tsd-description">
+											<h4 class="tsd-type-parameters-title">Type parameters</h4>
+											<ul class="tsd-type-parameters">
+												<li>
+													<h4>T</h4>
+												</li>
+											</ul>
+											<h4 class="tsd-parameters-title">Parameters</h4>
+											<ul class="tsd-parameters">
+												<li>
+													<h5>value: <span class="tsd-signature-type">T</span></h5>
+												</li>
+											</ul>
+											<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span></h4>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="setcontainerresourcerequests" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> set<wbr>Container<wbr>Resource<wbr>Requests</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Container<wbr>Resource<wbr>Requests<span class="tsd-signature-symbol">(</span>requests<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ResourceRequirements</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">"requests"</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span>&lt;T&gt;<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">T</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/7951ad8/packages/k8s/src/containers.ts#L83">packages/k8s/src/containers.ts:83</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns a function thats set resource requests on a container.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>requests: <span class="tsd-signature-type">ResourceRequirements</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">"requests"</span><span class="tsd-signature-symbol">]</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns &lt;T&gt;<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">T</span></h4>
+							<ul class="tsd-parameters">
+								<li class="tsd-parameter-signature">
+									<ul class="tsd-signatures tsd-kind-type-literal tsd-has-type-parameter">
+										<li class="tsd-signature tsd-kind-icon">&lt;T&gt;<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span></li>
+									</ul>
+									<ul class="tsd-descriptions">
+										<li class="tsd-description">
+											<h4 class="tsd-type-parameters-title">Type parameters</h4>
+											<ul class="tsd-type-parameters">
+												<li>
+													<h4>T</h4>
+												</li>
+											</ul>
+											<h4 class="tsd-parameters-title">Parameters</h4>
+											<ul class="tsd-parameters">
+												<li>
+													<h5>value: <span class="tsd-signature-type">T</span></h5>
+												</li>
+											</ul>
+											<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span></h4>
+										</li>
+									</ul>
+								</li>
+							</ul>
 						</li>
 					</ul>
 				</section>
@@ -240,6 +346,9 @@
 						<a href="_ingress_.html">&quot;ingress&quot;</a>
 					</li>
 					<li class=" tsd-kind-module">
+						<a href="_internal_fs_.html">&quot;internal/fs&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
 						<a href="_namespaces_.html">&quot;namespaces&quot;</a>
 					</li>
 					<li class=" tsd-kind-module">
@@ -272,6 +381,12 @@
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
 						<a href="_containers_.html#containerwithport" class="tsd-kind-icon">container<wbr>With<wbr>Port</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="_containers_.html#setcontainerresourcelimits" class="tsd-kind-icon">set<wbr>Container<wbr>Resource<wbr>Limits</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="_containers_.html#setcontainerresourcerequests" class="tsd-kind-icon">set<wbr>Container<wbr>Resource<wbr>Requests</a>
 					</li>
 				</ul>
 			</nav>
