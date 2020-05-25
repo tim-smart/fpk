@@ -162,3 +162,9 @@ export const setLivenessProbe = (probe: DeepPartial<Probe> = {}) => (
   container: Container,
 ) =>
   R.set(R.lensProp("livenessProbe"), createProbe(container, probe), container);
+
+/**
+ * Returns a function that sets the imagePullPolicy on a container.
+ */
+export const setImagePullPolicy = (policy: string) =>
+  R.set(R.lensProp("imagePullPolicy"), policy);

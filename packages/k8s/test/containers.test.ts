@@ -188,3 +188,15 @@ describe("setLivenessProbe", () =>
       } as Container,
     },
   ]));
+
+describe("setImagePullPolicy", () =>
+  runCases([
+    {
+      it: "sets imagePullPolicy for a container",
+      in: K.containerWithPort("myapp", "image", 80),
+      fn: K.setImagePullPolicy("Always"),
+      diff: {
+        imagePullPolicy: "Always",
+      } as Container,
+    },
+  ]));
