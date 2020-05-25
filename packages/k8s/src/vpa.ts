@@ -24,7 +24,6 @@ export interface IUpdatePolicy {
 export const vpa = (
   name: string,
   targetRef: CrossVersionObjectReference,
-  updatePolicy?: IUpdatePolicy,
   toMerge: DeepPartial<IVerticalPodAutoscaler> = {},
 ): IVerticalPodAutoscaler =>
   R.mergeDeepRight(
@@ -36,7 +35,9 @@ export const vpa = (
       },
       spec: {
         targetRef,
-        updatePolicy,
+        updatePolicy: {
+          updateMode: "Auto",
+        },
       },
     },
     toMerge,

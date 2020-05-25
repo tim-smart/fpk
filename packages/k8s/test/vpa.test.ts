@@ -8,15 +8,11 @@ describe("vpa", () =>
       it: "creates a vertical pod autoscaler",
       in: {},
       fn: (_) =>
-        K.vpa(
-          "myvpa",
-          {
-            apiVersion: "v1",
-            kind: "Deployment",
-            name: "myapp",
-          },
-          { updateMode: "Auto" },
-        ),
+        K.vpa("myvpa", {
+          apiVersion: "apps/v1",
+          kind: "Deployment",
+          name: "myapp",
+        }),
       diff: {
         apiVersion: "autoscaling.k8s.io/v1beta2",
         kind: "VerticalPodAutoscaler",
@@ -25,7 +21,7 @@ describe("vpa", () =>
         },
         spec: {
           targetRef: {
-            apiVersion: "v1",
+            apiVersion: "apps/v1",
             kind: "Deployment",
             name: "myapp",
           },
