@@ -1,10 +1,10 @@
-// export * from "./common";
+export * from "./common";
 export * from "./configmaps";
 export * from "./containers";
 // export * from "./daemonsets";
 export * from "./deployments";
 export * from "./hpa";
-// export * from "./ingress";
+export * from "./ingress";
 export * from "./namespaces";
 export * from "./podTemplates";
 // export * from "./secrets";
