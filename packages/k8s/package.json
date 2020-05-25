@@ -1,6 +1,6 @@
 {
   "name": "@fpk/k8s",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "Functional configuration helpers for Kubernetes using @fpk/cli",
   "main": "dist/index.js",
   "author": "Tim Smart <hello@timsmart.co>",
@@ -26,7 +26,7 @@
     "typescript": "^3.9.3"
   },
   "dependencies": {
-    "@fpk/core": "^0.1.2",
+    "@fpk/core": "^0.1.4",
     "ramda": "^0.27.0"
   }
 }
