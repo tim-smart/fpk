@@ -2,6 +2,7 @@ import * as K from "../src/index";
 import { describe } from "mocha";
 import { runCases } from "./helpers";
 import * as R from "ramda";
+import { Container } from "kubernetes-types/core/v1";
 
 describe("overPodTemplate", () =>
   runCases([
@@ -109,7 +110,7 @@ describe("overContainer", () =>
             spec: {
               containers: {
                 "0": {
-                  env: { "0": { name: "FOO", value: "bar" } },
+                  env: [{ name: "FOO", value: "bar" }],
                 },
               },
             },
@@ -119,3 +120,77 @@ describe("overContainer", () =>
     },
   ]));
 
+describe("appendVolume", () =>
+  runCases([
+    {
+      it: "appends a volume to the pod template",
+      in: K.deploymentWithContainer({
+        name: "myapp",
+        image: "myimage",
+      }),
+      fn: K.appendVolume("myvolume", {
+        persistentVolumeClaim: { claimName: "myclaim" },
+      }),
+      diff: {
+        spec: {
+          template: {
+            spec: {
+              volumes: [
+                {
+                  name: "myvolume",
+                  persistentVolumeClaim: {
+                    claimName: "myclaim",
+                  },
+                },
+              ],
+            },
+          },
+        },
+      },
+    },
+  ]));
+
+describe("appendVolumeAndMount", () =>
+  runCases([
+    {
+      it: "appends a volume to the pod template and mounts it to the container",
+      in: K.deploymentWithContainer({
+        name: "myapp",
+        image: "myimage",
+      }),
+      fn: K.appendVolumeAndMount({
+        name: "myvolume",
+        volume: {
+          persistentVolumeClaim: { claimName: "myclaim" },
+        },
+        containerName: "myapp",
+        mountPath: "/mnt/volume",
+      }),
+      diff: {
+        spec: {
+          template: {
+            spec: {
+              containers: {
+                "0": {
+                  volumeMounts: [
+                    {
+                      name: "myvolume",
+                      mountPath: "/mnt/volume",
+                    },
+                  ],
+                },
+              },
+              volumes: [
+                {
+                  name: "myvolume",
+                  persistentVolumeClaim: {
+                    claimName: "myclaim",
+                  },
+                },
+              ],
+            },
+          },
+        },
+      },
+    },
+  ]));

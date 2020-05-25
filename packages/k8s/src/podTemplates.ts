@@ -1,5 +1,12 @@
-import { PodTemplateSpec, Container } from "kubernetes-types/core/v1";
+import {
+  PodTemplateSpec,
+  Container,
+  Volume,
+  VolumeMount,
+} from "kubernetes-types/core/v1";
 import * as R from "ramda";
+import { DeepPartial } from "./common";
+import { appendVolumeMount } from "./containers";
 
 /**
  * Returns a function that will run the given pod transformer over the supplied
@@ -86,4 +93,39 @@ export const overContainer = (
         R.map(R.when(R.pipe(R.prop("name"), R.equals(name)), fn)),
       ),
     ),
+  );
+
+/**
+ * Returns a function that adds a volume to the pod template.
+ */
+export const appendVolume = (name: string, volume: DeepPartial<Volume>) =>
+  overPodTemplate(
+    R.over(
+      R.lensPath(["spec", "volumes"]),
+      R.pipe(
+        R.defaultTo([]),
+        R.append(R.mergeDeepRight({ name }, volume) as Volume),
+      ),
+    ),
+  );
+
+/**
+ * Returns a function that adds a volume and mounts it to a container.
+ */
+export const appendVolumeAndMount = ({
+  name,
+  containerName,
+  volume,
+  mountPath,
+  mount = {},
+}: {
+  name: string;
+  containerName: string;
+  volume: DeepPartial<Volume>;
+  mountPath: string;
+  mount?: DeepPartial<VolumeMount>;
+}) =>
+  R.pipe(
+    appendVolume(name, volume),
+    overContainer(containerName, appendVolumeMount(name, mountPath, mount)),
   );

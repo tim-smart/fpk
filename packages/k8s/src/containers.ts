@@ -4,6 +4,7 @@ import {
   EnvVarSource,
   ResourceRequirements,
   EnvFromSource,
+  VolumeMount,
 } from "kubernetes-types/core/v1";
 import * as R from "ramda";
 import { DeepPartial } from "./common";
@@ -107,3 +108,27 @@ export const setResourceLimits = (limits: ResourceRequirements["limits"]) =>
  */
 export const appendEnvFrom = (envFrom: EnvFromSource) =>
   R.over(R.lensProp("envFrom"), R.pipe(R.defaultTo([]), R.append(envFrom)));
+
+/**
+ * Returns a function that appends a volume mount to a container.
+ */
+export const appendVolumeMount = (
+  name: string,
+  mountPath: string,
+  merge: DeepPartial<VolumeMount>,
+) =>
+  R.over(
+    R.lensProp("volumeMounts"),
+    R.pipe(
+      R.defaultTo([]),
+      R.append(
+        R.mergeRight(
+          {
+            name,
+            mountPath,
+          } as VolumeMount,
+          merge,
+        ),
+      ),
+    ),
+  );

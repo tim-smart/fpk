@@ -130,3 +130,21 @@ describe("appendEnvFrom", () =>
       } as Container,
     },
   ]));
+
+describe("appendVolumeMount", () =>
+  runCases([
+    {
+      it: "appends volumeMount for a container",
+      in: K.container("myapp", "image"),
+      fn: K.appendVolumeMount("myvolume", "/mnt/volume", { readOnly: true }),
+      diff: {
+        volumeMounts: [
+          {
+            name: "myvolume",
+            mountPath: "/mnt/volume",
+            readOnly: true,
+          },
+        ],
+      } as Container,
+    },
+  ]));
