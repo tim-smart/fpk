@@ -8,3 +8,4 @@ See https://github.com/tim-smart/fpk-k8s-example
 
 ## API Docs
 
+Open up docs/index.html in your browser!
