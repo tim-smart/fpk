@@ -27,7 +27,6 @@
   },
   "dependencies": {
     "@fpk/core": "^0.1.2",
-    "lerna": "^3.21.0",
     "ramda": "^0.27.0"
   }
 }
