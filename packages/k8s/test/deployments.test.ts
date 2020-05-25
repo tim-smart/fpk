@@ -169,3 +169,17 @@ describe("setDeploymentRollingUpdate", () =>
       },
     },
   ]));
+
+describe("setDeploymentRollingUpdate", () =>
+  runCases([
+    {
+      it: "sets spec.strategy to RollingUpdate",
+      in: K.deployment("fancyapp"),
+      fn: K.setRevisionHistory(5),
+      diff: {
+        spec: {
+          revisionHistoryLimit: 5,
+        },
+      },
+    },
+  ]));

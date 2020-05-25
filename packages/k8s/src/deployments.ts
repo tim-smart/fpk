@@ -131,3 +131,6 @@ export const setDeploymentRollingUpdate = (
     type: "RollingUpdate",
     rollingUpdate,
   });
+
+export const setRevisionHistory = (count: number) =>
+  R.set(R.lensPath(["spec", "revisionHistoryLimit"]), count);
