@@ -27,9 +27,6 @@ export const deployment = (
     kind: "Deployment",
     metadata: {
       name,
-      labels: {
-        app: name,
-      },
     },
     spec: {
       replicas: 1,

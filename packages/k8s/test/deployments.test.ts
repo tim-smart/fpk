@@ -13,9 +13,6 @@ describe("deployment", () =>
         kind: "Deployment",
         metadata: {
           name: "fancyapp",
-          labels: {
-            app: "fancyapp",
-          },
         },
         spec: {
           replicas: 1,
