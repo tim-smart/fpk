@@ -1,7 +1,7 @@
 export * from "./common";
 export * from "./configmaps";
 export * from "./containers";
-// export * from "./daemonsets";
+export * from "./daemonsets";
 export * from "./deployments";
 export * from "./hpa";
 export * from "./ingress";
