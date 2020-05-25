@@ -49,6 +49,6 @@ $ cat out/my-app/00-one.yaml
 key: value
 ```
 
-## More examples
+## Kubernetes Examples
 
-See `test/examples`
+See https://github.com/tim-smart/fpk-k8s-example

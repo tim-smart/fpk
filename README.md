@@ -13,7 +13,13 @@ used for:
 
 npm install -g @fpk/cli
 
-## Create some config
+## Kubernetes Example Project
+
+See https://github.com/tim-smart/fpk-k8s-example
+
+## Usage
+
+### Create some config
 
 `src/my-app.ts`
 
@@ -29,7 +35,7 @@ export default {
 };
 ```
 
-## Generate the output
+### Generate the output
 
 ```
 $ fpk -d src -o out
