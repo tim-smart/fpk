@@ -80,7 +80,7 @@ export interface IFormat {
 
 const formats = new Map<string, IFormat>([
   ["json", (js) => JSON.stringify(js, null, 2)],
-  ["yaml", (js) => yaml.safeDump(js, { skipInvalid: true })],
+  ["yaml", (js) => yaml.safeDump(js, { skipInvalid: true, noRefs: true })],
 ]);
 
 export function registerFormat(name: string, dump: IFormat) {
