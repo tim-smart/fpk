@@ -1,6 +1,7 @@
 import * as K from "../src/index";
 import { describe } from "mocha";
 import { runCases } from "./helpers";
+import { resolveContents } from "@fpk/core";
 
 describe("namespace", () =>
   runCases([
@@ -69,6 +70,9 @@ describe("withNamespace", () =>
       it: "modifies other values in object",
       in: {
         "10-deployment": K.deployment("myapp"),
+        "20-promise-test": async () => ({
+          key: "value",
+        }),
       },
       fn: K.withNamespace("myns"),
       diff: {
@@ -80,6 +84,11 @@ describe("withNamespace", () =>
           },
         },
         "10-deployment": {
+          metadata: {
+            namespace: "myns",
+          },
+        },
+        "20-promise-test": {
           metadata: {
             namespace: "myns",
           },

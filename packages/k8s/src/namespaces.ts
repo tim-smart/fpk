@@ -1,6 +1,7 @@
 import { Namespace } from "kubernetes-types/core/v1";
 import * as R from "ramda";
 import { DeepPartial } from "./common";
+import { resolveContents } from "@fpk/core";
 
 const nonNamespacedResources = [
   "ComponentStatus",
@@ -50,13 +51,12 @@ export const setNamespace = (namespace: string) =>
  * Returns a function that add's a `00-namespace` resource to the object, then
  * adds a matching `metadata.namespace` to each item in the object.
  */
-export const withNamespace = (name: string, toMerge: Namespace = {}) => <T>(
-  object: T,
-): T & {
-  "00-namespace": Namespace;
-} => {
-  return R.pipe(
-    R.mapObjIndexed(setNamespace(name)),
-    R.set(R.lensProp("00-namespace"), namespace(name, toMerge)),
-  )(object as any) as any;
-};
+export const withNamespace = (name: string, toMerge: Namespace = {}) => (
+  object: any,
+): any =>
+  resolveContents({}, object).then(
+    R.pipe(
+      R.mapObjIndexed(setNamespace(name)),
+      R.set(R.lensProp("00-namespace"), namespace(name, toMerge)),
+    ),
+  );

@@ -11,10 +11,14 @@ export interface ITestCase<I> {
 
 export function runCases(cases: ITestCase<any>[]) {
   cases.forEach((c) => {
-    it(c.it, () => {
-      const out = c.fn(c.in);
-      const result = diff(c.in, out);
-      expect(result).to.deep.eq(c.diff);
+    it(c.it, (done) => {
+      Promise.resolve(c.fn(c.in))
+        .then((out) => {
+          const result = diff(c.in, out);
+          expect(result).to.deep.eq(c.diff);
+        })
+        .then(done)
+        .catch(done);
     });
   });
 }
