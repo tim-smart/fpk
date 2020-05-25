@@ -5,6 +5,8 @@
   "main": "dist/index.js",
   "author": "Tim Smart <hello@timsmart.co>",
   "license": "MIT",
+  "homepage": "https://github.com/tim-smart/fpk",
+  "repository": "tim-smart/fpk",
   "scripts": {
     "build": "rm -rf dist/ && tsc",
     "test": "mocha -r ts-node/register test/**/*.test.ts"
