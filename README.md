@@ -9,6 +9,14 @@ used for:
 - Generating configuration for Terraform
 - etc.
 
+## Packages
+
+| Name                         | Description                                                     |
+| ---------------------------- | --------------------------------------------------------------- |
+| [`@fpk/core`](packages/core) | Package that provides the config generation functionality       |
+| [`@fpk/cli`](packages/cli)   | The CLI tool for generating configuration                       |
+| [`@fpk/k8s`](packages/k8s)   | Collection of functions for generating Kubernetes configuration |
+
 ## Install
 
 npm install -g @fpk/cli
