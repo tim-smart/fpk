@@ -54,7 +54,7 @@ export function configs$(
 
     // Map functions / promises to the actual configuration
     RxOp.flatMap(({ relativePath, exports }) =>
-      resolveContents(context, exports).pipe(
+      Rx.from(resolveContents(context, exports)).pipe(
         RxOp.map((contents) => ({
           relativePath,
           contents,
@@ -76,7 +76,7 @@ export function configs$(
     // Map functions / promises for file contents, then encode it to the correct
     // format.
     RxOp.flatMap(({ file, contents }) =>
-      resolveContents(context, contents).pipe(
+      Rx.from(resolveContents(context, contents)).pipe(
         RxOp.map((fileContents) => ({
           file,
           contents: encodeContents(formats, format, fileContents),
@@ -95,13 +95,13 @@ function resolveFile(file: string) {
   return require(path.resolve(file));
 }
 
-function resolveContents(context: any, contents: any) {
+export function resolveContents(context: any, contents: any) {
   if (typeof contents === "function") {
     const retContents = contents(context);
-    return Rx.from(Promise.resolve(retContents));
+    return Promise.resolve(retContents);
   }
 
-  return Rx.of(contents);
+  return Promise.resolve(contents);
 }
 
 function encodeContents(
