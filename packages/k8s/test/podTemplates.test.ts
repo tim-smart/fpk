@@ -19,8 +19,6 @@ describe("overPodTemplate", () =>
         },
       },
     },
-
-    // TODO: Add case for daemonSet, cronjob etc.
   ]));
 
 describe("concatContainers", () =>
@@ -56,6 +54,56 @@ describe("appendContainer", () =>
             spec: {
               containers: {
                 "0": { name: "container1" },
+              },
+            },
+          },
+        },
+      },
+    },
+  ]));
+
+describe("overContainers", () =>
+  runCases([
+    {
+      it: "runs the function over the containers",
+      in: K.deployment("myapp"),
+      fn: K.overContainers(R.append({ name: "container1" })),
+      diff: {
+        spec: {
+          template: {
+            spec: {
+              containers: {
+                "0": { name: "container1" },
+              },
+            },
+          },
+        },
+      },
+    },
+  ]));
+
+describe("overContainer", () =>
+  runCases([
+    {
+      it: "runs the function over the specified container",
+      in: K.deploymentWithContainer({
+        name: "myapp",
+        image: "myimage",
+      }),
+      fn: K.overContainer(
+        "myapp",
+        K.concatEnv({
+          FOO: "bar",
+        }),
+      ),
+      diff: {
+        spec: {
+          template: {
+            spec: {
+              containers: {
+                "0": {
+                  env: { "0": { name: "FOO", value: "bar" } },
+                },
               },
             },
           },

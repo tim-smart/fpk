@@ -45,13 +45,13 @@ export const overPodTemplate = (fn: IPodTemplateTransformer) => <T>(
  * containerPusher(daemonSet);
  * ```
  */
-export const concatContainers = (containers: Container[]) => <T>(object: T) =>
+export const concatContainers = (containers: Container[]) =>
   overPodTemplate(
     R.over(
       R.lensPath(["spec", "containers"]),
       R.pipe(R.defaultTo([]), R.concat(R.__, containers)),
     ),
-  )(object);
+  );
 
 /**
  * Returns a function that appends the container to the given resource.
@@ -65,3 +65,29 @@ export const concatContainers = (containers: Container[]) => <T>(object: T) =>
  */
 export const appendContainer = (container: Container) =>
   concatContainers([container]);
+
+/**
+ * Returns a function that runs the given containers transformer in a resource.
+ */
+export const overContainers = (fn: (containers: Container[]) => Container[]) =>
+  overPodTemplate(
+    R.over(R.lensPath(["spec", "containers"]), R.pipe(R.defaultTo([]), fn)),
+  );
+
+/**
+ * Returns a function that finds a container by name, and runs the transformer
+ * over it in a resource.
+ */
+export const overContainer = (
+  name: string,
+  fn: (container: Container) => Container,
+) =>
+  overPodTemplate(
+    R.over(
+      R.lensPath(["spec", "containers"]),
+      R.pipe(
+        R.defaultTo([]),
+        R.map(R.when(R.pipe(R.prop("name"), R.equals(name)), fn)),
+      ),
+    ),
+  );

@@ -75,6 +75,41 @@ describe("deployment", () =>
     },
   ]));
 
+describe("deploymentWithContainer", () =>
+  runCases([
+    {
+      it: "creates a deployment with a container",
+      in: K.deployment("fancyapp"),
+      fn: (_) =>
+        K.deploymentWithContainer({
+          name: "fancyapp",
+          replicas: 5,
+          image: "fancyimage",
+          containerPort: 3000,
+          env: {
+            FOO: "bar",
+          },
+        }),
+      diff: {
+        spec: {
+          replicas: 5,
+          template: {
+            spec: {
+              containers: {
+                "0": {
+                  name: "fancyapp",
+                  image: "fancyimage",
+                  ports: [{ containerPort: 3000 }],
+                  env: [{ name: "FOO", value: "bar" }],
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  ]));
+
 describe("setReplicas", () =>
   runCases([
     {

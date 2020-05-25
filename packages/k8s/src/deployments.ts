@@ -4,8 +4,15 @@ import {
   RollingUpdateDeployment,
 } from "kubernetes-types/apps/v1";
 import * as R from "ramda";
-import { concatContainers, overPodTemplate } from "./podTemplates";
+import { appendContainer } from "./podTemplates";
 import { DeepPartial } from "./common";
+import {
+  containerWithPort,
+  container,
+  IEnvObject,
+  concatEnv,
+} from "./containers";
+import { Container } from "kubernetes-types/core/v1";
 
 /**
  * Create a deployment resource with the given name. The second argument is deep
@@ -46,6 +53,42 @@ export const deployment = (
 
   return R.mergeDeepRight<any, any>(config, toMerge);
 };
+
+export interface IDeploymentWithContainerOpts {
+  name: string;
+  replicas?: number;
+  image: string;
+  containerPort?: number;
+  env?: IEnvObject;
+  container?: DeepPartial<Container>;
+}
+
+/**
+ * Creates a deployment with a single container. Has a couple options to help
+ * make creating deployments easier.
+ */
+export const deploymentWithContainer = (
+  {
+    name,
+    replicas = 1,
+    image,
+    containerPort,
+    container: containerToMerge,
+    env = {},
+  }: IDeploymentWithContainerOpts,
+  toMerge: DeepPartial<Deployment> = {},
+) =>
+  R.pipe(
+    setReplicas(replicas),
+    appendContainer(
+      R.pipe(concatEnv(env))(
+        containerPort
+          ? containerWithPort(name, image, containerPort, containerToMerge)
+          : container(name, image, containerToMerge),
+      ),
+    ),
+    R.mergeDeepLeft(toMerge) as (d: Deployment) => Deployment,
+  )(deployment(name));
 
 /**
  * Returns a funciton that sets `spec.replicas` to the given number.
