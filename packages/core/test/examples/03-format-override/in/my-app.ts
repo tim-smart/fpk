@@ -8,4 +8,10 @@ export default {
       promise: true,
     };
   },
+
+  "20-env.foo": async () => {
+    return {
+      promise: true,
+    };
+  },
 };

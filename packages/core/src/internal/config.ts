@@ -169,12 +169,12 @@ function encodeContents(
 }
 
 function fileFormat(formats: Map<string, IFormat>) {
-  return R.pipe<string, string, string, string>(
+  return R.pipe<string, string, string, string | undefined>(
     path.extname,
     R.slice(1, Infinity),
     R.when(
-      R.or(R.isEmpty, R.complement(R.bind(formats.has, formats))),
-      R.empty,
+      R.either(R.isEmpty, (ext) => !formats.has(ext)),
+      R.always(undefined),
     ),
   );
 }
