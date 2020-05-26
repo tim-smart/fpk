@@ -75,12 +75,25 @@ export function generate(
 }
 
 export interface IFormat {
-  (js: any): string;
+  dump(js: any): string;
+  load(contents: string): any;
 }
 
 const formats = new Map<string, IFormat>([
-  ["json", (js) => JSON.stringify(js, null, 2)],
-  ["yaml", (js) => yaml.safeDump(js, { skipInvalid: true, noRefs: true })],
+  [
+    "json",
+    {
+      dump: (js) => JSON.stringify(js, null, 2),
+      load: JSON.parse,
+    },
+  ],
+  [
+    "yaml",
+    {
+      dump: (js) => yaml.safeDump(js, { skipInvalid: true, noRefs: true }),
+      load: yaml.safeLoad,
+    },
+  ],
 ]);
 
 export function registerFormat(name: string, dump: IFormat) {
