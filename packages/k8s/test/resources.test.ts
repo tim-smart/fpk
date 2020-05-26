@@ -1,6 +1,7 @@
 import * as K from "../src/index";
 import { describe } from "mocha";
 import { runCases } from "./helpers";
+import { CrossVersionObjectReference } from "kubernetes-types/autoscaling/v2beta2";
 
 describe("label", () =>
   runCases([
@@ -31,5 +32,19 @@ describe("annotate", () =>
           },
         },
       },
+    },
+  ]));
+
+describe("objectRef", () =>
+  runCases([
+    {
+      it: "returns a CrossVersionObjectReference",
+      in: {},
+      fn: () => K.objectRef(K.deployment("myapp")),
+      diff: {
+        apiVersion: "apps/v1",
+        kind: "Deployment",
+        name: "myapp",
+      } as CrossVersionObjectReference,
     },
   ]));

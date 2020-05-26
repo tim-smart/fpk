@@ -7,6 +7,8 @@ import {
   VolumeMount,
   Probe,
   HTTPGetAction,
+  ConfigMap,
+  Secret,
 } from "kubernetes-types/core/v1";
 import * as R from "ramda";
 import { DeepPartial } from "./common";
@@ -111,6 +113,38 @@ export const setResourceLimits = (limits: ResourceRequirements["limits"]) =>
  */
 export const appendEnvFrom = (envFrom: EnvFromSource) =>
   R.over(R.lensProp("envFrom"), R.pipe(R.defaultTo([]), R.append(envFrom)));
+
+/**
+ * Returns a function that sets envFrom for a container from a configMap
+ */
+export const appendEnvFromConfigMap = (configMap: ConfigMap) =>
+  R.over(
+    R.lensProp("envFrom"),
+    R.pipe(
+      R.defaultTo([]),
+      R.append({
+        configMapRef: {
+          name: configMap!.metadata!.name,
+        },
+      } as EnvFromSource),
+    ),
+  );
+
+/**
+ * Returns a function that sets envFrom for a container from a secret
+ */
+export const appendEnvFromSecret = (secret: Secret) =>
+  R.over(
+    R.lensProp("envFrom"),
+    R.pipe(
+      R.defaultTo([]),
+      R.append({
+        secretRef: {
+          name: secret!.metadata!.name,
+        },
+      } as EnvFromSource),
+    ),
+  );
 
 /**
  * Returns a function that appends a volume mount to a container.

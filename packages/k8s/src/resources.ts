@@ -1,6 +1,7 @@
 import * as R from "ramda";
 import { ObjectMeta } from "kubernetes-types/meta/v1";
 import { DeepPartial } from "./common";
+import { CrossVersionObjectReference } from "kubernetes-types/autoscaling/v2beta2";
 
 export interface IResource {
   apiVersion?: string;
@@ -45,3 +46,11 @@ export const annotate = (key: string, value: string) =>
     R.lensPath(["metadata", "annotations"]),
     R.pipe(R.defaultTo({}), R.set(R.lensProp(key), value)),
   );
+
+export const objectRef = (
+  resource: IResource,
+): CrossVersionObjectReference => ({
+  apiVersion: resource.apiVersion,
+  kind: resource.kind!,
+  name: resource.metadata!.name!,
+});

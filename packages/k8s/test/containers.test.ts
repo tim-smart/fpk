@@ -131,6 +131,50 @@ describe("appendEnvFrom", () =>
     },
   ]));
 
+describe("appendEnvFromConfigMap", () =>
+  runCases([
+    {
+      it: "appends envFrom for a container from a configMap",
+      in: K.container("myapp", "image"),
+      fn: K.appendEnvFromConfigMap({
+        metadata: {
+          name: "myconfigmap",
+        },
+      }),
+      diff: {
+        envFrom: [
+          {
+            configMapRef: {
+              name: "myconfigmap",
+            },
+          },
+        ],
+      } as Container,
+    },
+  ]));
+
+describe("appendEnvFromSecret", () =>
+  runCases([
+    {
+      it: "appends envFrom for a container from a secret",
+      in: K.container("myapp", "image"),
+      fn: K.appendEnvFromSecret({
+        metadata: {
+          name: "mysecret",
+        },
+      }),
+      diff: {
+        envFrom: [
+          {
+            secretRef: {
+              name: "mysecret",
+            },
+          },
+        ],
+      } as Container,
+    },
+  ]));
+
 describe("appendVolumeMount", () =>
   runCases([
     {
