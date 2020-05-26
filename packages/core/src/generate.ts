@@ -79,6 +79,11 @@ export interface IFormat {
   load(contents: string): any;
 }
 
+const yamlFormat: IFormat = {
+  dump: (js) => yaml.safeDump(js, { skipInvalid: true, noRefs: true }),
+  load: yaml.safeLoad,
+};
+
 const formats = new Map<string, IFormat>([
   [
     "json",
@@ -87,13 +92,8 @@ const formats = new Map<string, IFormat>([
       load: JSON.parse,
     },
   ],
-  [
-    "yaml",
-    {
-      dump: (js) => yaml.safeDump(js, { skipInvalid: true, noRefs: true }),
-      load: yaml.safeLoad,
-    },
-  ],
+  ["yaml", yamlFormat],
+  ["yml", yamlFormat],
 ]);
 
 export function registerFormat(name: string, dump: IFormat) {

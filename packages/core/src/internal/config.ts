@@ -86,16 +86,28 @@ export const resolveConfigFromExports = (
     // extension for the format.
     RxOp.flatMap(({ relativePath, contents }) =>
       Rx.from(Object.keys(contents)).pipe(
-        RxOp.map((file) => ({
-          file: `${relativePath}/${file}.${format}`,
-          contents: contents[file],
-        })),
+        // Determine the format for the file
+        RxOp.map((file) => {
+          const fileContents = contents[file];
+          let formatOverride = fileFormat(formats)(file);
+          return formatOverride
+            ? {
+                file: `${relativePath}/${file}`,
+                format: formatOverride,
+                contents: fileContents,
+              }
+            : {
+                file: `${relativePath}/${file}.${format}`,
+                format,
+                contents: fileContents,
+              };
+        }),
       ),
     ),
 
     // Map functions / promises for file contents, then encode it to the correct
     // format.
-    RxOp.flatMap(({ file, contents }) =>
+    RxOp.flatMap(({ file, format, contents }) =>
       Rx.from(resolveContents(context, contents)).pipe(
         RxOp.map((fileContents) => ({
           file,
@@ -154,4 +166,15 @@ function encodeContents(
 ) {
   const { dump } = formats.get(format)!;
   return dump(contents);
+}
+
+function fileFormat(formats: Map<string, IFormat>) {
+  return R.pipe<string, string, string, string>(
+    path.extname,
+    R.slice(1, Infinity),
+    R.when(
+      R.or(R.isEmpty, R.complement(R.bind(formats.has, formats))),
+      R.empty,
+    ),
+  );
 }
