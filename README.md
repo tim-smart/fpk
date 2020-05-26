@@ -6,8 +6,6 @@ Use Typescript / Javascript to generate yaml or json (or register your own
 format) configuration. Could be used for:
 
 - Generating configuration for Kubernetes
-- Generating configuration for Terraform
-- etc.
 
 ## Why?
 
