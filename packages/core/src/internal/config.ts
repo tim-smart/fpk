@@ -92,7 +92,10 @@ export function configsToFiles() {
 }
 
 function resolveFile(file: string) {
-  return require(path.resolve(file));
+  const module = require.resolve(file);
+
+  delete require.cache[module];
+  return require(module);
 }
 
 export function resolveContents(context: any, contents: any) {

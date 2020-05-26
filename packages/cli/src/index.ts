@@ -5,6 +5,9 @@ import { Command, flags } from "@oclif/command";
 import * as fs from "fs/promises";
 import { safeLoad } from "js-yaml";
 import * as path from "path";
+import { watch } from "chokidar";
+import * as Rx from "rxjs";
+import * as RxOp from "rxjs/operators";
 
 class FpkCli extends Command {
   static description = "Generate configuration from an fpk config tree";
@@ -31,6 +34,11 @@ class FpkCli extends Command {
       char: "f",
       options: availableFormats(),
       default: "yaml",
+    }),
+    watch: flags.boolean({
+      char: "w",
+      description: "watch for changes",
+      default: false,
     }),
   };
 
@@ -59,10 +67,32 @@ class FpkCli extends Command {
       }
     }
 
-    await generate(flags.source, flags.output, {
-      context,
-      format: flags.format,
-    });
+    const generator = () => {
+      console.log("BUILD", "Running...");
+      return generate(flags.source, flags.output, {
+        context,
+        format: flags.format,
+      });
+    };
+
+    await generator();
+
+    if (flags.watch) {
+      Rx.fromEvent(
+        watch(flags.source, {
+          ignoreInitial: true,
+        }),
+        "all"
+      )
+        .pipe(
+          RxOp.debounceTime(200),
+          RxOp.tap((e) => console.log("WATCH", e)),
+          RxOp.concatMap(() => Rx.from(generator()))
+        )
+        .subscribe();
+
+      console.log("WATCH", "Started");
+    }
   }
 }
 
