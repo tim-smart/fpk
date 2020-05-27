@@ -10,7 +10,7 @@
   "scripts": {
     "build": "rm -rf dist/ && tsc",
     "test": "mocha -r ts-node/register test/**/*.test.ts",
-    "docs": "typedoc --out docs"
+    "docs": "typedoc --out docs --gitRevision master"
   },
   "peerDependencies": {
     "kubernetes-types": "*"
