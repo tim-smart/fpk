@@ -10,6 +10,12 @@
     "publish": "lerna run build && lerna publish"
   },
   "devDependencies": {
+    "husky": "^4.2.5",
     "lerna": "^3.21.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-push": "make docs"
+    }
   }
 }
