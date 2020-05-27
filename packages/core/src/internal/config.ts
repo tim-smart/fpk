@@ -150,9 +150,14 @@ function resolveFile(file: string) {
   return require(module);
 }
 
-export function resolveContents(context: any, contents: any) {
+type TContentsAsyncFunction<T> = (ctx: any) => Promise<T>;
+type TContentsFunction<T> = (ctx: any) => T;
+type TContentsFn<T> = TContentsAsyncFunction<T> | TContentsFunction<T>;
+export type TContents<T extends {}> = TContentsFn<T> | Promise<T> | T;
+
+export function resolveContents<T>(context: any, contents: TContents<T>) {
   if (typeof contents === "function") {
-    const retContents = contents(context);
+    const retContents = (contents as TContentsFn<T>)(context);
     return Promise.resolve(retContents);
   }
 

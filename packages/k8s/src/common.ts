@@ -3,5 +3,3 @@ export type DeepPartial<T> = T extends Function
   : T extends object
   ? { [P in keyof T]?: DeepPartial<T[P]> }
   : T;
-
-export type Transformer = <T>(input: T) => T;

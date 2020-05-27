@@ -11,7 +11,7 @@ import {
   Secret,
 } from "kubernetes-types/core/v1";
 import * as R from "ramda";
-import { DeepPartial, Transformer } from "./common";
+import { DeepPartial } from "./common";
 import { maybeMergeResource } from "./resources";
 
 /**
@@ -202,15 +202,14 @@ export const setLivenessProbe = (probe?: DeepPartial<Probe>) => (
  * Returns a function that sets the imagePullPolicy on a container.
  */
 export const setImagePullPolicy = (policy: string) =>
-  R.assoc("imagePullPolicy", policy) as Transformer;
+  R.assoc("imagePullPolicy", policy);
 
 /**
  * Returns a function that sets the command on a container.
  */
-export const setCommand = (command: string[]) =>
-  R.assoc("command", command) as Transformer;
+export const setCommand = (command: string[]) => R.assoc("command", command);
 
 /**
  * Returns a function that sets the args on a container.
  */
-export const setArgs = (args: string[]) => R.assoc("args", args) as Transformer;
+export const setArgs = (args: string[]) => R.assoc("args", args);
