@@ -145,8 +145,6 @@ export function configsToFiles() {
 
 function resolveFile(file: string) {
   const module = require.resolve(file);
-
-  delete require.cache[module];
   return require(module);
 }
 

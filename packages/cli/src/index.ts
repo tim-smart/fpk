@@ -69,11 +69,18 @@ class FpkCli extends Command {
 
     const generator = () => {
       console.log("BUILD", "Running...");
+
       return generate(flags.source, flags.output, {
         context,
         format: flags.format,
       });
     };
+
+    function resetCache() {
+      Object.keys(require.cache).forEach((key) => {
+        delete require.cache[key];
+      });
+    }
 
     await generator();
 
@@ -87,6 +94,7 @@ class FpkCli extends Command {
         .pipe(
           RxOp.debounceTime(200),
           RxOp.tap((e) => console.log("WATCH", e)),
+          RxOp.tap(resetCache),
           RxOp.concatMap(() => Rx.from(generator()))
         )
         .subscribe();
