@@ -76,7 +76,10 @@ const rulesToSpec = ({
   )(ingress);
 };
 
-export const ingressFromRules = (
+/**
+ * Create an ingress with a simplier API
+ */
+export const ingressSimple = (
   name: string,
   rules: IIngressRules,
   toMerge?: DeepPartial<Ingress>,
@@ -92,3 +95,12 @@ export const ingressFromRules = (
       annotate("ingress.kubernetes.io/force-ssl-redirect", "true"),
     ),
   )(ingress(name, rulesToSpec(rules), toMerge));
+
+/**
+ * Returns a function that sets basic auth annotations on the ingress.
+ */
+export const setBasicAuth = (secretName: string) =>
+  R.pipe<Ingress, Ingress, Ingress>(
+    annotate("ingress.kubernetes.io/auth-type", "basic"),
+    annotate("ingress.kubernetes.io/auth-secret", secretName),
+  );

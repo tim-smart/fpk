@@ -65,13 +65,13 @@ describe("ingress", () =>
     },
   ]));
 
-describe("ingressFromRules", () =>
+describe("ingressSimple", () =>
   runCases([
     {
       it: "creates an ingress resource from rules",
       in: {},
       fn: (_) =>
-        K.ingressFromRules("myingress", {
+        K.ingressSimple("myingress", {
           tlsAcme: true,
           tlsRedirect: true,
           tlsSecretName: "myapp-tls-secret",
@@ -151,6 +151,23 @@ describe("ingressFromRules", () =>
               secretName: "myapp-tls-secret",
             },
           ],
+        },
+      } as Ingress,
+    },
+  ]));
+
+describe("setBasicAuth", () =>
+  runCases([
+    {
+      it: "annotates the ingress for basic auth",
+      in: K.ingress("myingress", {}),
+      fn: K.setBasicAuth("mysecret"),
+      diff: {
+        metadata: {
+          annotations: {
+            "ingress.kubernetes.io/auth-type": "basic",
+            "ingress.kubernetes.io/auth-secret": "mysecret",
+          },
         },
       } as Ingress,
     },
