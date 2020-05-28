@@ -2,7 +2,6 @@ import * as K from "../src/index";
 import { describe } from "mocha";
 import { runCases } from "./helpers";
 import * as R from "ramda";
-import { Container } from "kubernetes-types/core/v1";
 
 describe("overPodTemplate", () =>
   runCases([
@@ -128,7 +127,8 @@ describe("appendVolume", () =>
         name: "myapp",
         image: "myimage",
       }),
-      fn: K.appendVolume("myvolume", {
+      fn: K.appendVolume({
+        name: "myvolume",
         persistentVolumeClaim: { claimName: "myclaim" },
       }),
       diff: {
@@ -159,8 +159,8 @@ describe("appendVolumeAndMount", () =>
         image: "myimage",
       }),
       fn: K.appendVolumeAndMount({
-        name: "myvolume",
         volume: {
+          name: "myvolume",
           persistentVolumeClaim: { claimName: "myclaim" },
         },
         containerName: "myapp",

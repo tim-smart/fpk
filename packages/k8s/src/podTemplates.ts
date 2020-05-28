@@ -98,14 +98,11 @@ export const overContainer = (
 /**
  * Returns a function that adds a volume to the pod template.
  */
-export const appendVolume = (name: string, volume: DeepPartial<Volume>) =>
+export const appendVolume = (volume: Volume) =>
   overPodTemplate(
     R.over(
       R.lensPath(["spec", "volumes"]),
-      R.pipe(
-        R.defaultTo([]),
-        R.append(R.mergeDeepRight({ name }, volume) as Volume),
-      ),
+      R.pipe(R.defaultTo([]), R.append(volume)),
     ),
   );
 
@@ -113,19 +110,20 @@ export const appendVolume = (name: string, volume: DeepPartial<Volume>) =>
  * Returns a function that adds a volume and mounts it to a container.
  */
 export const appendVolumeAndMount = ({
-  name,
-  containerName,
   volume,
+  containerName,
   mountPath,
   mount = {},
 }: {
-  name: string;
   containerName: string;
-  volume: DeepPartial<Volume>;
+  volume: Volume;
   mountPath: string;
   mount?: DeepPartial<VolumeMount>;
 }) =>
   R.pipe(
-    appendVolume(name, volume),
-    overContainer(containerName, appendVolumeMount(name, mountPath, mount)),
+    appendVolume(volume),
+    overContainer(
+      containerName,
+      appendVolumeMount(volume.name, mountPath, mount),
+    ),
   );
