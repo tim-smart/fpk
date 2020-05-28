@@ -80,8 +80,7 @@ export interface IFormat {
 }
 
 const yamlFormat: IFormat = {
-  dump: (js) =>
-    yaml.safeDump(js, { skipInvalid: true, noRefs: true, noArrayIndent: true }),
+  dump: (js) => yaml.safeDump(js, { skipInvalid: true, noRefs: true }),
   load: yaml.safeLoad,
 };
 
