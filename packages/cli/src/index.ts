@@ -92,8 +92,8 @@ class FpkCli extends Command {
         "all"
       )
         .pipe(
-          RxOp.debounceTime(200),
-          RxOp.tap((e) => console.log("WATCH", e)),
+          RxOp.tap((e: any) => console.log("WATCH", e.slice(0, 2))),
+          RxOp.auditTime(200),
           RxOp.tap(resetCache),
           RxOp.concatMap(() => Rx.from(generator()))
         )
