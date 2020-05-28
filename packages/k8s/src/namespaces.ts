@@ -5,11 +5,36 @@ import { resolveContents } from "@fpk/core";
 import { maybeMergeResource, resource } from "./resources";
 import { TContents } from "@fpk/core/dist/internal/config";
 
-const nonNamespacedResources = [
+/**
+ * A list of non namespaced resource kinds.
+ */
+export const nonNamespacedResources = [
   "ComponentStatus",
   "Namespace",
   "Node",
   "PersistentVolume",
+  "MutatingWebhookConfiguration",
+  "ValidatingWebhookConfiguration",
+  "CustomResourceDefinition",
+  "APIService",
+  "TokenReview",
+  "SelfSubjectAccessReview",
+  "SelfSubjectRulesReview",
+  "SubjectAccessReview",
+  "ClusterIssuer",
+  "CertificateSigningRequest",
+  "NodeMetrics",
+  "StorageState",
+  "StorageVersionMigration",
+  "RuntimeClass",
+  "PodSecurityPolicy",
+  "ClusterRoleBinding",
+  "ClusterRole",
+  "PriorityClass",
+  "CSIDriver",
+  "CSINode",
+  "StorageClass",
+  "VolumeAttachment",
 ];
 
 /**
