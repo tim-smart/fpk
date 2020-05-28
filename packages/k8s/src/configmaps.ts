@@ -6,7 +6,7 @@ import { maybeMergeResource, resource } from "./resources";
 /**
  * Creates a configmap resource from some data
  */
-export const configmap = (
+export const configMap = (
   name: string,
   data: { [name: string]: string },
   toMerge?: DeepPartial<ConfigMap>,
@@ -19,12 +19,12 @@ export const configmap = (
 /**
  * Create a configmap from a file
  */
-export const configmapFromFile = (
+export const configMapFromFile = (
   name: string,
   file: string,
   filename?: string,
   toMerge?: DeepPartial<ConfigMap>,
 ) =>
   createConfigFromFile(file, filename).then((data) =>
-    configmap(name, data, toMerge),
+    configMap(name, data, toMerge),
   );

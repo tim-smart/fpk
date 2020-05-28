@@ -8,7 +8,7 @@ describe("configmap", () =>
       it: "creates a configmap",
       in: {},
       fn: (_) =>
-        K.configmap(
+        K.configMap(
           "myconfig",
           {
             key: "value",
@@ -35,8 +35,8 @@ describe("configmapFromFile", () =>
   runCases([
     {
       it: "creates a configmap from a file",
-      in: K.configmap("myconfig", {}),
-      fn: (_) => K.configmapFromFile("myconfig", "test/fixtures/file.txt"),
+      in: K.configMap("myconfig", {}),
+      fn: (_) => K.configMapFromFile("myconfig", "test/fixtures/file.txt"),
       diff: {
         data: {
           "file.txt": "asdf\n",

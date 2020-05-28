@@ -13,4 +13,5 @@ export * from "./resources";
 export * from "./secrets";
 export * from "./services";
 export * from "./units";
+export * from "./volumes";
 export * from "./vpa";
