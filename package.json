@@ -15,6 +15,7 @@
   },
   "husky": {
     "hooks": {
+      "pre-commit": "lerna run test",
       "pre-push": "make docs"
     }
   }

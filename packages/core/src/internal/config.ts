@@ -16,18 +16,18 @@ export function configs$(
   dir: string,
   context: any,
   formats: Map<string, IFormat>,
-  format: string,
+  format: string
 ): Rx.Observable<IConfig> {
   return files$(dir).pipe(
     RxOp.flatMap((file) => {
       if ([".js", ".ts"].includes(path.extname(file))) {
         return Rx.of(file).pipe(
-          resolveConfigFromExports(dir, context, formats, format),
+          resolveConfigFromExports(dir, context, formats, format)
         );
       }
 
       return Rx.of(file).pipe(resolveConfigFromContents(dir));
-    }),
+    })
   );
 }
 
@@ -35,7 +35,7 @@ export const resolveConfigFromExports = (
   dir: string,
   context: any,
   formats: Map<string, IFormat>,
-  format: string,
+  format: string
 ) => (input$: Rx.Observable<string>) =>
   input$.pipe(
     // For each file, require() it and load its exports
@@ -52,7 +52,7 @@ export const resolveConfigFromExports = (
       relativePath: R.pipe(
         R.split("."),
         R.remove(-1, 1),
-        R.join("."),
+        R.join(".")
       )(path.relative(dir, file)),
       exports: exports.default,
     })),
@@ -66,10 +66,10 @@ export const resolveConfigFromExports = (
         R.pipe(
           R.view(R.lensProp("relativePath")),
           path.basename,
-          R.equals("index"),
+          R.equals("index")
         ),
-        R.over(R.lensProp("relativePath"), (f) => path.join(f, "..")),
-      ),
+        R.over(R.lensProp("relativePath"), (f) => path.join(f, ".."))
+      )
     ),
 
     // Map functions / promises to the actual configuration
@@ -78,8 +78,8 @@ export const resolveConfigFromExports = (
         RxOp.map((contents) => ({
           relativePath,
           contents,
-        })),
-      ),
+        }))
+      )
     ),
 
     // For each key in the configuration create a file with the correct
@@ -101,24 +101,20 @@ export const resolveConfigFromExports = (
                 format,
                 contents: fileContents,
               };
-        }),
-      ),
+        })
+      )
     ),
 
     // Map functions / promises for file contents, then encode it to the correct
     // format.
-    RxOp.flatMap(({ file, format, contents }) =>
-      Rx.from(resolveContents(context, contents)).pipe(
-        RxOp.map((fileContents) => ({
-          file,
-          contents: encodeContents(formats, format, fileContents),
-        })),
-      ),
-    ),
+    RxOp.map(({ file, format, contents }) => ({
+      file,
+      contents: encodeContents(formats, format, contents),
+    }))
   );
 
 export const resolveConfigFromContents = (dir: string) => (
-  input$: Rx.Observable<string>,
+  input$: Rx.Observable<string>
 ) =>
   input$.pipe(
     // Load contents from file
@@ -127,15 +123,15 @@ export const resolveConfigFromContents = (dir: string) => (
         RxOp.map((blob) => ({
           file,
           contents: blob.toString("utf8"),
-        })),
-      ),
+        }))
+      )
     ),
 
     // Remove file extensions and de-nest "default" exports
     RxOp.map(({ file, contents }) => ({
       file: path.relative(dir, file),
       contents,
-    })),
+    }))
   );
 
 export function configsToFiles() {
@@ -151,21 +147,50 @@ function resolveFile(file: string) {
 type TContentsAsyncFunction<T> = (ctx: any) => Promise<T>;
 type TContentsFunction<T> = (ctx: any) => T;
 type TContentsFn<T> = TContentsAsyncFunction<T> | TContentsFunction<T>;
-export type TContents<T extends {}> = TContentsFn<T> | Promise<T> | T;
+
+export type TContents<T> = TContentsFn<T> | Promise<T> | T;
+
+type TExtractContentType<C> = C extends TContents<infer T> ? T : never;
+type TContentsMapResolved<M> = { [K in keyof M]: TExtractContentType<M[K]> };
 
 export function resolveContents<T>(context: any, contents: TContents<T>) {
   if (typeof contents === "function") {
-    const retContents = (contents as TContentsFn<T>)(context);
-    return Promise.resolve(retContents);
+    const fn = contents as TContentsFn<T>;
+    const retContents = fn(context);
+
+    return Promise.resolve(retContents).then((contents: T) =>
+      resolveContentMap(context, contents)
+    );
   }
 
-  return Promise.resolve(contents);
+  return Promise.resolve(contents).then((contents: T) =>
+    resolveContentMap(context, contents)
+  );
+}
+
+export async function resolveContentMap<M extends { [key: string]: any }>(
+  context: any,
+  contentMap: M
+) {
+  let out = {};
+
+  for (const key in contentMap) {
+    let value: any = await Promise.resolve(contentMap[key]);
+
+    if (typeof value === "function") {
+      value = await resolveContents(context, value);
+    }
+
+    out = R.assoc(key, value, out);
+  }
+
+  return out as TContentsMapResolved<M>;
 }
 
 function encodeContents(
   formats: Map<string, IFormat>,
   format: string,
-  contents: any,
+  contents: any
 ) {
   const { dump } = formats.get(format)!;
   return dump(contents);
@@ -177,7 +202,7 @@ function fileFormat(formats: Map<string, IFormat>) {
     R.slice(1, Infinity),
     R.when(
       R.either(R.isEmpty, (ext) => !formats.has(ext)),
-      R.always(undefined),
-    ),
+      R.always(undefined)
+    )
   );
 }

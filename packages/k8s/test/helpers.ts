@@ -1,6 +1,7 @@
 import { it } from "mocha";
 import { diff } from "deep-object-diff";
 import { expect } from "chai";
+import { resolveContents } from "@fpk/core";
 
 export interface ITestCase<I> {
   it: string;
@@ -12,13 +13,15 @@ export interface ITestCase<I> {
 export function runCases(cases: ITestCase<any>[]) {
   cases.forEach((c) => {
     it(c.it, (done) => {
-      Promise.resolve(c.fn(c.in))
-        .then((out) => {
-          const result = diff(c.in, out);
-          expect(result).to.deep.eq(c.diff);
-        })
-        .then(done)
-        .catch(done);
+      resolveContents({}, c.in).then((input) => {
+        Promise.resolve(c.fn(input))
+          .then((out) => {
+            const result = diff(input, out);
+            expect(result).to.deep.eq(c.diff);
+          })
+          .then(done)
+          .catch(done);
+      });
     });
   });
 }
