@@ -53,12 +53,8 @@ export const namespace = (
 
 /**
  * Set `metadata.namespace` for the resource. Ignores the following resource
- * types:
+ * kinds,  defined in `nonNamespacedResources`.
  *
- * * ComponentStatus
- * * Namespace
- * * Node
- * * PersistentVolume
  */
 export const setNamespace = (namespace: string) =>
   R.when(

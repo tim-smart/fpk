@@ -12,6 +12,9 @@ export interface IConfig
     contents: string;
   }> {}
 
+/**
+ * Streams a list of configuration files from a source directory.
+ */
 export function configs$(
   dir: string,
   context: any,
@@ -31,6 +34,9 @@ export function configs$(
   );
 }
 
+/**
+ * Streams configuration files from a module.
+ */
 export const resolveConfigFromExports = (
   dir: string,
   context: any,
@@ -113,6 +119,9 @@ export const resolveConfigFromExports = (
     })),
   );
 
+/**
+ * Streams configuration files from non-module files.
+ */
 export const resolveConfigFromContents = (dir: string) => (
   input$: Rx.Observable<string>,
 ) =>
@@ -127,13 +136,16 @@ export const resolveConfigFromContents = (dir: string) => (
       ),
     ),
 
-    // Remove file extensions and de-nest "default" exports
+    // Make file path relative
     RxOp.map(({ file, contents }) => ({
       file: path.relative(dir, file),
       contents,
     })),
   );
 
+/**
+ * Transforms config objects to file paths
+ */
 export function configsToFiles() {
   return (input$: Rx.Observable<IConfig>) =>
     input$.pipe(RxOp.map((config) => config.file));
@@ -153,6 +165,9 @@ export type TContents<T> = TContentsFn<T> | Promise<T> | T;
 type TExtractContentType<C> = C extends TContents<infer T> ? T : never;
 type TContentsMapResolved<M> = { [K in keyof M]: TExtractContentType<M[K]> };
 
+/**
+ * Turn functions/promises etc. into the actual configuration.
+ */
 export function resolveContents<T>(context: any, contents: TContents<T>) {
   if (typeof contents === "function") {
     const fn = contents as TContentsFn<T>;
