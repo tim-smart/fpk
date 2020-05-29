@@ -2,7 +2,7 @@ import * as Rx from "rxjs";
 import * as RxOp from "rxjs/operators";
 import FSTree, { Operation } from "fs-tree-diff";
 import * as fs from "fs";
-import * as fsp from "fs/promises";
+import { promises as fsp } from "fs";
 import * as path from "path";
 
 export function toFileTree(dir: string) {

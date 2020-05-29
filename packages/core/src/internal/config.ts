@@ -4,7 +4,7 @@ import * as path from "path";
 import * as R from "ramda";
 import { files$ } from "./fs";
 import { IFormat } from "../generate";
-import * as fsp from "fs/promises";
+import { promises as fsp } from "fs";
 
 export interface IConfig
   extends Readonly<{
@@ -16,18 +16,18 @@ export function configs$(
   dir: string,
   context: any,
   formats: Map<string, IFormat>,
-  format: string
+  format: string,
 ): Rx.Observable<IConfig> {
   return files$(dir).pipe(
     RxOp.flatMap((file) => {
       if ([".js", ".ts"].includes(path.extname(file))) {
         return Rx.of(file).pipe(
-          resolveConfigFromExports(dir, context, formats, format)
+          resolveConfigFromExports(dir, context, formats, format),
         );
       }
 
       return Rx.of(file).pipe(resolveConfigFromContents(dir));
-    })
+    }),
   );
 }
 
@@ -35,7 +35,7 @@ export const resolveConfigFromExports = (
   dir: string,
   context: any,
   formats: Map<string, IFormat>,
-  format: string
+  format: string,
 ) => (input$: Rx.Observable<string>) =>
   input$.pipe(
     // For each file, require() it and load its exports
@@ -52,7 +52,7 @@ export const resolveConfigFromExports = (
       relativePath: R.pipe(
         R.split("."),
         R.remove(-1, 1),
-        R.join(".")
+        R.join("."),
       )(path.relative(dir, file)),
       exports: exports.default,
     })),
@@ -66,10 +66,10 @@ export const resolveConfigFromExports = (
         R.pipe(
           R.view(R.lensProp("relativePath")),
           path.basename,
-          R.equals("index")
+          R.equals("index"),
         ),
-        R.over(R.lensProp("relativePath"), (f) => path.join(f, ".."))
-      )
+        R.over(R.lensProp("relativePath"), (f) => path.join(f, "..")),
+      ),
     ),
 
     // Map functions / promises to the actual configuration
@@ -78,8 +78,8 @@ export const resolveConfigFromExports = (
         RxOp.map((contents) => ({
           relativePath,
           contents,
-        }))
-      )
+        })),
+      ),
     ),
 
     // For each key in the configuration create a file with the correct
@@ -101,8 +101,8 @@ export const resolveConfigFromExports = (
                 format,
                 contents: fileContents,
               };
-        })
-      )
+        }),
+      ),
     ),
 
     // Map functions / promises for file contents, then encode it to the correct
@@ -110,11 +110,11 @@ export const resolveConfigFromExports = (
     RxOp.map(({ file, format, contents }) => ({
       file,
       contents: encodeContents(formats, format, contents),
-    }))
+    })),
   );
 
 export const resolveConfigFromContents = (dir: string) => (
-  input$: Rx.Observable<string>
+  input$: Rx.Observable<string>,
 ) =>
   input$.pipe(
     // Load contents from file
@@ -123,15 +123,15 @@ export const resolveConfigFromContents = (dir: string) => (
         RxOp.map((blob) => ({
           file,
           contents: blob.toString("utf8"),
-        }))
-      )
+        })),
+      ),
     ),
 
     // Remove file extensions and de-nest "default" exports
     RxOp.map(({ file, contents }) => ({
       file: path.relative(dir, file),
       contents,
-    }))
+    })),
   );
 
 export function configsToFiles() {
@@ -159,18 +159,18 @@ export function resolveContents<T>(context: any, contents: TContents<T>) {
     const retContents = fn(context);
 
     return Promise.resolve(retContents).then((contents: T) =>
-      resolveContentMap(context, contents)
+      resolveContentMap(context, contents),
     );
   }
 
   return Promise.resolve(contents).then((contents: T) =>
-    resolveContentMap(context, contents)
+    resolveContentMap(context, contents),
   );
 }
 
 export async function resolveContentMap<M extends { [key: string]: any }>(
   context: any,
-  contentMap: M
+  contentMap: M,
 ) {
   let out = {};
 
@@ -190,7 +190,7 @@ export async function resolveContentMap<M extends { [key: string]: any }>(
 function encodeContents(
   formats: Map<string, IFormat>,
   format: string,
-  contents: any
+  contents: any,
 ) {
   const { dump } = formats.get(format)!;
   return dump(contents);
@@ -202,7 +202,7 @@ function fileFormat(formats: Map<string, IFormat>) {
     R.slice(1, Infinity),
     R.when(
       R.either(R.isEmpty, (ext) => !formats.has(ext)),
-      R.always(undefined)
-    )
+      R.always(undefined),
+    ),
   );
 }

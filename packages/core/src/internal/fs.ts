@@ -1,6 +1,6 @@
 import * as Rx from "rxjs";
 import * as RxOp from "rxjs/operators";
-import * as fs from "fs/promises";
+import { promises as fs } from "fs";
 
 export function files$(dir: string): Rx.Observable<string> {
   return Rx.from(fs.readdir(dir)).pipe(

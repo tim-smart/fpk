@@ -2,7 +2,7 @@ import "ts-node/register";
 
 import { availableFormats, generate } from "@fpk/core";
 import { Command, flags } from "@oclif/command";
-import * as fs from "fs/promises";
+import { promises as fs } from "fs";
 import { safeLoad } from "js-yaml";
 import * as path from "path";
 import { watch } from "chokidar";
