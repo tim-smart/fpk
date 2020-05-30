@@ -1,6 +1,7 @@
 import * as K from "../src/index";
 import { describe } from "mocha";
 import { runCases } from "./helpers";
+import { Service } from "kubernetes-types/core/v1";
 
 describe("service", () =>
   runCases([
@@ -31,7 +32,19 @@ describe("service", () =>
     },
   ]));
 
-describe("serviceWithPort", () =>
+describe("appendServicePort", () =>
+  runCases([
+    {
+      it: "appends the port to the service",
+      in: K.service("mysvc", { app: "myapp" }),
+      fn: K.appendServicePort("http", 80),
+      diff: {
+        spec: { ports: [{ name: "http", port: 80, targetPort: 80 }] },
+      } as Service,
+    },
+  ]));
+
+describe("serviceWithPorts", () =>
   runCases([
     {
       it: "creates a service resource with a port",
@@ -41,12 +54,17 @@ describe("serviceWithPort", () =>
         { metadata: { labels: { test: "ing" } } },
       ),
       fn: (_) =>
-        K.serviceWithPort("mysvc", { app: "myapp" }, 3000, {
-          metadata: { labels: { test: "ing" } },
-        }),
+        K.serviceWithPorts(
+          "mysvc",
+          { app: "myapp" },
+          { http: 3000 },
+          {
+            metadata: { labels: { test: "ing" } },
+          },
+        ),
       diff: {
         spec: {
-          ports: [{ port: 3000, targetPort: 3000 }],
+          ports: [{ name: "http", port: 3000, targetPort: 3000 }],
         },
       },
     },

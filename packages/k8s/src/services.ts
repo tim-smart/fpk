@@ -16,21 +16,31 @@ export const service = (
     toMerge,
   );
 
-export const appendServicePort = (targetPort: number, port: number) =>
+export const appendServicePort = (
+  name: string,
+  targetPort: number,
+  port: number = targetPort,
+) =>
   R.over(
     R.lensPath(["spec", "ports"]),
     R.pipe(
       R.defaultTo([]),
       R.append({
+        name,
         port,
         targetPort,
       }),
     ),
   );
 
-export const serviceWithPort = (
+export const serviceWithPorts = (
   name: string,
   selector: ServiceSpec["selector"],
-  port: number,
+  ports: { [name: string]: number },
   toMerge?: DeepPartial<Service>,
-) => R.pipe(appendServicePort(port, port))(service(name, selector, toMerge));
+) =>
+  R.reduce(
+    (svc, [name, port]) => appendServicePort(name, port, port)(svc),
+    service(name, selector, toMerge),
+    R.toPairs(ports),
+  );
