@@ -2,6 +2,55 @@ import * as K from "../src/index";
 import { describe } from "mocha";
 import { runCases } from "./helpers";
 import * as R from "ramda";
+import { PodTemplateSpec } from "kubernetes-types/core/v1";
+
+describe("getPodTemplate", () =>
+  runCases([
+    {
+      it: "gets the pod template in the deployment",
+      in: {},
+      fn: () => K.viewPodTemplate(K.deployment("myapp")),
+      diff: {
+        metadata: { labels: { app: "myapp" } },
+        spec: { containers: [] },
+      } as PodTemplateSpec,
+    },
+  ]));
+
+describe("getPodPath", () =>
+  runCases([
+    {
+      it: "gets at the path for the deployment",
+      in: {},
+      fn: () => K.viewPodPath(["spec"])(K.deployment("myapp")),
+      diff: { containers: [] },
+    },
+  ]));
+
+describe("getPodLabels", () =>
+  runCases([
+    {
+      it: "gets the pod template labels for the deployment",
+      in: {},
+      fn: () => K.viewPodLabels(K.deployment("myapp")),
+      diff: { app: "myapp" },
+    },
+  ]));
+
+describe("getPodAnnotations", () =>
+  runCases([
+    {
+      it: "gets the pod template annotations for the deployment",
+      in: {},
+      fn: () =>
+        K.viewPodAnnotations(
+          K.deployment("myapp", {
+            spec: { template: { metadata: { annotations: { foo: "bar" } } } },
+          }),
+        ),
+      diff: { foo: "bar" },
+    },
+  ]));
 
 describe("overPodTemplate", () =>
   runCases([

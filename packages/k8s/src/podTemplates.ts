@@ -7,6 +7,61 @@ import {
 import * as R from "ramda";
 import { DeepPartial } from "./common";
 import { appendVolumeMount } from "./containers";
+import { IResource } from "./resources";
+import { ObjectMeta } from "kubernetes-types/meta/v1";
+
+const podTemplateLens = <T>(object: T) => {
+  if ((object as any).kind === "Pod") {
+    return R.lensPath([]);
+  } else if (R.hasPath(["spec", "jobTemplate", "spec", "template"], object)) {
+    return R.lensPath(["spec", "jobTemplate", "spec", "template"]);
+  } else if (R.hasPath(["spec", "template"], object)) {
+    return R.lensPath(["spec", "template"]);
+  }
+
+  return undefined;
+};
+
+/**
+ * Returns the pod template for a resource if it exists.
+ */
+export const viewPodTemplate = <T extends IResource>(
+  object: T,
+): PodTemplateSpec | undefined => {
+  const lens = podTemplateLens(object);
+  return lens ? R.view(lens, object) : undefined;
+};
+
+/**
+ * Returns the property at the specified path for the given resource pod
+ * template.
+ */
+export const viewPodPath = (path: string[]) => <T extends IResource>(
+  resource: T,
+) => {
+  const pod = viewPodTemplate(resource);
+  return pod ? R.path(path, pod) : undefined;
+};
+
+/**
+ * Returns the metadata labels for the given resource pod
+ * template.
+ */
+export const viewPodLabels = viewPodPath(["metadata", "labels"]) as <
+  T extends IResource
+>(
+  resource: T,
+) => ObjectMeta["labels"] | undefined;
+
+/**
+ * Returns the metadata annotations for the given resource pod
+ * template.
+ */
+export const viewPodAnnotations = viewPodPath(["metadata", "annotations"]) as <
+  T extends IResource
+>(
+  resource: T,
+) => ObjectMeta["annotations"] | undefined;
 
 /**
  * Returns a function that will run the given pod transformer over the supplied
@@ -23,19 +78,8 @@ import { appendVolumeMount } from "./containers";
 export const overPodTemplate = (
   fn: (pod: PodTemplateSpec) => PodTemplateSpec,
 ) => <T>(object: T) => {
-  if ((object as any).kind === "Pod") {
-    return fn(object) as T;
-  } else if (R.hasPath(["spec", "jobTemplate", "spec", "template"], object)) {
-    return R.over(
-      R.lensPath(["spec", "jobTemplate", "spec", "template"]),
-      fn,
-      object,
-    );
-  } else if (R.hasPath(["spec", "template"], object)) {
-    return R.over(R.lensPath(["spec", "template"]), fn, object);
-  }
-
-  return object;
+  const lens = podTemplateLens(object);
+  return lens ? R.over(lens, fn, object) : object;
 };
 
 /**
