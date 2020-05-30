@@ -75,7 +75,7 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_services_.html#appendserviceport" class="tsd-kind-icon">append<wbr>Service<wbr>Port</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_services_.html#service" class="tsd-kind-icon">service</a></li>
-								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_services_.html#servicewithport" class="tsd-kind-icon">service<wbr>With<wbr>Port</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_services_.html#servicewithports" class="tsd-kind-icon">service<wbr>With<wbr>Ports</a></li>
 							</ul>
 						</section>
 					</div>
@@ -87,7 +87,7 @@
 					<a name="appendserviceport" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> append<wbr>Service<wbr>Port</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">append<wbr>Service<wbr>Port<span class="tsd-signature-symbol">(</span>targetPort<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, port<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span>&lt;T&gt;<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">T</span></li>
+						<li class="tsd-signature tsd-kind-icon">append<wbr>Service<wbr>Port<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, targetPort<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, port<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span>&lt;T&gt;<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">T</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -99,10 +99,13 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
+									<h5>name: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
 									<h5>targetPort: <span class="tsd-signature-type">number</span></h5>
 								</li>
 								<li>
-									<h5>port: <span class="tsd-signature-type">number</span></h5>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> port: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = targetPort</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns &lt;T&gt;<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">T</span></h4>
@@ -168,16 +171,16 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
-					<a name="servicewithport" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagConst">Const</span> service<wbr>With<wbr>Port</h3>
+					<a name="servicewithports" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> service<wbr>With<wbr>Ports</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">service<wbr>With<wbr>Port<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, selector<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ServiceSpec</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">"selector"</span><span class="tsd-signature-symbol">]</span>, port<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, toMerge<span class="tsd-signature-symbol">?: </span><a href="_common_.html#deeppartial" class="tsd-signature-type">DeepPartial</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Service</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Service</span></li>
+						<li class="tsd-signature tsd-kind-icon">service<wbr>With<wbr>Ports<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, selector<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ServiceSpec</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">"selector"</span><span class="tsd-signature-symbol">]</span>, ports<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{}</span>, toMerge<span class="tsd-signature-symbol">?: </span><a href="_common_.html#deeppartial" class="tsd-signature-type">DeepPartial</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Service</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Service</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/services.ts#L31">packages/k8s/src/services.ts:31</a></li>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/services.ts#L36">packages/k8s/src/services.ts:36</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -189,7 +192,12 @@
 									<h5>selector: <span class="tsd-signature-type">ServiceSpec</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">"selector"</span><span class="tsd-signature-symbol">]</span></h5>
 								</li>
 								<li>
-									<h5>port: <span class="tsd-signature-type">number</span></h5>
+									<h5>ports: <span class="tsd-signature-symbol">{}</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-index-signature">
+											<h5><span class="tsd-signature-symbol">[</span>name: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]: </span><span class="tsd-signature-type">number</span></h5>
+										</li>
+									</ul>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> toMerge: <a href="_common_.html#deeppartial" class="tsd-signature-type">DeepPartial</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Service</span><span class="tsd-signature-symbol">&gt;</span></h5>
@@ -275,7 +283,7 @@
 						<a href="_services_.html#service" class="tsd-kind-icon">service</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
-						<a href="_services_.html#servicewithport" class="tsd-kind-icon">service<wbr>With<wbr>Port</a>
+						<a href="_services_.html#servicewithports" class="tsd-kind-icon">service<wbr>With<wbr>Ports</a>
 					</li>
 				</ul>
 			</nav>
