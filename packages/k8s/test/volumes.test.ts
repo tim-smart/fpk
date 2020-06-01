@@ -35,3 +35,34 @@ describe("volumeFromConfigMap", () =>
       } as Volume,
     },
   ]));
+
+describe("volumeFromPvc", () =>
+  runCases([
+    {
+      it: "creates a volume from a pvc",
+      in: {},
+      fn: R.always(K.volumeFromPvc("myvolume", K.pvc("mypvc", "10Gi"))),
+      diff: {
+        name: "myvolume",
+        persistentVolumeClaim: {
+          claimName: "mypvc",
+          readOnly: false,
+        },
+      } as Volume,
+    },
+  ]));
+
+describe("volumeFromHostPath", () =>
+  runCases([
+    {
+      it: "creates a volume from a hostPath",
+      in: {},
+      fn: R.always(K.volumeFromHostPath("myvolume", "/tmp")),
+      diff: {
+        name: "myvolume",
+        hostPath: {
+          path: "/tmp",
+        },
+      } as Volume,
+    },
+  ]));
