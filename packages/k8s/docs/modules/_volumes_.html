@@ -74,6 +74,8 @@
 							<h3>Functions</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_volumes_.html#volumefromconfigmap" class="tsd-kind-icon">volume<wbr>From<wbr>Config<wbr>Map</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_volumes_.html#volumefromhostpath" class="tsd-kind-icon">volume<wbr>From<wbr>Host<wbr>Path</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_volumes_.html#volumefrompvc" class="tsd-kind-icon">volume<wbr>From<wbr>Pvc</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_volumes_.html#volumefromsecret" class="tsd-kind-icon">volume<wbr>From<wbr>Secret</a></li>
 							</ul>
 						</section>
@@ -92,7 +94,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/volumes.ts#L16">packages/k8s/src/volumes.ts:16</a></li>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/volumes.ts#L21">packages/k8s/src/volumes.ts:21</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -114,6 +116,71 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="volumefromhostpath" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> volume<wbr>From<wbr>Host<wbr>Path</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">volume<wbr>From<wbr>Host<wbr>Path<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, path<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Volume</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/volumes.ts#L46">packages/k8s/src/volumes.ts:46</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Create a volume from a host directory</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>name: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>path: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Volume</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="volumefrompvc" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> volume<wbr>From<wbr>Pvc</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">volume<wbr>From<wbr>Pvc<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, pvc<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">PersistentVolumeClaim</span>, readOnly<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Volume</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/volumes.ts#L31">packages/k8s/src/volumes.ts:31</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Create a volume from a pvc</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>name: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>pvc: <span class="tsd-signature-type">PersistentVolumeClaim</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> readOnly: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = false</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Volume</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
 					<a name="volumefromsecret" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> volume<wbr>From<wbr>Secret</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
@@ -123,7 +190,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/volumes.ts#L6">packages/k8s/src/volumes.ts:6</a></li>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/volumes.ts#L11">packages/k8s/src/volumes.ts:11</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -215,6 +282,12 @@
 				<ul class="before-current">
 					<li class=" tsd-kind-function tsd-parent-kind-module">
 						<a href="_volumes_.html#volumefromconfigmap" class="tsd-kind-icon">volume<wbr>From<wbr>Config<wbr>Map</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="_volumes_.html#volumefromhostpath" class="tsd-kind-icon">volume<wbr>From<wbr>Host<wbr>Path</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="_volumes_.html#volumefrompvc" class="tsd-kind-icon">volume<wbr>From<wbr>Pvc</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
 						<a href="_volumes_.html#volumefromsecret" class="tsd-kind-icon">volume<wbr>From<wbr>Secret</a>
