@@ -9,6 +9,7 @@ import {
   HTTPGetAction,
   ConfigMap,
   Secret,
+  ContainerPort,
 } from "kubernetes-types/core/v1";
 import * as R from "ramda";
 import { DeepPartial } from "./common";
@@ -31,6 +32,28 @@ export const container = (
   );
 
 /**
+ * Appends a port to a container
+ */
+export const appendPort = (
+  containerPort: number,
+  name?: string,
+  protocol?: string,
+) =>
+  R.over(
+    R.lensProp("ports"),
+    R.pipe(
+      R.defaultTo([]),
+      R.append(
+        R.pipe(
+          R.always({ containerPort } as ContainerPort),
+          R.when(R.always(!!name), R.assoc("name", name!)),
+          R.when(R.always(!!protocol), R.assoc("protocol", protocol!)),
+        )(),
+      ),
+    ),
+  );
+
+/**
  * Creates a container with the provided name, image and port.
  */
 export const containerWithPort = (
@@ -38,14 +61,21 @@ export const containerWithPort = (
   image: string,
   containerPort: number,
   toMerge?: DeepPartial<Container>,
+): Container => appendPort(containerPort)(container(name, image, toMerge));
+
+/**
+ * Creates a container with the provided name, image and ports.
+ */
+export const containerWithPorts = (
+  name: string,
+  image: string,
+  ports: { [name: string]: number },
+  toMerge?: DeepPartial<Container>,
 ): Container =>
-  maybeMergeResource<Container>(
-    {
-      name,
-      image,
-      ports: [{ containerPort }],
-    },
-    toMerge,
+  R.reduce(
+    (c, [name, port]) => appendPort(port, name)(c),
+    container(name, image, toMerge),
+    R.toPairs(ports),
   );
 
 export interface IEnvObject {

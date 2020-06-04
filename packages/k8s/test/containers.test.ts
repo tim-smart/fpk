@@ -20,6 +20,18 @@ describe("container", () =>
     },
   ]));
 
+describe("appendPort", () =>
+  runCases([
+    {
+      it: "appends a port to a container",
+      in: K.container("myapp", "fancyimage"),
+      fn: K.appendPort(3000, "http", "TCP"),
+      diff: {
+        ports: [{ name: "http", containerPort: 3000, protocol: "TCP" }],
+      },
+    },
+  ]));
+
 describe("containerWithPort", () =>
   runCases([
     {
@@ -35,6 +47,35 @@ describe("containerWithPort", () =>
         imagePullPolicy: "Always",
         ports: [{ containerPort: 3000 }],
       },
+    },
+  ]));
+
+describe("containerWithPorts", () =>
+  runCases([
+    {
+      it: "creates a container resource with some ports",
+      in: {},
+      fn: (_) =>
+        K.containerWithPorts(
+          "myapp",
+          "image/name:latest",
+          {
+            http: 80,
+            https: 443,
+          },
+          {
+            imagePullPolicy: "Always",
+          },
+        ),
+      diff: {
+        name: "myapp",
+        image: "image/name:latest",
+        imagePullPolicy: "Always",
+        ports: [
+          { name: "http", containerPort: 80 },
+          { name: "https", containerPort: 443 },
+        ],
+      } as Container,
     },
   ]));
 
