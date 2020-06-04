@@ -88,6 +88,7 @@
 							<h3>Functions</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_ingress_.html#ingress" class="tsd-kind-icon">ingress</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_ingress_.html#ingressfromservice" class="tsd-kind-icon">ingress<wbr>From<wbr>Service</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_ingress_.html#ingresssimple" class="tsd-kind-icon">ingress<wbr>Simple</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module tsd-is-not-exported"><a href="_ingress_.html#rulestospec" class="tsd-kind-icon">rules<wbr>ToSpec</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_ingress_.html#setbasicauth" class="tsd-kind-icon">set<wbr>Basic<wbr>Auth</a></li>
@@ -104,7 +105,7 @@
 					<div class="tsd-signature tsd-kind-icon">Ingress<wbr>Spec<wbr>Transformer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>i<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IngressSpec</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">IngressSpec</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/ingress.ts#L40">packages/k8s/src/ingress.ts:40</a></li>
+							<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/ingress.ts#L41">packages/k8s/src/ingress.ts:41</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -142,7 +143,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/ingress.ts#L11">packages/k8s/src/ingress.ts:11</a></li>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/ingress.ts#L12">packages/k8s/src/ingress.ts:12</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -162,6 +163,43 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="ingressfromservice" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> ingress<wbr>From<wbr>Service</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">ingress<wbr>From<wbr>Service<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, hosts<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span>, svc<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Service</span>, tls<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Ingress</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/ingress.ts#L103">packages/k8s/src/ingress.ts:103</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Create an ingress from a Service</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>name: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>hosts: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+								<li>
+									<h5>svc: <span class="tsd-signature-type">Service</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> tls: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = true</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Ingress</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
 					<a name="ingresssimple" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> ingress<wbr>Simple</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
@@ -171,7 +209,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/ingress.ts#L82">packages/k8s/src/ingress.ts:82</a></li>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/ingress.ts#L83">packages/k8s/src/ingress.ts:83</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -205,7 +243,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/ingress.ts#L42">packages/k8s/src/ingress.ts:42</a></li>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/ingress.ts#L43">packages/k8s/src/ingress.ts:43</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -239,7 +277,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/ingress.ts#L102">packages/k8s/src/ingress.ts:102</a></li>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/ingress.ts#L123">packages/k8s/src/ingress.ts:123</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -364,6 +402,9 @@
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
 						<a href="_ingress_.html#ingress" class="tsd-kind-icon">ingress</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="_ingress_.html#ingressfromservice" class="tsd-kind-icon">ingress<wbr>From<wbr>Service</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
 						<a href="_ingress_.html#ingresssimple" class="tsd-kind-icon">ingress<wbr>Simple</a>
