@@ -82,10 +82,12 @@
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_containers_.html#appendenvfrom" class="tsd-kind-icon">append<wbr>Env<wbr>From</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_containers_.html#appendenvfromconfigmap" class="tsd-kind-icon">append<wbr>Env<wbr>From<wbr>Config<wbr>Map</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_containers_.html#appendenvfromsecret" class="tsd-kind-icon">append<wbr>Env<wbr>From<wbr>Secret</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_containers_.html#appendport" class="tsd-kind-icon">append<wbr>Port</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_containers_.html#appendvolumemount" class="tsd-kind-icon">append<wbr>Volume<wbr>Mount</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_containers_.html#concatenv" class="tsd-kind-icon">concat<wbr>Env</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_containers_.html#container" class="tsd-kind-icon">container</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_containers_.html#containerwithport" class="tsd-kind-icon">container<wbr>With<wbr>Port</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_containers_.html#containerwithports" class="tsd-kind-icon">container<wbr>With<wbr>Ports</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module tsd-is-not-exported"><a href="_containers_.html#createprobe" class="tsd-kind-icon">create<wbr>Probe</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_containers_.html#setargs" class="tsd-kind-icon">set<wbr>Args</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_containers_.html#setcommand" class="tsd-kind-icon">set<wbr>Command</a></li>
@@ -111,7 +113,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/containers.ts#L114">packages/k8s/src/containers.ts:114</a></li>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/containers.ts#L144">packages/k8s/src/containers.ts:144</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -163,7 +165,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/containers.ts#L120">packages/k8s/src/containers.ts:120</a></li>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/containers.ts#L150">packages/k8s/src/containers.ts:150</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -215,7 +217,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/containers.ts#L136">packages/k8s/src/containers.ts:136</a></li>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/containers.ts#L166">packages/k8s/src/containers.ts:166</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -258,6 +260,64 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="appendport" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> append<wbr>Port</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">append<wbr>Port<span class="tsd-signature-symbol">(</span>containerPort<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, name<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span>, protocol<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span>&lt;T&gt;<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">T</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/containers.ts#L37">packages/k8s/src/containers.ts:37</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Appends a port to a container</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>containerPort: <span class="tsd-signature-type">number</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> name: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> protocol: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns &lt;T&gt;<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">T</span></h4>
+							<ul class="tsd-parameters">
+								<li class="tsd-parameter-signature">
+									<ul class="tsd-signatures tsd-kind-type-literal tsd-has-type-parameter">
+										<li class="tsd-signature tsd-kind-icon">&lt;T&gt;<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span></li>
+									</ul>
+									<ul class="tsd-descriptions">
+										<li class="tsd-description">
+											<h4 class="tsd-type-parameters-title">Type parameters</h4>
+											<ul class="tsd-type-parameters">
+												<li>
+													<h4>T</h4>
+												</li>
+											</ul>
+											<h4 class="tsd-parameters-title">Parameters</h4>
+											<ul class="tsd-parameters">
+												<li>
+													<h5>value: <span class="tsd-signature-type">T</span></h5>
+												</li>
+											</ul>
+											<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span></h4>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
 					<a name="appendvolumemount" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> append<wbr>Volume<wbr>Mount</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
@@ -267,7 +327,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/containers.ts#L152">packages/k8s/src/containers.ts:152</a></li>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/containers.ts#L182">packages/k8s/src/containers.ts:182</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -325,7 +385,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/containers.ts#L59">packages/k8s/src/containers.ts:59</a></li>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/containers.ts#L89">packages/k8s/src/containers.ts:89</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -372,7 +432,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/containers.ts#L20">packages/k8s/src/containers.ts:20</a></li>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/containers.ts#L21">packages/k8s/src/containers.ts:21</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -406,7 +466,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/containers.ts#L36">packages/k8s/src/containers.ts:36</a></li>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/containers.ts#L59">packages/k8s/src/containers.ts:59</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -433,6 +493,48 @@
 						</li>
 					</ul>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="containerwithports" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> container<wbr>With<wbr>Ports</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">container<wbr>With<wbr>Ports<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, image<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, ports<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{}</span>, toMerge<span class="tsd-signature-symbol">?: </span><a href="_common_.html#deeppartial" class="tsd-signature-type">DeepPartial</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Container</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Container</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/containers.ts#L69">packages/k8s/src/containers.ts:69</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Creates a container with the provided name, image and ports.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>name: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>image: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>ports: <span class="tsd-signature-symbol">{}</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-index-signature">
+											<h5><span class="tsd-signature-symbol">[</span>name: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]: </span><span class="tsd-signature-type">number</span></h5>
+										</li>
+									</ul>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> toMerge: <a href="_common_.html#deeppartial" class="tsd-signature-type">DeepPartial</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Container</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Container</span></h4>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-is-not-exported">
 					<a name="createprobe" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> create<wbr>Probe</h3>
@@ -443,7 +545,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/containers.ts#L173">packages/k8s/src/containers.ts:173</a></li>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/containers.ts#L203">packages/k8s/src/containers.ts:203</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -469,7 +571,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/containers.ts#L215">packages/k8s/src/containers.ts:215</a></li>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/containers.ts#L245">packages/k8s/src/containers.ts:245</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -521,7 +623,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/containers.ts#L210">packages/k8s/src/containers.ts:210</a></li>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/containers.ts#L240">packages/k8s/src/containers.ts:240</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -573,7 +675,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/containers.ts#L204">packages/k8s/src/containers.ts:204</a></li>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/containers.ts#L234">packages/k8s/src/containers.ts:234</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -625,7 +727,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/containers.ts#L196">packages/k8s/src/containers.ts:196</a></li>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/containers.ts#L226">packages/k8s/src/containers.ts:226</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -653,7 +755,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/containers.ts#L188">packages/k8s/src/containers.ts:188</a></li>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/containers.ts#L218">packages/k8s/src/containers.ts:218</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -681,7 +783,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/containers.ts#L103">packages/k8s/src/containers.ts:103</a></li>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/containers.ts#L133">packages/k8s/src/containers.ts:133</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -733,7 +835,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/containers.ts#L90">packages/k8s/src/containers.ts:90</a></li>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/containers.ts#L120">packages/k8s/src/containers.ts:120</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -863,6 +965,9 @@
 						<a href="_containers_.html#appendenvfromsecret" class="tsd-kind-icon">append<wbr>Env<wbr>From<wbr>Secret</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="_containers_.html#appendport" class="tsd-kind-icon">append<wbr>Port</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
 						<a href="_containers_.html#appendvolumemount" class="tsd-kind-icon">append<wbr>Volume<wbr>Mount</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
@@ -873,6 +978,9 @@
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
 						<a href="_containers_.html#containerwithport" class="tsd-kind-icon">container<wbr>With<wbr>Port</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="_containers_.html#containerwithports" class="tsd-kind-icon">container<wbr>With<wbr>Ports</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module tsd-is-not-exported">
 						<a href="_containers_.html#createprobe" class="tsd-kind-icon">create<wbr>Probe</a>
