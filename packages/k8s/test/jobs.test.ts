@@ -51,6 +51,7 @@ describe("jobWithContainer", () =>
           completions: 1,
           template: {
             spec: {
+              restartPolicy: "OnFailure",
               containers: [
                 {
                   name: "fancyjob",

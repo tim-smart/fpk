@@ -3,6 +3,7 @@ import { describe } from "mocha";
 import { runCases } from "./helpers";
 import * as R from "ramda";
 import { PodTemplateSpec } from "kubernetes-types/core/v1";
+import { Deployment } from "kubernetes-types/apps/v1";
 
 describe("getPodTemplate", () =>
   runCases([
@@ -241,5 +242,23 @@ describe("appendVolumeAndMount", () =>
           },
         },
       },
+    },
+  ]));
+
+describe("setRestartPolicy", () =>
+  runCases([
+    {
+      it: "sets the restartPolicy for the pod template",
+      in: K.deployment("myapp"),
+      fn: K.setRestartPolicy("OnFailure"),
+      diff: {
+        spec: {
+          template: {
+            spec: {
+              restartPolicy: "OnFailure",
+            },
+          },
+        },
+      } as Deployment,
     },
   ]));

@@ -171,3 +171,9 @@ export const appendVolumeAndMount = ({
       appendVolumeMount(volume.name, mountPath, mount),
     ),
   );
+
+/**
+ * Returns a function that sets the restart policy for the resource
+ */
+export const setRestartPolicy = (policy: string) =>
+  overPodTemplate(R.assocPath(["spec", "restartPolicy"], policy));

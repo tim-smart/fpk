@@ -7,11 +7,10 @@ import {
   concatEnv,
   setResourceRequests,
   setResourceLimits,
-  containerWithPort,
   container,
 } from "./containers";
 import { Container, ResourceRequirements } from "kubernetes-types/core/v1";
-import { appendContainer } from "./podTemplates";
+import { appendContainer, setRestartPolicy } from "./podTemplates";
 
 /**
  * Creates a job resource
@@ -71,6 +70,7 @@ export const jobWithContainer = (
         R.when(() => !!resourceLimits, setResourceLimits(resourceLimits)),
       )(),
     ),
+    setRestartPolicy("OnFailure"),
     (j) => maybeMergeResource<Job>(j, toMerge),
   )(
     job(name, {
