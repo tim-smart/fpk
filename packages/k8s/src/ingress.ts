@@ -7,6 +7,7 @@ import {
 import * as R from "ramda";
 import { DeepPartial } from "./common";
 import { annotate, maybeMergeResource, resource } from "./resources";
+import { Service } from "kubernetes-types/core/v1";
 
 export const ingress = (
   name: string,
@@ -95,6 +96,26 @@ export const ingressSimple = (
       annotate("ingress.kubernetes.io/force-ssl-redirect", "true"),
     ),
   )(ingress(name, rulesToSpec(rules), toMerge));
+
+/**
+ * Create an ingress from a Service
+ */
+export const ingressFromService = (
+  name: string,
+  hosts: string[],
+  svc: Service,
+  tls = true,
+) =>
+  ingressSimple(name, {
+    backend: {
+      serviceName: svc.metadata!.name!,
+      servicePort: svc.spec!.ports![0].port,
+    },
+    tlsRedirect: tls,
+    tlsAcme: tls,
+    tlsSecretName: `${name}-tls`,
+    rules: R.map((host) => ({ host }), hosts),
+  });
 
 /**
  * Returns a function that sets basic auth annotations on the ingress.

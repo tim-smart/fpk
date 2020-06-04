@@ -156,6 +156,64 @@ describe("ingressSimple", () =>
     },
   ]));
 
+describe("ingressFromService", () =>
+  runCases([
+    {
+      it: "creates an ingress resource from a service",
+      in: K.ingress("myingress", {}),
+      fn: (_) =>
+        K.ingressFromService(
+          "myingress",
+          ["example.com", "foo.example.com"],
+          K.serviceWithPorts("myapp", {}, { http: 1337 }),
+        ),
+      diff: {
+        metadata: {
+          annotations: {
+            "ingress.kubernetes.io/force-ssl-redirect": "true",
+            "kubernetes.io/tls-acme": "true",
+          },
+        },
+        spec: {
+          rules: [
+            {
+              host: "example.com",
+              http: {
+                paths: [
+                  {
+                    backend: {
+                      serviceName: "myapp",
+                      servicePort: 1337,
+                    },
+                  },
+                ],
+              },
+            },
+            {
+              host: "foo.example.com",
+              http: {
+                paths: [
+                  {
+                    backend: {
+                      serviceName: "myapp",
+                      servicePort: 1337,
+                    },
+                  },
+                ],
+              },
+            },
+          ],
+          tls: [
+            {
+              hosts: ["example.com", "foo.example.com"],
+              secretName: "myingress-tls",
+            },
+          ],
+        },
+      } as Ingress,
+    },
+  ]));
+
 describe("setBasicAuth", () =>
   runCases([
     {
