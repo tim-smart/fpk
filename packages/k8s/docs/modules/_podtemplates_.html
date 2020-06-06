@@ -81,11 +81,14 @@
 							<h3>Functions</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_podtemplates_.html#appendcontainer" class="tsd-kind-icon">append<wbr>Container</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_podtemplates_.html#appendinitcontainer" class="tsd-kind-icon">append<wbr>Init<wbr>Container</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_podtemplates_.html#appendvolume" class="tsd-kind-icon">append<wbr>Volume</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_podtemplates_.html#appendvolumeandmount" class="tsd-kind-icon">append<wbr>Volume<wbr>And<wbr>Mount</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_podtemplates_.html#concatcontainers" class="tsd-kind-icon">concat<wbr>Containers</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_podtemplates_.html#concatinitcontainers" class="tsd-kind-icon">concat<wbr>Init<wbr>Containers</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_podtemplates_.html#overcontainer" class="tsd-kind-icon">over<wbr>Container</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_podtemplates_.html#overcontainers" class="tsd-kind-icon">over<wbr>Containers</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_podtemplates_.html#overinitcontainer" class="tsd-kind-icon">over<wbr>Init<wbr>Container</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_podtemplates_.html#overpodtemplate" class="tsd-kind-icon">over<wbr>Pod<wbr>Template</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter tsd-is-not-exported"><a href="_podtemplates_.html#podtemplatelens" class="tsd-kind-icon">pod<wbr>Template<wbr>Lens</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_podtemplates_.html#setrestartpolicy" class="tsd-kind-icon">set<wbr>Restart<wbr>Policy</a></li>
@@ -220,6 +223,38 @@ container<span class="hljs-constructor">Pusher(<span class="hljs-params">daemonS
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="appendinitcontainer" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> append<wbr>Init<wbr>Container</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">append<wbr>Init<wbr>Container<span class="tsd-signature-symbol">(</span>container<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Container</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">(Anonymous function)</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/podTemplates.ts#L144">packages/k8s/src/podTemplates.ts:144</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns a function that appends the init container to the given resource.</p>
+								</div>
+								<pre><code>const containerPusher = append<span class="hljs-constructor">InitContainer({ <span class="hljs-params">image</span>: <span class="hljs-string">"fancyimage"</span> })</span>;
+
+container<span class="hljs-constructor">Pusher(<span class="hljs-params">deployment</span>)</span>;
+container<span class="hljs-constructor">Pusher(<span class="hljs-params">daemonSet</span>)</span>;</code></pre>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>container: <span class="tsd-signature-type">Container</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">(Anonymous function)</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
 					<a name="appendvolume" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> append<wbr>Volume</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
@@ -229,7 +264,7 @@ container<span class="hljs-constructor">Pusher(<span class="hljs-params">daemonS
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/podTemplates.ts#L145">packages/k8s/src/podTemplates.ts:145</a></li>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/podTemplates.ts#L194">packages/k8s/src/podTemplates.ts:194</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -257,7 +292,7 @@ container<span class="hljs-constructor">Pusher(<span class="hljs-params">daemonS
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/podTemplates.ts#L156">packages/k8s/src/podTemplates.ts:156</a></li>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/podTemplates.ts#L205">packages/k8s/src/podTemplates.ts:205</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -324,6 +359,38 @@ container<span class="hljs-constructor">Pusher(<span class="hljs-params">daemonS
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="concatinitcontainers" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> concat<wbr>Init<wbr>Containers</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">concat<wbr>Init<wbr>Containers<span class="tsd-signature-symbol">(</span>containers<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Container</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">(Anonymous function)</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/podTemplates.ts#L126">packages/k8s/src/podTemplates.ts:126</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns a function that concats a list of init containers to the given resource.</p>
+								</div>
+								<pre><code>const containerPusher = concat<span class="hljs-constructor">InitContainers([{ <span class="hljs-params">image</span>: <span class="hljs-string">"fancyimage"</span> }])</span>;
+
+container<span class="hljs-constructor">Pusher(<span class="hljs-params">deployment</span>)</span>;
+container<span class="hljs-constructor">Pusher(<span class="hljs-params">daemonSet</span>)</span>;</code></pre>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>containers: <span class="tsd-signature-type">Container</span><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">(Anonymous function)</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
 					<a name="overcontainer" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> over<wbr>Container</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
@@ -333,7 +400,7 @@ container<span class="hljs-constructor">Pusher(<span class="hljs-params">daemonS
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/podTemplates.ts#L128">packages/k8s/src/podTemplates.ts:128</a></li>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/podTemplates.ts#L159">packages/k8s/src/podTemplates.ts:159</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -383,7 +450,7 @@ container<span class="hljs-constructor">Pusher(<span class="hljs-params">daemonS
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/podTemplates.ts#L119">packages/k8s/src/podTemplates.ts:119</a></li>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/podTemplates.ts#L150">packages/k8s/src/podTemplates.ts:150</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -409,6 +476,56 @@ container<span class="hljs-constructor">Pusher(<span class="hljs-params">daemonS
 														</li>
 													</ul>
 													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Container</span><span class="tsd-signature-symbol">[]</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">(Anonymous function)</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="overinitcontainer" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> over<wbr>Init<wbr>Container</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">over<wbr>Init<wbr>Container<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, fn<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>container<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Container</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Container</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">(Anonymous function)</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/podTemplates.ts#L177">packages/k8s/src/podTemplates.ts:177</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns a function that finds an init container by name, and runs the
+									transformer over it in a resource.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>name: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>fn: <span class="tsd-signature-symbol">(</span>container<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Container</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Container</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-signature">
+											<ul class="tsd-signatures tsd-kind-type-literal">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>container<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Container</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Container</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>container: <span class="tsd-signature-type">Container</span></h5>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Container</span></h4>
 												</li>
 											</ul>
 										</li>
@@ -510,7 +627,7 @@ setEmptyContainers(<span class="hljs-name">cronjob</span>)</code></pre>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/podTemplates.ts#L178">packages/k8s/src/podTemplates.ts:178</a></li>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/podTemplates.ts#L227">packages/k8s/src/podTemplates.ts:227</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -676,6 +793,9 @@ setEmptyContainers(<span class="hljs-name">cronjob</span>)</code></pre>
 						<a href="_podtemplates_.html#appendcontainer" class="tsd-kind-icon">append<wbr>Container</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="_podtemplates_.html#appendinitcontainer" class="tsd-kind-icon">append<wbr>Init<wbr>Container</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
 						<a href="_podtemplates_.html#appendvolume" class="tsd-kind-icon">append<wbr>Volume</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
@@ -685,10 +805,16 @@ setEmptyContainers(<span class="hljs-name">cronjob</span>)</code></pre>
 						<a href="_podtemplates_.html#concatcontainers" class="tsd-kind-icon">concat<wbr>Containers</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="_podtemplates_.html#concatinitcontainers" class="tsd-kind-icon">concat<wbr>Init<wbr>Containers</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
 						<a href="_podtemplates_.html#overcontainer" class="tsd-kind-icon">over<wbr>Container</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
 						<a href="_podtemplates_.html#overcontainers" class="tsd-kind-icon">over<wbr>Containers</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="_podtemplates_.html#overinitcontainer" class="tsd-kind-icon">over<wbr>Init<wbr>Container</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
 						<a href="_podtemplates_.html#overpodtemplate" class="tsd-kind-icon">over<wbr>Pod<wbr>Template</a>
