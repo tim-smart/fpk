@@ -114,6 +114,37 @@ export const appendContainer = (container: Container) =>
   concatContainers([container]);
 
 /**
+ * Returns a function that concats a list of init containers to the given resource.
+ *
+ * ```
+ * const containerPusher = concatInitContainers([{ image: "fancyimage" }]);
+ *
+ * containerPusher(deployment);
+ * containerPusher(daemonSet);
+ * ```
+ */
+export const concatInitContainers = (containers: Container[]) =>
+  overPodTemplate(
+    R.over(
+      R.lensPath(["spec", "initContainers"]),
+      R.pipe(R.defaultTo([]), R.concat(R.__, containers)),
+    ),
+  );
+
+/**
+ * Returns a function that appends the init container to the given resource.
+ *
+ * ```
+ * const containerPusher = appendInitContainer({ image: "fancyimage" });
+ *
+ * containerPusher(deployment);
+ * containerPusher(daemonSet);
+ * ```
+ */
+export const appendInitContainer = (container: Container) =>
+  concatInitContainers([container]);
+
+/**
  * Returns a function that runs the given containers transformer in a resource.
  */
 export const overContainers = (fn: (containers: Container[]) => Container[]) =>
@@ -132,6 +163,24 @@ export const overContainer = (
   overPodTemplate(
     R.over(
       R.lensPath(["spec", "containers"]),
+      R.pipe(
+        R.defaultTo([]),
+        R.map(R.when(R.pipe(R.prop("name"), R.equals(name)), fn)),
+      ),
+    ),
+  );
+
+/**
+ * Returns a function that finds an init container by name, and runs the
+ * transformer over it in a resource.
+ */
+export const overInitContainer = (
+  name: string,
+  fn: (container: Container) => Container,
+) =>
+  overPodTemplate(
+    R.over(
+      R.lensPath(["spec", "initContainers"]),
       R.pipe(
         R.defaultTo([]),
         R.map(R.when(R.pipe(R.prop("name"), R.equals(name)), fn)),

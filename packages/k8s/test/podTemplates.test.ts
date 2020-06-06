@@ -112,6 +112,45 @@ describe("appendContainer", () =>
     },
   ]));
 
+describe("concatInitContainers", () =>
+  runCases([
+    {
+      it: "adds a list of init containers",
+      in: K.deployment("myapp"),
+      fn: K.concatInitContainers([
+        { name: "container1" },
+        { name: "container2" },
+      ]),
+      diff: {
+        spec: {
+          template: {
+            spec: {
+              initContainers: [{ name: "container1" }, { name: "container2" }],
+            },
+          },
+        },
+      },
+    },
+  ]));
+
+describe("appendInitContainer", () =>
+  runCases([
+    {
+      it: "adds an init container",
+      in: K.deployment("myapp"),
+      fn: K.appendInitContainer({ name: "container1" }),
+      diff: {
+        spec: {
+          template: {
+            spec: {
+              initContainers: [{ name: "container1" }],
+            },
+          },
+        },
+      },
+    },
+  ]));
+
 describe("overContainers", () =>
   runCases([
     {
@@ -158,6 +197,36 @@ describe("overContainer", () =>
           template: {
             spec: {
               containers: {
+                "0": {
+                  env: [{ name: "FOO", value: "bar" }],
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  ]));
+
+describe("overInitContainer", () =>
+  runCases([
+    {
+      it: "runs the function over the specified init container",
+      in: K.appendInitContainer({
+        name: "mycontainer",
+        image: "anotherimage",
+      })(K.deployment("myapp")),
+      fn: K.overInitContainer(
+        "mycontainer",
+        K.concatEnv({
+          FOO: "bar",
+        }),
+      ),
+      diff: {
+        spec: {
+          template: {
+            spec: {
+              initContainers: {
                 "0": {
                   env: [{ name: "FOO", value: "bar" }],
                 },
