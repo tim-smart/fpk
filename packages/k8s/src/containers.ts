@@ -182,14 +182,14 @@ export const appendEnvFromSecret = (secret: Secret) =>
 export const appendVolumeMount = (
   name: string,
   mountPath: string,
-  merge: DeepPartial<VolumeMount>,
+  merge?: DeepPartial<VolumeMount>,
 ) =>
   R.over(
     R.lensProp("volumeMounts"),
     R.pipe(
       R.defaultTo([]),
       R.append(
-        R.mergeRight(
+        maybeMergeResource<VolumeMount>(
           {
             name,
             mountPath,
