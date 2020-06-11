@@ -21,6 +21,10 @@ class FpkCli extends Command {
       description: "source directory",
       required: true,
     }),
+    ignore: flags.string({
+      char: "i",
+      description: "pattern of files to ignore in the source directory",
+    }),
     output: flags.string({
       char: "o",
       description: "output directory",
@@ -73,6 +77,7 @@ class FpkCli extends Command {
       return generate(flags.source, flags.output, {
         context,
         format: flags.format,
+        ignore: flags.ignore,
       });
     };
 
