@@ -20,8 +20,9 @@ export function configs$(
   context: any,
   formats: Map<string, IFormat>,
   format: string,
+  ignore?: string,
 ): Rx.Observable<IConfig> {
-  return files$(dir).pipe(
+  return files$(dir, ignore).pipe(
     RxOp.flatMap((file) => {
       if ([".js", ".ts"].includes(path.extname(file))) {
         return Rx.of(file).pipe(

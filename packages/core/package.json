@@ -13,6 +13,7 @@
   },
   "devDependencies": {
     "@types/chai": "^4.2.11",
+    "@types/glob-to-regexp": "^0.4.0",
     "@types/js-yaml": "^3.12.4",
     "@types/mocha": "^7.0.2",
     "@types/ncp": "^2.0.4",
@@ -28,6 +29,7 @@
   },
   "dependencies": {
     "fs-tree-diff": "^2.0.1",
+    "glob-to-regexp": "^0.4.1",
     "js-yaml": "^3.14.0",
     "ramda": "^0.27.0",
     "rxjs": "^6.5.5"

@@ -16,23 +16,16 @@ import * as path from "path";
 export interface IGenerateOpts {
   context: any;
   format: string;
+  ignore?: string;
 }
 
 export function generate(
   inputDir: string,
   outDir: string,
-  opts: Partial<IGenerateOpts> = {},
+  { format = "yaml", context = {}, ignore }: Partial<IGenerateOpts> = {},
 ) {
   inputDir = path.resolve(inputDir);
   outDir = path.resolve(outDir);
-
-  const { context, format } = R.mergeRight(
-    {
-      format: "yaml",
-      context: {},
-    },
-    opts,
-  );
 
   if (!formats.has(format)) {
     throw new Error(`Format ${format} is not registered.`);
@@ -47,7 +40,7 @@ export function generate(
     fs.mkdirSync(outDir);
   }
 
-  const inputConfigs$ = configs$(inputDir, context, formats, format);
+  const inputConfigs$ = configs$(inputDir, context, formats, format, ignore);
   const inputConfigsArray$ = inputConfigs$.pipe(RxOp.toArray());
   const outputFT$ = files$(outDir).pipe(toFileTree(outDir));
   const inputFT$ = inputConfigs$.pipe(configsToFiles(), toFileTree(inputDir));

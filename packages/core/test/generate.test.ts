@@ -9,6 +9,32 @@ import ncp from "ncp";
 
 const examples = fs.readdirSync(path.join(__dirname, "examples"));
 
+interface ITestCase {
+  inDir: string;
+  outDir: string;
+  genDir: string;
+  context?: any;
+  format?: string;
+  ignore?: string;
+}
+
+function testCase(
+  itString: string,
+  { genDir, inDir, outDir, context, format, ignore }: ITestCase,
+) {
+  it(itString, (done) => {
+    rmrf(genDir);
+
+    generate(inDir, genDir, { format, context, ignore })
+      .then(() => compare(genDir, outDir, { compareContent: true }))
+      .then((r) => {
+        expect(r.same).to.equal(true);
+        done();
+      })
+      .catch(done);
+  });
+}
+
 describe("generate", () => {
   examples
     .filter((f) => !f.startsWith("_"))
@@ -17,19 +43,10 @@ describe("generate", () => {
       const genDir = path.join(__dirname, "examples", example, "gen");
       const outDir = path.join(__dirname, "examples", example, "out");
 
-      it(`generates ${example} correctly`, (done) => {
-        rmrf(genDir);
-        generate(inDir, genDir)
-          .then(() =>
-            compare(genDir, outDir, {
-              compareContent: true,
-            }),
-          )
-          .then((r) => {
-            expect(r.same).to.equal(true);
-            done();
-          })
-          .catch(done);
+      testCase(`generates ${example} correctly`, {
+        inDir,
+        genDir,
+        outDir,
       });
     });
 
@@ -53,44 +70,25 @@ describe("generate", () => {
     });
   });
 
-  it("works with context", (done) => {
-    const inDir = path.join(__dirname, "examples/_context-test/in");
-    const genDir = path.join(__dirname, "examples/_context-test/gen");
-    const outDir = path.join(__dirname, "examples/_context-test/out");
-
-    rmrf(genDir);
-
-    generate(inDir, genDir, {
-      context: {
-        value: "secret",
-      },
-    })
-      .then(() => compare(genDir, outDir, { compareContent: true }))
-      .then((r) => {
-        expect(r.same).to.equal(true);
-        done();
-      })
-      .catch(done);
+  testCase("works with context", {
+    context: { value: "secret" },
+    inDir: path.join(__dirname, "examples/_context-test/in"),
+    genDir: path.join(__dirname, "examples/_context-test/gen"),
+    outDir: path.join(__dirname, "examples/_context-test/out"),
   });
 
-  it("works with json", (done) => {
-    const inDir = path.join(__dirname, "examples/_json-test/in");
-    const genDir = path.join(__dirname, "examples/_json-test/gen");
-    const outDir = path.join(__dirname, "examples/_json-test/out");
+  testCase("works with json", {
+    format: "json",
+    context: { value: "secret" },
+    inDir: path.join(__dirname, "examples/_json-test/in"),
+    genDir: path.join(__dirname, "examples/_json-test/gen"),
+    outDir: path.join(__dirname, "examples/_json-test/out"),
+  });
 
-    rmrf(genDir);
-
-    generate(inDir, genDir, {
-      format: "json",
-      context: {
-        value: "secret",
-      },
-    })
-      .then(() => compare(genDir, outDir, { compareContent: true }))
-      .then((r) => {
-        expect(r.same).to.equal(true);
-        done();
-      })
-      .catch(done);
+  testCase("works with ignore", {
+    ignore: "*.ts",
+    inDir: path.join(__dirname, "examples/_ignore-test/in"),
+    genDir: path.join(__dirname, "examples/_ignore-test/gen"),
+    outDir: path.join(__dirname, "examples/_ignore-test/out"),
   });
 });
