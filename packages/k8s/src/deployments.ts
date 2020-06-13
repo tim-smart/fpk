@@ -13,6 +13,7 @@ import {
   concatEnv,
   setResourceRequests,
   setResourceLimits,
+  containerWithPorts,
 } from "./containers";
 import { Container, ResourceRequirements } from "kubernetes-types/core/v1";
 import { maybeMergeResource, resource } from "./resources";
@@ -53,7 +54,7 @@ export interface IDeploymentWithContainerOpts {
   name: string;
   replicas?: number;
   image: string;
-  containerPort?: number;
+  ports?: { [name: string]: number };
   env?: IEnvObject;
   container?: DeepPartial<Container>;
 
@@ -70,7 +71,7 @@ export const deploymentWithContainer = (
     name,
     replicas = 1,
     image,
-    containerPort,
+    ports,
     container: containerToMerge,
     env,
     resourceLimits,
@@ -86,8 +87,8 @@ export const deploymentWithContainer = (
         R.when(() => !!resourceRequests, setResourceRequests(resourceRequests)),
         R.when(() => !!resourceLimits, setResourceLimits(resourceLimits)),
       )(
-        containerPort
-          ? containerWithPort(name, image, containerPort, containerToMerge)
+        ports
+          ? containerWithPorts(name, image, ports, containerToMerge)
           : container(name, image, containerToMerge),
       ),
     ),

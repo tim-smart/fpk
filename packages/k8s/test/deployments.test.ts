@@ -82,7 +82,7 @@ describe("deploymentWithContainer", () =>
           name: "fancyapp",
           replicas: 5,
           image: "fancyimage",
-          containerPort: 3000,
+          ports: { http: 3000 },
           env: {
             FOO: "bar",
           },
@@ -100,7 +100,7 @@ describe("deploymentWithContainer", () =>
                 "0": {
                   name: "fancyapp",
                   image: "fancyimage",
-                  ports: [{ containerPort: 3000 }],
+                  ports: [{ name: "http", containerPort: 3000 }],
                   env: [{ name: "FOO", value: "bar" }],
                   resources: {
                     requests: {
