@@ -9,7 +9,7 @@ import { promises as fsp } from "fs";
 export interface IConfig
   extends Readonly<{
     file: string;
-    contents: string;
+    contents: string | Buffer;
   }> {}
 
 /**
@@ -130,9 +130,9 @@ export const resolveConfigFromContents = (dir: string) => (
     // Load contents from file
     RxOp.flatMap((file) =>
       Rx.from(fsp.readFile(file)).pipe(
-        RxOp.map((blob) => ({
+        RxOp.map((contents) => ({
           file,
-          contents: blob.toString("utf8"),
+          contents,
         })),
       ),
     ),
