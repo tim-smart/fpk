@@ -16,7 +16,7 @@ export function toFileTree(dir: string) {
 
 export interface IInputContents
   extends Readonly<{
-    [file: string]: string;
+    [file: string]: Buffer | string;
   }> {}
 
 export function calculatePatch(
@@ -29,12 +29,13 @@ export function calculatePatch(
       return a.isDirectory() && b.isDirectory();
     }
 
-    const aContent = contents[a.relativePath];
-    const bContent = fs
-      .readFileSync(path.join(outDir, b.relativePath))
-      .toString("utf8");
+    const aContent =
+      typeof contents[a.relativePath] === "string"
+        ? Buffer.from(contents[a.relativePath])
+        : (contents[a.relativePath] as Buffer);
+    const bContent = fs.readFileSync(path.join(outDir, b.relativePath));
 
-    return aContent.trim() === bContent.trim();
+    return aContent.compare(bContent) === 0;
   });
 }
 
