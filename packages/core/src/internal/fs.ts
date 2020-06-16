@@ -16,7 +16,7 @@ export function files$(dir: string, ignore?: string): Rx.Observable<string> {
       ),
     ),
     RxOp.flatMap((f) =>
-      f.isDir ? files$(`${dir}/${f.file}`) : Rx.of(`${dir}/${f.file}`),
+      f.isDir ? files$(`${dir}/${f.file}`, ignore) : Rx.of(`${dir}/${f.file}`),
     ),
   );
 }
