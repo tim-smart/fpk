@@ -62,7 +62,7 @@ class FpkCli extends Command {
 
         case ".yaml":
         case ".yml":
-          context = safeLoad(contextBlob.toString("utf8"));
+          context = safeLoad(contextBlob.toString("utf8")) as object;
           break;
 
         default:
