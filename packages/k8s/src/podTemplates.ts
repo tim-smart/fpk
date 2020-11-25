@@ -197,11 +197,8 @@ export const overFirstInitContainer = (
  * Returns a function that adds a volume to the pod template.
  */
 export const appendVolume = (volume: Volume) =>
-  overPodTemplate(
-    R.over(
-      R.lensPath(["spec", "volumes"]),
-      R.pipe(R.defaultTo([]), R.append(volume)),
-    ),
+  overPodTemplatePath<Volume[]>(["spec", "volumes"])(
+    R.pipe(R.defaultTo([]), R.append(volume)),
   );
 
 /**

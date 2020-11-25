@@ -108,6 +108,40 @@ describe("concatEnv", () =>
         ],
       } as Container,
     },
+    {
+      it: "adds extra environment variables for a container",
+      in: K.container("myapp", "image", {
+        env: [
+          {
+            name: "TEST",
+            value: "123",
+          },
+        ],
+      }),
+      fn: K.concatEnv({
+        FOO: "bar",
+        BAR: {
+          secretKeyRef: {
+            name: "mysecret",
+            key: "password",
+          },
+        },
+      }),
+      diff: {
+        env: {
+          "1": { name: "FOO", value: "bar" },
+          "2": {
+            name: "BAR",
+            valueFrom: {
+              secretKeyRef: {
+                name: "mysecret",
+                key: "password",
+              },
+            },
+          },
+        },
+      },
+    },
   ]));
 
 describe("setResourceRequests", () =>
