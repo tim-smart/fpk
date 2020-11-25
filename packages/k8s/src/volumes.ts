@@ -3,26 +3,46 @@ import {
   Volume,
   ConfigMap,
   PersistentVolumeClaim,
+  SecretVolumeSource,
+  ConfigMapVolumeSource,
+  PersistentVolumeClaimVolumeSource,
+  HostPathVolumeSource,
 } from "kubernetes-types/core/v1";
+import { DeepPartial } from "./common";
+import { maybeMergeResource } from "./resources";
 
 /**
  * Create a volume from a secret
  */
-export const volumeFromSecret = (name: string, secret: Secret): Volume => ({
+export const volumeFromSecret = (
+  name: string,
+  secret: Secret,
+  toMerge?: DeepPartial<SecretVolumeSource>,
+): Volume => ({
   name,
-  secret: {
-    secretName: secret.metadata!.name,
-  },
+  secret: maybeMergeResource<SecretVolumeSource>(
+    {
+      secretName: secret.metadata!.name,
+    },
+    toMerge,
+  ),
 });
 
 /**
  * Create a volume from a configmap
  */
-export const volumeFromConfigMap = (name: string, cm: ConfigMap): Volume => ({
+export const volumeFromConfigMap = (
+  name: string,
+  cm: ConfigMap,
+  toMerge?: DeepPartial<ConfigMapVolumeSource>,
+): Volume => ({
   name,
-  configMap: {
-    name: cm.metadata!.name,
-  },
+  configMap: maybeMergeResource<ConfigMapVolumeSource>(
+    {
+      name: cm.metadata!.name,
+    },
+    toMerge,
+  ),
 });
 
 /**
@@ -31,21 +51,30 @@ export const volumeFromConfigMap = (name: string, cm: ConfigMap): Volume => ({
 export const volumeFromPvc = (
   name: string,
   pvc: PersistentVolumeClaim,
-  readOnly = false,
+  toMerge?: DeepPartial<PersistentVolumeClaimVolumeSource>,
 ): Volume => ({
   name,
-  persistentVolumeClaim: {
-    claimName: pvc.metadata!.name!,
-    readOnly,
-  },
+  persistentVolumeClaim: maybeMergeResource<PersistentVolumeClaimVolumeSource>(
+    {
+      claimName: pvc.metadata!.name!,
+    },
+    toMerge,
+  ),
 });
 
 /**
  * Create a volume from a host directory
  */
-export const volumeFromHostPath = (name: string, path: string): Volume => ({
+export const volumeFromHostPath = (
+  name: string,
+  path: string,
+  toMerge?: DeepPartial<HostPathVolumeSource>,
+): Volume => ({
   name,
-  hostPath: {
-    path,
-  },
+  hostPath: maybeMergeResource<HostPathVolumeSource>(
+    {
+      path,
+    },
+    toMerge,
+  ),
 });

@@ -7,7 +7,7 @@ export interface ITestCase<I> {
   it: string;
   in: I;
   fn(input: I): any;
-  diff: object;
+  diff: any;
 }
 
 export function runCases(cases: ITestCase<any>[]) {

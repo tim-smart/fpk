@@ -15,7 +15,7 @@ import {
   setResourceLimits,
   containerWithPorts,
 } from "./containers";
-import { Container, ResourceRequirements } from "kubernetes-types/core/v1";
+import { Container } from "kubernetes-types/core/v1";
 import { maybeMergeResource, resource } from "./resources";
 
 /**
@@ -50,50 +50,19 @@ export const deployment = (
     toMerge,
   );
 
-export interface IDeploymentWithContainerOpts {
-  name: string;
-  replicas?: number;
-  image: string;
-  ports?: { [name: string]: number };
-  env?: IEnvObject;
-  container?: DeepPartial<Container>;
-
-  resourceRequests?: ResourceRequirements["requests"];
-  resourceLimits?: ResourceRequirements["limits"];
-}
-
 /**
  * Creates a deployment with a single container. Has a couple options to help
  * make creating deployments easier.
  */
 export const deploymentWithContainer = (
-  {
-    name,
-    replicas = 1,
-    image,
-    ports,
-    container: containerToMerge,
-    env,
-    resourceLimits,
-    resourceRequests,
-  }: IDeploymentWithContainerOpts,
+  container: Container,
   toMerge?: DeepPartial<Deployment>,
 ) =>
   R.pipe(
-    setReplicas(replicas),
-    appendContainer(
-      R.pipe(
-        R.when(() => !!env, concatEnv(env!)),
-        R.when(() => !!resourceRequests, setResourceRequests(resourceRequests)),
-        R.when(() => !!resourceLimits, setResourceLimits(resourceLimits)),
-      )(
-        ports
-          ? containerWithPorts(name, image, ports, containerToMerge)
-          : container(name, image, containerToMerge),
-      ),
-    ),
+    R.always(deployment(container.name)),
+    appendContainer(container),
     (d: Deployment) => maybeMergeResource<Deployment>(d, toMerge),
-  )(deployment(name));
+  )();
 
 /**
  * Returns a funciton that sets `spec.replicas` to the given number.

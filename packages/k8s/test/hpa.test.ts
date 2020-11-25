@@ -11,17 +11,17 @@ describe("hpa", () =>
         K.hpa(
           "myhpa",
           {
-            minReplicas: 1,
-            maxReplicas: 5,
-            scaleTargetRef: {
-              apiVersion: "v1",
-              kind: "Deployment",
-              name: "myapp",
-            },
+            apiVersion: "v1",
+            kind: "Deployment",
+            name: "myapp",
           },
           {
             metadata: {
               labels: { test: "ing" },
+            },
+            spec: {
+              minReplicas: 1,
+              maxReplicas: 5,
             },
           },
         ),

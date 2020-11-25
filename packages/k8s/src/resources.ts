@@ -54,3 +54,13 @@ export const objectRef = (
   kind: resource.kind!,
   name: resource.metadata!.name!,
 });
+
+export const matches = <R extends IResource>(kind: string, name?: string) => (
+  r: R,
+): boolean => r.kind === kind && (name ? r.metadata?.name === name : true);
+
+export const overResource = <R extends IResource>(
+  kind: R["kind"],
+  name?: string,
+) => (fn: (resource: R) => R) => (obj: { [key: string]: any }) =>
+  R.mapObjIndexed(R.when(matches(kind!, name), fn), obj);

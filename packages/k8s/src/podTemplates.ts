@@ -93,12 +93,7 @@ export const overPodTemplate = (
  * ```
  */
 export const concatContainers = (containers: Container[]) =>
-  overPodTemplate(
-    R.over(
-      R.lensPath(["spec", "containers"]),
-      R.pipe(R.defaultTo([]), R.concat(R.__, containers)),
-    ),
-  );
+  overContainers(R.concat(R.__, containers));
 
 /**
  * Returns a function that appends the container to the given resource.
@@ -124,12 +119,7 @@ export const appendContainer = (container: Container) =>
  * ```
  */
 export const concatInitContainers = (containers: Container[]) =>
-  overPodTemplate(
-    R.over(
-      R.lensPath(["spec", "initContainers"]),
-      R.pipe(R.defaultTo([]), R.concat(R.__, containers)),
-    ),
-  );
+  overInitContainers(R.concat(R.__, containers));
 
 /**
  * Returns a function that appends the init container to the given resource.
@@ -145,11 +135,18 @@ export const appendInitContainer = (container: Container) =>
   concatInitContainers([container]);
 
 /**
+ * Return a function that runs the transform function over the given path.
+ */
+export const overPodTemplatePath = <R>(path: string[]) => (
+  fn: (input: R) => R,
+) => overPodTemplate(R.over(R.lensPath(path), fn));
+
+/**
  * Returns a function that runs the given containers transformer in a resource.
  */
 export const overContainers = (fn: (containers: Container[]) => Container[]) =>
-  overPodTemplate(
-    R.over(R.lensPath(["spec", "containers"]), R.pipe(R.defaultTo([]), fn)),
+  overPodTemplatePath<Container[]>(["spec", "containers"])(
+    R.pipe(R.defaultTo([]), fn),
   );
 
 /**
@@ -159,15 +156,24 @@ export const overContainers = (fn: (containers: Container[]) => Container[]) =>
 export const overContainer = (
   name: string,
   fn: (container: Container) => Container,
+) => overContainers(R.map(R.when(R.propEq("name", name), fn)));
+
+/**
+ * Returns a function that finds the first container, and runs the transformer
+ * over it in a resource.
+ */
+export const overFirstContainer = (fn: (container: Container) => Container) =>
+  overContainers(R.over(R.lensIndex(0), fn));
+
+/**
+ * Returns a function that runs the given init containers transformer in a
+ * resource.
+ */
+export const overInitContainers = (
+  fn: (containers: Container[]) => Container[],
 ) =>
-  overPodTemplate(
-    R.over(
-      R.lensPath(["spec", "containers"]),
-      R.pipe(
-        R.defaultTo([]),
-        R.map(R.when(R.pipe(R.prop("name"), R.equals(name)), fn)),
-      ),
-    ),
+  overPodTemplatePath<Container[]>(["spec", "initContainers"])(
+    R.pipe(R.defaultTo([]), fn),
   );
 
 /**
@@ -177,16 +183,15 @@ export const overContainer = (
 export const overInitContainer = (
   name: string,
   fn: (container: Container) => Container,
-) =>
-  overPodTemplate(
-    R.over(
-      R.lensPath(["spec", "initContainers"]),
-      R.pipe(
-        R.defaultTo([]),
-        R.map(R.when(R.pipe(R.prop("name"), R.equals(name)), fn)),
-      ),
-    ),
-  );
+) => overInitContainers(R.map(R.when(R.propEq("name", name), fn)));
+
+/**
+ * Returns a function that finds the first init container, and runs the
+ * transformer over it in a resource.
+ */
+export const overFirstInitContainer = (
+  fn: (container: Container) => Container,
+) => overInitContainers(R.over(R.lensIndex(0), fn));
 
 /**
  * Returns a function that adds a volume to the pod template.

@@ -64,31 +64,14 @@ export interface IDaemonsetWithContainerOpts {
  * make creating daemonsets easier.
  */
 export const daemonSetWithContainer = (
-  {
-    name,
-    image,
-    containerPort,
-    container: containerToMerge,
-    env,
-    resourceLimits,
-    resourceRequests,
-  }: IDaemonsetWithContainerOpts,
+  container: Container,
   toMerge: DeepPartial<DaemonSet> = {},
 ) =>
   R.pipe(
-    appendContainer(
-      R.pipe(
-        R.when(() => !!env, concatEnv(env!)),
-        R.when(() => !!resourceRequests, setResourceRequests(resourceRequests)),
-        R.when(() => !!resourceLimits, setResourceLimits(resourceLimits)),
-      )(
-        containerPort
-          ? containerWithPort(name, image, containerPort, containerToMerge)
-          : container(name, image, containerToMerge),
-      ),
-    ) as (d: DaemonSet) => DaemonSet,
+    R.always(daemonSet(container.name)),
+    appendContainer(container),
     R.mergeDeepLeft(toMerge) as (d: DaemonSet) => DaemonSet,
-  )(daemonSet(name));
+  )();
 
 /**
  * Returns a function that sets `spec.updateStrategy` to the given strategy.

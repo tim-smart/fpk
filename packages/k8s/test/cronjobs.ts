@@ -12,10 +12,7 @@ describe("cronJob", () =>
         K.cronJob(
           "fancyjob",
           "* * * * *",
-          K.jobWithContainer({
-            name: "fancyjob",
-            image: "fancyimage",
-          }),
+          K.jobWithContainer(K.container("fancyjob", "fancyimage")),
         ),
       diff: {
         apiVersion: "batch/v1beta1",
@@ -36,6 +33,7 @@ describe("cronJob", () =>
                   },
                 },
                 spec: {
+                  restartPolicy: "OnFailure",
                   containers: [
                     {
                       name: "fancyjob",

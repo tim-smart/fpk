@@ -2,14 +2,7 @@ import * as R from "ramda";
 import { Job } from "kubernetes-types/batch/v1";
 import { maybeMergeResource, resource } from "./resources";
 import { DeepPartial } from "./common";
-import {
-  IEnvObject,
-  concatEnv,
-  setResourceRequests,
-  setResourceLimits,
-  container,
-} from "./containers";
-import { Container, ResourceRequirements } from "kubernetes-types/core/v1";
+import { Container } from "kubernetes-types/core/v1";
 import { appendContainer, setRestartPolicy } from "./podTemplates";
 
 /**
@@ -31,52 +24,24 @@ export const job = (name: string, toMerge?: DeepPartial<Job>): Job =>
     toMerge,
   );
 
-export interface IJobWithContainerOpts {
-  name: string;
-  parallelism?: number;
-  completions?: number;
-  image: string;
-  env?: IEnvObject;
-  container?: DeepPartial<Container>;
-
-  resourceRequests?: ResourceRequirements["requests"];
-  resourceLimits?: ResourceRequirements["limits"];
-}
-
 /**
  * Creates a job with a single container. Has a couple options to help
  * make creating jobs easier.
  */
 export const jobWithContainer = (
-  {
-    name,
-    image,
-    parallelism = 1,
-    completions = 1,
-    container: containerToMerge,
-    env,
-    resourceLimits,
-    resourceRequests,
-  }: IJobWithContainerOpts,
+  container: Container,
   toMerge?: DeepPartial<Job>,
 ) =>
   R.pipe(
     (j: Job) => j,
-    appendContainer(
-      R.pipe(
-        R.always(container(name, image, containerToMerge)),
-        R.when(() => !!env, concatEnv(env!)),
-        R.when(() => !!resourceRequests, setResourceRequests(resourceRequests)),
-        R.when(() => !!resourceLimits, setResourceLimits(resourceLimits)),
-      )(),
-    ),
+    appendContainer(container),
     setRestartPolicy("OnFailure"),
     (j) => maybeMergeResource<Job>(j, toMerge),
   )(
-    job(name, {
+    job(container.name, {
       spec: {
-        parallelism,
-        completions,
+        parallelism: 1,
+        completions: 1,
       },
     }),
   );

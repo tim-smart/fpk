@@ -7,7 +7,12 @@ describe("pvc", () =>
     {
       it: "create the persistent volume claim",
       in: {},
-      fn: (_) => K.pvc("mypvc", "10Gi"),
+      fn: (_) =>
+        K.pvc("mypvc", "10Gi", {
+          spec: {
+            accessModes: ["ReadOnly"],
+          },
+        }),
       diff: {
         apiVersion: "v1",
         kind: "PersistentVolumeClaim",
@@ -15,7 +20,7 @@ describe("pvc", () =>
           name: "mypvc",
         },
         spec: {
-          accessModes: ["ReadWriteOnce"],
+          accessModes: ["ReadOnly"],
           resources: {
             requests: {
               storage: "10Gi",

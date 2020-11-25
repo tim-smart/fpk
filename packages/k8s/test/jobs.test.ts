@@ -1,4 +1,5 @@
 import * as K from "../src/index";
+import * as R from "ramda";
 import { describe } from "mocha";
 import { runCases } from "./helpers";
 import { Job } from "kubernetes-types/batch/v1";
@@ -40,18 +41,18 @@ describe("jobWithContainer", () =>
       it: "creates a basic job",
       in: K.job("fancyjob"),
       fn: (_) =>
-        K.jobWithContainer({
-          name: "fancyjob",
-          image: "fancyimage",
-          env: { FOO: "bar" },
-        }),
+        K.jobWithContainer(
+          R.pipe(
+            R.always(K.container("fancyjob", "fancyimage")),
+            K.concatEnv({ FOO: "bar" }),
+          )(),
+        ),
       diff: {
         spec: {
           parallelism: 1,
           completions: 1,
           template: {
             spec: {
-              restartPolicy: "OnFailure",
               containers: [
                 {
                   name: "fancyjob",
@@ -59,6 +60,7 @@ describe("jobWithContainer", () =>
                   env: [{ name: "FOO", value: "bar" }],
                 },
               ],
+              restartPolicy: "OnFailure",
             },
           },
         },

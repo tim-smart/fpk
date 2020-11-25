@@ -208,6 +208,42 @@ describe("overContainer", () =>
     },
   ]));
 
+describe("overFirstContainer", () =>
+  runCases([
+    {
+      it: "runs the function over the first container",
+      in: R.pipe(
+        K.appendContainer({
+          name: "secondcontainer",
+          image: "anotherimage",
+        }),
+      )(
+        K.deploymentWithContainer({
+          name: "myapp",
+          image: "myimage",
+        }),
+      ),
+      fn: K.overFirstContainer(
+        K.concatEnv({
+          FOO: "bar",
+        }),
+      ),
+      diff: {
+        spec: {
+          template: {
+            spec: {
+              containers: {
+                "0": {
+                  env: [{ name: "FOO", value: "bar" }],
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  ]));
+
 describe("overInitContainer", () =>
   runCases([
     {
@@ -218,6 +254,41 @@ describe("overInitContainer", () =>
       })(K.deployment("myapp")),
       fn: K.overInitContainer(
         "mycontainer",
+        K.concatEnv({
+          FOO: "bar",
+        }),
+      ),
+      diff: {
+        spec: {
+          template: {
+            spec: {
+              initContainers: {
+                "0": {
+                  env: [{ name: "FOO", value: "bar" }],
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  ]));
+
+describe("overFirstInitContainer", () =>
+  runCases([
+    {
+      it: "runs the function over the specified init container",
+      in: R.pipe(
+        K.appendInitContainer({
+          name: "mycontainer",
+          image: "anotherimage",
+        }),
+        K.appendInitContainer({
+          name: "mycontainer2",
+          image: "anotherimage",
+        }),
+      )(K.deployment("myapp")),
+      fn: K.overFirstInitContainer(
         K.concatEnv({
           FOO: "bar",
         }),

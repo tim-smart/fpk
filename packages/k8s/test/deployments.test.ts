@@ -1,6 +1,7 @@
 import * as K from "../src/index";
 import { describe } from "mocha";
 import { runCases } from "./helpers";
+import * as R from "ramda";
 
 describe("deployment", () =>
   runCases([
@@ -78,19 +79,22 @@ describe("deploymentWithContainer", () =>
       it: "creates a deployment with a container",
       in: K.deployment("fancyapp"),
       fn: (_) =>
-        K.deploymentWithContainer({
-          name: "fancyapp",
-          replicas: 5,
-          image: "fancyimage",
-          ports: { http: 3000 },
-          env: {
-            FOO: "bar",
-          },
-          resourceRequests: {
-            cpu: "1",
-            memory: "100M",
-          },
-        }),
+        R.pipe(
+          R.always(
+            K.deploymentWithContainer(
+              R.pipe(
+                R.always(
+                  K.containerWithPorts("fancyapp", "fancyimage", {
+                    http: 3000,
+                  }),
+                ),
+                K.concatEnv({ FOO: "bar" }),
+                K.setResourceRequests({ cpu: "1", memory: "100M" }),
+              )(),
+            ),
+          ),
+          K.setReplicas(5),
+        )(),
       diff: {
         spec: {
           replicas: 5,

@@ -9,11 +9,16 @@ describe("volumeFromSecret", () =>
     {
       it: "creates a volume from a secret",
       in: {},
-      fn: R.always(K.volumeFromSecret("myvolume", K.secret("mysecret", {}))),
+      fn: R.always(
+        K.volumeFromSecret("myvolume", K.secret("mysecret", {}), {
+          defaultMode: 400,
+        }),
+      ),
       diff: {
         name: "myvolume",
         secret: {
           secretName: "mysecret",
+          defaultMode: 400,
         },
       } as Volume,
     },
@@ -41,12 +46,16 @@ describe("volumeFromPvc", () =>
     {
       it: "creates a volume from a pvc",
       in: {},
-      fn: R.always(K.volumeFromPvc("myvolume", K.pvc("mypvc", "10Gi"))),
+      fn: R.always(
+        K.volumeFromPvc("myvolume", K.pvc("mypvc", "10Gi"), {
+          readOnly: true,
+        }),
+      ),
       diff: {
         name: "myvolume",
         persistentVolumeClaim: {
           claimName: "mypvc",
-          readOnly: false,
+          readOnly: true,
         },
       } as Volume,
     },
@@ -57,7 +66,7 @@ describe("volumeFromHostPath", () =>
     {
       it: "creates a volume from a hostPath",
       in: {},
-      fn: R.always(K.volumeFromHostPath("myvolume", "/tmp")),
+      fn: R.always(K.volumeFromHostPath("myvolume", "/tmp", {})),
       diff: {
         name: "myvolume",
         hostPath: {

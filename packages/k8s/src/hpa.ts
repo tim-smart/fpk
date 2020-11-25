@@ -1,13 +1,13 @@
 import {
   HorizontalPodAutoscaler,
-  HorizontalPodAutoscalerSpec,
+  CrossVersionObjectReference,
 } from "kubernetes-types/autoscaling/v2beta2";
 import { DeepPartial } from "./common";
 import { maybeMergeResource, resource } from "./resources";
 
 export const hpa = (
   name: string,
-  spec: HorizontalPodAutoscalerSpec,
+  targetRef: CrossVersionObjectReference,
   toMerge?: DeepPartial<HorizontalPodAutoscaler>,
 ): HorizontalPodAutoscaler =>
   maybeMergeResource<HorizontalPodAutoscaler>(
@@ -15,7 +15,7 @@ export const hpa = (
       "autoscaling/v2beta2",
       "HorizontalPodAutoscaler",
       name,
-      { spec },
+      { spec: { scaleTargetRef: targetRef, maxReplicas: 1 } },
     ),
     toMerge,
   );

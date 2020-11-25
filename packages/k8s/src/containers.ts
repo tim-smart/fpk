@@ -180,7 +180,7 @@ export const appendEnvFromSecret = (secret: Secret) =>
  * Returns a function that appends a volume mount to a container.
  */
 export const appendVolumeMount = (
-  name: string,
+  volumeName: string,
   mountPath: string,
   merge?: DeepPartial<VolumeMount>,
 ) =>
@@ -191,7 +191,7 @@ export const appendVolumeMount = (
       R.append(
         maybeMergeResource<VolumeMount>(
           {
-            name,
+            name: volumeName,
             mountPath,
           } as VolumeMount,
           merge,
