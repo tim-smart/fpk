@@ -186,8 +186,7 @@ describe("overContainer", () =>
           image: "myimage",
         }),
       ),
-      fn: K.overContainer(
-        "myapp",
+      fn: K.overContainer("myapp")(
         K.concatEnv({
           FOO: "bar",
         }),
@@ -252,8 +251,7 @@ describe("overInitContainer", () =>
         name: "mycontainer",
         image: "anotherimage",
       })(K.deployment("myapp")),
-      fn: K.overInitContainer(
-        "mycontainer",
+      fn: K.overInitContainer("mycontainer")(
         K.concatEnv({
           FOO: "bar",
         }),
@@ -349,11 +347,11 @@ describe("appendVolumeAndMount", () =>
         image: "myimage",
       }),
       fn: K.appendVolumeAndMount({
+        overContainer: K.overContainer("myapp"),
         volume: {
           name: "myvolume",
           persistentVolumeClaim: { claimName: "myclaim" },
         },
-        containerName: "myapp",
         mountPath: "/mnt/volume",
       }),
       diff: {

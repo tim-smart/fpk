@@ -153,8 +153,7 @@ export const overContainers = (fn: (containers: Container[]) => Container[]) =>
  * Returns a function that finds a container by name, and runs the transformer
  * over it in a resource.
  */
-export const overContainer = (
-  name: string,
+export const overContainer = (name: string) => (
   fn: (container: Container) => Container,
 ) => overContainers(R.map(R.when(R.propEq("name", name), fn)));
 
@@ -180,8 +179,7 @@ export const overInitContainers = (
  * Returns a function that finds an init container by name, and runs the
  * transformer over it in a resource.
  */
-export const overInitContainer = (
-  name: string,
+export const overInitContainer = (name: string) => (
   fn: (container: Container) => Container,
 ) => overInitContainers(R.map(R.when(R.propEq("name", name), fn)));
 
@@ -201,26 +199,27 @@ export const appendVolume = (volume: Volume) =>
     R.pipe(R.defaultTo([]), R.append(volume)),
   );
 
+export type TContainerSelector = (
+  fn: (c: Container) => Container,
+) => <R>(resource: R) => R;
+
 /**
  * Returns a function that adds a volume and mounts it to a container.
  */
 export const appendVolumeAndMount = ({
+  overContainer,
   volume,
-  containerName,
   mountPath,
   mount = {},
 }: {
-  containerName: string;
+  overContainer: TContainerSelector;
   volume: Volume;
   mountPath: string;
   mount?: DeepPartial<VolumeMount>;
 }) =>
   R.pipe(
     appendVolume(volume),
-    overContainer(
-      containerName,
-      appendVolumeMount(volume.name, mountPath, mount),
-    ),
+    overContainer(appendVolumeMount(volume.name, mountPath, mount)),
   );
 
 /**
