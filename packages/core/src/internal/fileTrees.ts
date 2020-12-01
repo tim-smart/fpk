@@ -62,7 +62,7 @@ export function executePatch(contents: IInputContents, outDir: string) {
               case "unlink":
                 return Rx.from(fsp.unlink(path));
             }
-          }, 10),
+          }),
         ),
       ),
     );
