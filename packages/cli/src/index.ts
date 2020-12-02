@@ -9,7 +9,7 @@ import { watch } from "chokidar";
 import * as Rx from "rxjs";
 import * as RxOp from "rxjs/operators";
 
-class FpkCli extends Command {
+export default class FpkCli extends Command {
   static description = "Generate configuration from an fpk config tree";
 
   static flags = {
@@ -108,5 +108,3 @@ class FpkCli extends Command {
     }
   }
 }
-
-module.exports = FpkCli;
