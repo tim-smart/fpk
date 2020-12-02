@@ -21,11 +21,11 @@ really beneficial when writing configuration:
 
 ## Packages
 
-| Name                         | Description                                                     |
-| ---------------------------- | --------------------------------------------------------------- |
-| [`@fpk/core`](packages/core) | Package that provides the config generation functionality       |
-| [`@fpk/cli`](packages/cli)   | The CLI tool for generating configuration                       |
-| [`@fpk/k8s`](packages/k8s)   | Collection of functions for generating Kubernetes configuration |
+| Name                                                                      | Description                                                     |
+| ------------------------------------------------------------------------- | --------------------------------------------------------------- |
+| [`@fpk/core`](https://github.com/tim-smart/fpk/tree/master/packages/core) | Package that provides the config generation functionality       |
+| [`@fpk/cli`](https://github.com/tim-smart/fpk/tree/master/packages/cli)   | The CLI tool for generating configuration                       |
+| [`@fpk/k8s`](https://github.com/tim-smart/fpk/tree/master/packages/k8s)   | Collection of functions for generating Kubernetes configuration |
 
 ## Install
 
