@@ -3,6 +3,7 @@ import * as RxOp from "rxjs/operators";
 import * as R from "ramda";
 import yaml from "js-yaml";
 import * as fs from "fs";
+import * as Ini from "ini";
 import { configs$, configsToFiles } from "./internal/config";
 import {
   toFileTree,
@@ -88,6 +89,13 @@ const formats = new Map<string, IFormat>([
   ],
   ["yaml", yamlFormat],
   ["yml", yamlFormat],
+  [
+    "ini",
+    {
+      dump: (js) => Ini.stringify(js),
+      load: Ini.parse,
+    },
+  ],
 ]);
 
 export function registerFormat(name: string, dump: IFormat) {

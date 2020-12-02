@@ -8,4 +8,13 @@ export default {
       promise: true,
     };
   },
+
+  "20-ini-test.ini": {
+    key: "value",
+
+    database: {
+      user: "dbuser",
+      password: "dbpassword",
+    },
+  },
 };
