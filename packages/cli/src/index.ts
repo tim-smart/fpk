@@ -1,4 +1,4 @@
-import "@swc-node/register";
+import "ts-node/register";
 
 import { availableFormats, generate } from "@fpk/core";
 import { Command, flags } from "@oclif/command";
@@ -109,4 +109,4 @@ class FpkCli extends Command {
   }
 }
 
-module.exports = FpkCli;
+export = FpkCli;
