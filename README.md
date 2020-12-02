@@ -2,10 +2,12 @@
 
 Functional configuration management.
 
-Use Typescript / Javascript to generate yaml or json (or register your own
+Use Typescript / Javascript to generate yaml, json, init (or register your own
 format) configuration. Could be used for:
 
 - Generating configuration for Kubernetes
+- Generating configuration for databases
+- etc.
 
 ## Why?
 
@@ -51,24 +53,35 @@ export default {
   "02-two": {
     foo: false,
   },
+
+  "03-three.json": {
+    json: true,
+  },
+
+  "04-four.ini": {
+    ini: "yes",
+  },
 };
 ```
 
-### Generate the output
+## Generate the output
 
 ```
 $ fpk -d src -o out
 MKDIR my-app/
 CREATE my-app/00-one.yaml
 CREATE my-app/02-two.yaml
+CREATE my-app/03-three.json
 
 $ tree out/
 out
 └── my-app
     ├── 00-one.yaml
-    └── 02-two.yaml
+    ├── 02-two.yaml
+    ├── 03-three.json
+    └── 04-four.ini
 
-1 directory, 2 files
+1 directory, 4 files
 
 $ cat out/my-app/00-one.yaml
 key: value
