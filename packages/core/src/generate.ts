@@ -1,13 +1,11 @@
 import * as Rx from "rxjs";
 import * as RxOp from "rxjs/operators";
-import * as R from "ramda";
 import yaml from "js-yaml";
 import * as fs from "fs";
 import * as Ini from "ini";
 import { configs$, configsToFiles } from "./internal/config";
 import {
   toFileTree,
-  IInputContents,
   calculatePatch,
   executePatch,
   precalculatePatch,
@@ -24,7 +22,7 @@ export interface IGenerateOpts {
 export function generate(
   inputDir: string,
   outDir: string,
-  { format = "yaml", context = {}, ignore }: Partial<IGenerateOpts> = {},
+  { format = "yaml", context = {}, ignore }: Partial<IGenerateOpts> = {}
 ) {
   inputDir = path.resolve(inputDir);
   outDir = path.resolve(outDir);
@@ -47,19 +45,18 @@ export function generate(
   const outputFT$ = files$(outDir).pipe(toFileTree(outDir));
   const inputFT$ = inputConfigs$.pipe(configsToFiles(), toFileTree(inputDir));
 
-  return Rx.zip(inputPatch$, inputFT$, outputFT$)
-    .pipe(
-      RxOp.flatMap(([{ contents, comparisons }, inputFT, outputFT]) => {
-        const patch = calculatePatch(inputFT, outputFT, {
-          comparisons,
-        });
-        return Rx.from(patch).pipe(executePatch(contents, outDir));
-      }),
-    )
-    .toPromise()
-    .finally(() => {
-      process.chdir(startDir);
-    });
+  const pipeline = Rx.zip(inputPatch$, inputFT$, outputFT$).pipe(
+    RxOp.flatMap(([{ contents, comparisons }, inputFT, outputFT]) => {
+      const patch = calculatePatch(inputFT, outputFT, {
+        comparisons,
+      });
+      return Rx.from(patch).pipe(executePatch(contents, outDir));
+    })
+  );
+
+  return Rx.lastValueFrom(pipeline).finally(() => {
+    process.chdir(startDir);
+  });
 }
 
 export interface IFormat {

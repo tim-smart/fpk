@@ -24,6 +24,7 @@
     "dir-compare": "^2.3.0",
     "mocha": "^8.2.0",
     "ncp": "^2.0.0",
+    "prettier": "^2.2.1",
     "rimraf": "^3.0.2",
     "ts-node": "^9.0.0",
     "typescript": "^4.0.3"
@@ -34,7 +35,7 @@
     "ini": "^1.3.5",
     "js-yaml": "^3.14.0",
     "ramda": "^0.27.1",
-    "rxjs": "^6.6.3"
+    "rxjs": "^7.0.0-beta.8"
   },
   "gitHead": "a5aa6a6e10b62a957de11c4bc55ac4d3ee9a2ece"
 }
