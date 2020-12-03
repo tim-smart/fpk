@@ -54,7 +54,9 @@ export function generate(
     })
   );
 
-  return Rx.lastValueFrom(pipeline).finally(() => {
+  return new Promise<void>((resolve, reject) => {
+    pipeline.subscribe(() => {}, reject, resolve);
+  }).finally(() => {
     process.chdir(startDir);
   });
 }
