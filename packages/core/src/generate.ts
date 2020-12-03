@@ -10,6 +10,7 @@ import {
   IInputContents,
   calculatePatch,
   executePatch,
+  precalculatePatch,
 } from "./internal/fileTrees";
 import { files$ } from "./internal/fs";
 import * as path from "path";
@@ -42,22 +43,15 @@ export function generate(
   }
 
   const inputConfigs$ = configs$(inputDir, context, formats, format, ignore);
-  const inputConfigsArray$ = inputConfigs$.pipe(RxOp.toArray());
+  const inputPatch$ = inputConfigs$.pipe(precalculatePatch(outDir));
   const outputFT$ = files$(outDir).pipe(toFileTree(outDir));
   const inputFT$ = inputConfigs$.pipe(configsToFiles(), toFileTree(inputDir));
 
-  return Rx.zip(inputConfigsArray$, inputFT$, outputFT$)
+  return Rx.zip(inputPatch$, inputFT$, outputFT$)
     .pipe(
-      RxOp.flatMap(([configs, inputFT, outputFT]) => {
-        const contents = R.reduce(
-          (acc, c) => R.set(R.lensProp(c.file), c.contents, acc),
-          {} as IInputContents,
-          configs,
-        );
-
+      RxOp.flatMap(([{ contents, comparisons }, inputFT, outputFT]) => {
         const patch = calculatePatch(inputFT, outputFT, {
-          contents,
-          outDir,
+          comparisons,
         });
         return Rx.from(patch).pipe(executePatch(contents, outDir));
       }),

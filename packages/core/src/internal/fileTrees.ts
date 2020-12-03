@@ -5,6 +5,7 @@ import * as fs from "fs";
 import { promises as fsp } from "fs";
 import * as path from "path";
 import { bufferUntil } from "./operators";
+import { IConfig } from "./config";
 
 export function toFileTree(dir: string) {
   return (input$: Rx.Observable<string>) =>
@@ -20,23 +21,62 @@ export interface IInputContents
     [file: string]: Buffer | string;
   }> {}
 
+export interface IPrecalculateResults {
+  contents: IInputContents;
+  comparisons: { [file: string]: boolean };
+}
+
+export const precalculatePatch = (outDir: string) => (
+  configs$: Rx.Observable<IConfig>,
+) =>
+  configs$.pipe(
+    RxOp.flatMap((config) =>
+      fsp
+        .readFile(path.join(outDir, config.file))
+        .then((b) => {
+          const a = ensureBuffer(config.contents);
+          return {
+            config,
+            match: a.equals(b),
+          };
+        })
+        .catch(() => ({
+          config,
+          match: false,
+        })),
+    ),
+    RxOp.reduce(
+      ({ contents, comparisons }, { config, match }) => ({
+        contents: {
+          ...contents,
+          [config.file]: config.contents,
+        },
+        comparisons: {
+          ...comparisons,
+          [config.file]: match,
+        },
+      }),
+      {
+        contents: {},
+        comparisons: {},
+      } as IPrecalculateResults,
+    ),
+  );
+
+const ensureBuffer = (v: Buffer | string): Buffer =>
+  typeof v === "string" ? Buffer.from(v) : v;
+
 export function calculatePatch(
   a: FSTree,
   b: FSTree,
-  { contents, outDir }: { contents: IInputContents; outDir: string },
+  { comparisons }: { comparisons: IPrecalculateResults["comparisons"] },
 ) {
   return b.calculatePatch(a, (a, b) => {
     if (a.isDirectory() || b.isDirectory()) {
       return a.isDirectory() && b.isDirectory();
     }
 
-    const aContent =
-      typeof contents[a.relativePath] === "string"
-        ? Buffer.from(contents[a.relativePath])
-        : (contents[a.relativePath] as Buffer);
-    const bContent = fs.readFileSync(path.join(outDir, b.relativePath));
-
-    return aContent.compare(bContent) === 0;
+    return comparisons[a.relativePath] || false;
   });
 }
 
@@ -53,14 +93,14 @@ export function executePatch(contents: IInputContents, outDir: string) {
 
             switch (op) {
               case "mkdir":
-                return Rx.from(fsp.mkdir(path));
+                return fsp.mkdir(path);
               case "rmdir":
-                return Rx.from(fsp.rmdir(path));
+                return fsp.rmdir(path);
               case "change":
               case "create":
-                return Rx.from(fsp.writeFile(path, contents[file]));
+                return fsp.writeFile(path, contents[file]);
               case "unlink":
-                return Rx.from(fsp.unlink(path));
+                return fsp.unlink(path);
             }
           }),
         ),
