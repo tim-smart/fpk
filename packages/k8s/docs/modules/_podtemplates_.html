@@ -80,7 +80,9 @@
 							<h3>Variables</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="_podtemplates_.html#viewpodannotations" class="tsd-kind-icon">view<wbr>Pod<wbr>Annotations</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="_podtemplates_.html#viewpodcontainers" class="tsd-kind-icon">view<wbr>Pod<wbr>Containers</a></li>
 								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="_podtemplates_.html#viewpodlabels" class="tsd-kind-icon">view<wbr>Pod<wbr>Labels</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="_podtemplates_.html#viewpodports" class="tsd-kind-icon">view<wbr>Pod<wbr>Ports</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -117,7 +119,7 @@
 					<div class="tsd-signature tsd-kind-icon">TContainer<wbr>Selector<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>fn<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>c<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Container</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Container</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span>&lt;R&gt;<span class="tsd-signature-symbol">(</span>resource<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">R</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/podTemplates.ts#L202">packages/k8s/src/podTemplates.ts:202</a></li>
+							<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/podTemplates.ts#L219">packages/k8s/src/podTemplates.ts:219</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -193,7 +195,7 @@
 					<div class="tsd-signature tsd-kind-icon">view<wbr>Pod<wbr>Annotations<span class="tsd-signature-symbol">:</span> &lt;T&gt;<span class="tsd-signature-symbol">(</span>resource<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">ObjectMeta</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">"annotations"</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> = viewPodPath([&quot;metadata&quot;, &quot;annotations&quot;]) as &lt;T extends IResource&gt;(resource: T,) &#x3D;&gt; ObjectMeta[&quot;annotations&quot;] | undefined</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/podTemplates.ts#L60">packages/k8s/src/podTemplates.ts:60</a></li>
+							<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/podTemplates.ts#L61">packages/k8s/src/podTemplates.ts:61</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -231,12 +233,54 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
+					<a name="viewpodcontainers" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> view<wbr>Pod<wbr>Containers</h3>
+					<div class="tsd-signature tsd-kind-icon">view<wbr>Pod<wbr>Containers<span class="tsd-signature-symbol">:</span> &lt;T&gt;<span class="tsd-signature-symbol">(</span>resource<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Container</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = R.pipe(viewPodPath([&quot;spec&quot;, &quot;containers&quot;]),R.defaultTo([]),) as &lt;T extends IResource&gt;(resource: T) &#x3D;&gt; Container[]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/podTemplates.ts#L70">packages/k8s/src/podTemplates.ts:70</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Returns the containers for the given resource pod template.</p>
+						</div>
+					</div>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-signature">
+								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-variable tsd-has-type-parameter">
+									<li class="tsd-signature tsd-kind-icon">&lt;T&gt;<span class="tsd-signature-symbol">(</span>resource<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Container</span><span class="tsd-signature-symbol">[]</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<h4 class="tsd-type-parameters-title">Type parameters</h4>
+										<ul class="tsd-type-parameters">
+											<li>
+												<h4>T<span class="tsd-signature-symbol">: </span><a href="../interfaces/_resources_.iresource.html" class="tsd-signature-type">IResource</a></h4>
+											</li>
+										</ul>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>resource: <span class="tsd-signature-type">T</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Container</span><span class="tsd-signature-symbol">[]</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
 					<a name="viewpodlabels" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> view<wbr>Pod<wbr>Labels</h3>
 					<div class="tsd-signature tsd-kind-icon">view<wbr>Pod<wbr>Labels<span class="tsd-signature-symbol">:</span> &lt;T&gt;<span class="tsd-signature-symbol">(</span>resource<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">ObjectMeta</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">"labels"</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> = viewPodPath([&quot;metadata&quot;, &quot;labels&quot;]) as &lt;T extends IResource&gt;(resource: T,) &#x3D;&gt; ObjectMeta[&quot;labels&quot;] | undefined</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/podTemplates.ts#L50">packages/k8s/src/podTemplates.ts:50</a></li>
+							<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/podTemplates.ts#L51">packages/k8s/src/podTemplates.ts:51</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -273,6 +317,48 @@
 						</ul>
 					</div>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
+					<a name="viewpodports" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> view<wbr>Pod<wbr>Ports</h3>
+					<div class="tsd-signature tsd-kind-icon">view<wbr>Pod<wbr>Ports<span class="tsd-signature-symbol">:</span> &lt;T&gt;<span class="tsd-signature-symbol">(</span>resource<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">ContainerPort</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = R.pipe(viewPodContainers,R.reduce((ports, c) &#x3D;&gt; [...ports, ...(c.ports || [])], [] as ContainerPort[]),) as &lt;T extends IResource&gt;(resource: T) &#x3D;&gt; ContainerPort[]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/podTemplates.ts#L78">packages/k8s/src/podTemplates.ts:78</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Returns the aggregated ports for the given resource pod template.</p>
+						</div>
+					</div>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-signature">
+								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-variable tsd-has-type-parameter">
+									<li class="tsd-signature tsd-kind-icon">&lt;T&gt;<span class="tsd-signature-symbol">(</span>resource<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ContainerPort</span><span class="tsd-signature-symbol">[]</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<h4 class="tsd-type-parameters-title">Type parameters</h4>
+										<ul class="tsd-type-parameters">
+											<li>
+												<h4>T<span class="tsd-signature-symbol">: </span><a href="../interfaces/_resources_.iresource.html" class="tsd-signature-type">IResource</a></h4>
+											</li>
+										</ul>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>resource: <span class="tsd-signature-type">T</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">ContainerPort</span><span class="tsd-signature-symbol">[]</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Functions</h2>
@@ -286,7 +372,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/podTemplates.ts#L108">packages/k8s/src/podTemplates.ts:108</a></li>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/podTemplates.ts#L125">packages/k8s/src/podTemplates.ts:125</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -318,7 +404,7 @@ container<span class="hljs-constructor">Pusher(<span class="hljs-params">daemonS
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/podTemplates.ts#L134">packages/k8s/src/podTemplates.ts:134</a></li>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/podTemplates.ts#L151">packages/k8s/src/podTemplates.ts:151</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -350,7 +436,7 @@ container<span class="hljs-constructor">Pusher(<span class="hljs-params">daemonS
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/podTemplates.ts#L197">packages/k8s/src/podTemplates.ts:197</a></li>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/podTemplates.ts#L214">packages/k8s/src/podTemplates.ts:214</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -378,7 +464,7 @@ container<span class="hljs-constructor">Pusher(<span class="hljs-params">daemonS
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/podTemplates.ts#L209">packages/k8s/src/podTemplates.ts:209</a></li>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/podTemplates.ts#L226">packages/k8s/src/podTemplates.ts:226</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -422,7 +508,7 @@ container<span class="hljs-constructor">Pusher(<span class="hljs-params">daemonS
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/podTemplates.ts#L95">packages/k8s/src/podTemplates.ts:95</a></li>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/podTemplates.ts#L112">packages/k8s/src/podTemplates.ts:112</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -454,7 +540,7 @@ container<span class="hljs-constructor">Pusher(<span class="hljs-params">daemonS
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/podTemplates.ts#L121">packages/k8s/src/podTemplates.ts:121</a></li>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/podTemplates.ts#L138">packages/k8s/src/podTemplates.ts:138</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -486,7 +572,7 @@ container<span class="hljs-constructor">Pusher(<span class="hljs-params">daemonS
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/podTemplates.ts#L156">packages/k8s/src/podTemplates.ts:156</a></li>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/podTemplates.ts#L173">packages/k8s/src/podTemplates.ts:173</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -515,7 +601,7 @@ container<span class="hljs-constructor">Pusher(<span class="hljs-params">daemonS
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/podTemplates.ts#L147">packages/k8s/src/podTemplates.ts:147</a></li>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/podTemplates.ts#L164">packages/k8s/src/podTemplates.ts:164</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -561,7 +647,7 @@ container<span class="hljs-constructor">Pusher(<span class="hljs-params">daemonS
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/podTemplates.ts#L164">packages/k8s/src/podTemplates.ts:164</a></li>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/podTemplates.ts#L181">packages/k8s/src/podTemplates.ts:181</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -608,7 +694,7 @@ container<span class="hljs-constructor">Pusher(<span class="hljs-params">daemonS
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/podTemplates.ts#L190">packages/k8s/src/podTemplates.ts:190</a></li>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/podTemplates.ts#L207">packages/k8s/src/podTemplates.ts:207</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -655,7 +741,7 @@ container<span class="hljs-constructor">Pusher(<span class="hljs-params">daemonS
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/podTemplates.ts#L182">packages/k8s/src/podTemplates.ts:182</a></li>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/podTemplates.ts#L199">packages/k8s/src/podTemplates.ts:199</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -684,7 +770,7 @@ container<span class="hljs-constructor">Pusher(<span class="hljs-params">daemonS
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/podTemplates.ts#L171">packages/k8s/src/podTemplates.ts:171</a></li>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/podTemplates.ts#L188">packages/k8s/src/podTemplates.ts:188</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -731,7 +817,7 @@ container<span class="hljs-constructor">Pusher(<span class="hljs-params">daemonS
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/podTemplates.ts#L78">packages/k8s/src/podTemplates.ts:78</a></li>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/podTemplates.ts#L95">packages/k8s/src/podTemplates.ts:95</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -783,7 +869,7 @@ set<span class="hljs-constructor">EmptyContainers(<span class="hljs-params">cron
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/podTemplates.ts#L140">packages/k8s/src/podTemplates.ts:140</a></li>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/podTemplates.ts#L157">packages/k8s/src/podTemplates.ts:157</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -817,7 +903,7 @@ set<span class="hljs-constructor">EmptyContainers(<span class="hljs-params">cron
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/podTemplates.ts#L13">packages/k8s/src/podTemplates.ts:13</a></li>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/podTemplates.ts#L14">packages/k8s/src/podTemplates.ts:14</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -846,7 +932,7 @@ set<span class="hljs-constructor">EmptyContainers(<span class="hljs-params">cron
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/podTemplates.ts#L228">packages/k8s/src/podTemplates.ts:228</a></li>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/podTemplates.ts#L245">packages/k8s/src/podTemplates.ts:245</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -874,7 +960,7 @@ set<span class="hljs-constructor">EmptyContainers(<span class="hljs-params">cron
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/podTemplates.ts#L39">packages/k8s/src/podTemplates.ts:39</a></li>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/podTemplates.ts#L40">packages/k8s/src/podTemplates.ts:40</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -903,7 +989,7 @@ set<span class="hljs-constructor">EmptyContainers(<span class="hljs-params">cron
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/podTemplates.ts#L28">packages/k8s/src/podTemplates.ts:28</a></li>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/podTemplates.ts#L29">packages/k8s/src/podTemplates.ts:29</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1009,7 +1095,13 @@ set<span class="hljs-constructor">EmptyContainers(<span class="hljs-params">cron
 						<a href="_podtemplates_.html#viewpodannotations" class="tsd-kind-icon">view<wbr>Pod<wbr>Annotations</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-parent-kind-module">
+						<a href="_podtemplates_.html#viewpodcontainers" class="tsd-kind-icon">view<wbr>Pod<wbr>Containers</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module">
 						<a href="_podtemplates_.html#viewpodlabels" class="tsd-kind-icon">view<wbr>Pod<wbr>Labels</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module">
+						<a href="_podtemplates_.html#viewpodports" class="tsd-kind-icon">view<wbr>Pod<wbr>Ports</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
 						<a href="_podtemplates_.html#appendcontainer" class="tsd-kind-icon">append<wbr>Container</a>
