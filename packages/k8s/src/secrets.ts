@@ -1,7 +1,7 @@
 import { Secret } from "kubernetes-types/core/v1";
 import { DeepPartial } from "./common";
 import * as R from "ramda";
-import { createConfigFromFile } from "./internal/fs";
+import { createConfigFromFile, createConfigFromDir } from "./internal/fs";
 import { resource, maybeMergeResource } from "./resources";
 
 /**
@@ -30,7 +30,13 @@ export const secretFromFile = (
   file: string,
   filename?: string,
   toMerge: DeepPartial<Secret> = {},
-) =>
-  createConfigFromFile(file, filename).then((data) =>
-    secret(name, data, toMerge),
-  );
+) => secret(name, createConfigFromFile(file, filename), toMerge);
+
+/**
+ * Create a secret from a directory
+ */
+export const secretFromDir = (
+  name: string,
+  dir: string,
+  toMerge: DeepPartial<Secret> = {},
+) => secret(name, createConfigFromDir(dir), toMerge);

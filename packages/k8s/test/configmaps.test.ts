@@ -44,3 +44,17 @@ describe("configmapFromFile", () =>
       },
     },
   ]));
+
+describe("configmapFromDir", () =>
+  runCases([
+    {
+      it: "creates a configmap from a directory",
+      in: K.configMap("myconfig", {}),
+      fn: (_) => K.configMapFromDir("myconfig", "test/fixtures/"),
+      diff: {
+        data: {
+          "file.txt": "asdf\n",
+        },
+      },
+    },
+  ]));

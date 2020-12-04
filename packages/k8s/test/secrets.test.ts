@@ -44,3 +44,17 @@ describe("secretFromFile", () =>
       },
     },
   ]));
+
+describe("secretFromDir", () =>
+  runCases([
+    {
+      it: "creates a secret from a directory",
+      in: K.secret("myconfig", {}),
+      fn: (_) => K.secretFromDir("myconfig", "test/fixtures/"),
+      diff: {
+        data: {
+          "file.txt": "YXNkZgo=",
+        },
+      },
+    },
+  ]));

@@ -1,6 +1,6 @@
 import { ConfigMap } from "kubernetes-types/core/v1";
 import { DeepPartial } from "./common";
-import { createConfigFromFile } from "./internal/fs";
+import { createConfigFromFile, createConfigFromDir } from "./internal/fs";
 import { maybeMergeResource, resource } from "./resources";
 
 /**
@@ -24,7 +24,13 @@ export const configMapFromFile = (
   file: string,
   filename?: string,
   toMerge?: DeepPartial<ConfigMap>,
-) =>
-  createConfigFromFile(file, filename).then((data) =>
-    configMap(name, data, toMerge),
-  );
+) => configMap(name, createConfigFromFile(file, filename), toMerge);
+
+/**
+ * Create a configmap from a file
+ */
+export const configMapFromDir = (
+  name: string,
+  dir: string,
+  toMerge?: DeepPartial<ConfigMap>,
+) => configMap(name, createConfigFromDir(dir), toMerge);

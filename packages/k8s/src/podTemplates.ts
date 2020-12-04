@@ -207,12 +207,12 @@ export type TContainerSelector = (
  * Returns a function that adds a volume and mounts it to a container.
  */
 export const appendVolumeAndMount = ({
-  overContainer,
+  overContainer = overFirstContainer,
   volume,
   mountPath,
   mount = {},
 }: {
-  overContainer: TContainerSelector;
+  overContainer?: TContainerSelector;
   volume: Volume;
   mountPath: string;
   mount?: DeepPartial<VolumeMount>;
