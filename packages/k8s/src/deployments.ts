@@ -55,11 +55,12 @@ export const deployment = (
  * make creating deployments easier.
  */
 export const deploymentWithContainer = (
+  name: string,
   container: Container,
   toMerge?: DeepPartial<Deployment>,
 ) =>
   R.pipe(
-    R.always(deployment(container.name)),
+    R.always(deployment(name)),
     appendContainer(container),
     (d: Deployment) => maybeMergeResource<Deployment>(d, toMerge),
   )();

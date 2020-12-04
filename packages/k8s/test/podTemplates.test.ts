@@ -64,7 +64,10 @@ describe("viewPodContainers", () =>
       in: {},
       fn: () =>
         K.viewPodContainers(
-          K.deploymentWithContainer(K.container("myapp", "myimage")),
+          K.deploymentWithContainer(
+            "mydeploy",
+            K.container("myapp", "myimage"),
+          ),
         ),
       diff: [{ name: "myapp", image: "myimage" }] as Container[],
     },
@@ -78,6 +81,7 @@ describe("viewPodPorts", () =>
       fn: () =>
         K.viewPodPorts(
           K.deploymentWithContainer(
+            "mydeploy",
             K.containerWithPorts("myapp", "myimage", { http: 3000 }),
           ),
         ),
@@ -213,7 +217,7 @@ describe("overContainer", () =>
           image: "anotherimage",
         }),
       )(
-        K.deploymentWithContainer({
+        K.deploymentWithContainer("mydeploy", {
           name: "myapp",
           image: "myimage",
         }),
@@ -249,7 +253,7 @@ describe("overFirstContainer", () =>
           image: "anotherimage",
         }),
       )(
-        K.deploymentWithContainer({
+        K.deploymentWithContainer("mydeply", {
           name: "myapp",
           image: "myimage",
         }),
@@ -343,7 +347,7 @@ describe("appendVolume", () =>
   runCases([
     {
       it: "appends a volume to the pod template",
-      in: K.deploymentWithContainer({
+      in: K.deploymentWithContainer("mydeploy", {
         name: "myapp",
         image: "myimage",
       }),
@@ -374,7 +378,7 @@ describe("appendVolumeAndMount", () =>
   runCases([
     {
       it: "appends a volume to the pod template and mounts it to the container",
-      in: K.deploymentWithContainer({
+      in: K.deploymentWithContainer("mydeploy", {
         name: "myapp",
         image: "myimage",
       }),

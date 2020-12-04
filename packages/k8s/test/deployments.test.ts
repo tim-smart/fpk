@@ -77,11 +77,12 @@ describe("deploymentWithContainer", () =>
   runCases([
     {
       it: "creates a deployment with a container",
-      in: K.deployment("fancyapp"),
+      in: K.deployment("fancyapp-deploy"),
       fn: (_) =>
         R.pipe(
           R.always(
             K.deploymentWithContainer(
+              "fancyapp-deploy",
               R.pipe(
                 R.always(
                   K.containerWithPorts("fancyapp", "fancyimage", {

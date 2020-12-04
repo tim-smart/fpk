@@ -79,6 +79,7 @@ describe("serviceFromPod", () =>
         K.serviceFromPod(
           "mysvc",
           K.deploymentWithContainer(
+            "mydeploy",
             K.containerWithPorts("myapp", "myimage", {
               http: 3000,
               admin: 1337,
@@ -88,7 +89,7 @@ describe("serviceFromPod", () =>
       diff: {
         spec: {
           selector: {
-            app: "myapp",
+            app: "mydeploy",
           },
           ports: [
             { name: "http", port: 3000, targetPort: 3000 },
