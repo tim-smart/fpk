@@ -16,8 +16,12 @@ export function runCases(cases: ITestCase<any>[]) {
       resolveContents({}, c.in).then((input) => {
         Promise.resolve(c.fn(input))
           .then((out) => {
-            const result = diff(input, out);
-            expect(result).to.deep.eq(c.diff);
+            if (Array.isArray(out)) {
+              expect(out).to.deep.eq(c.diff);
+            } else {
+              const result = diff(input, out);
+              expect(result).to.deep.eq(c.diff);
+            }
           })
           .then(done)
           .catch(done);

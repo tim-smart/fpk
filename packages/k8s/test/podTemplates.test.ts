@@ -2,7 +2,11 @@ import * as K from "../src/index";
 import { describe } from "mocha";
 import { runCases } from "./helpers";
 import * as R from "ramda";
-import { PodTemplateSpec } from "kubernetes-types/core/v1";
+import {
+  PodTemplateSpec,
+  Container,
+  ContainerPort,
+} from "kubernetes-types/core/v1";
 import { Deployment } from "kubernetes-types/apps/v1";
 
 describe("getPodTemplate", () =>
@@ -50,6 +54,34 @@ describe("getPodAnnotations", () =>
           }),
         ),
       diff: { foo: "bar" },
+    },
+  ]));
+
+describe("viewPodContainers", () =>
+  runCases([
+    {
+      it: "gets the pod template containers for the deployment",
+      in: {},
+      fn: () =>
+        K.viewPodContainers(
+          K.deploymentWithContainer(K.container("myapp", "myimage")),
+        ),
+      diff: [{ name: "myapp", image: "myimage" }] as Container[],
+    },
+  ]));
+
+describe("viewPodPorts", () =>
+  runCases([
+    {
+      it: "gets the pod template ports for the deployment",
+      in: {},
+      fn: () =>
+        K.viewPodPorts(
+          K.deploymentWithContainer(
+            K.containerWithPorts("myapp", "myimage", { http: 3000 }),
+          ),
+        ),
+      diff: [{ name: "http", containerPort: 3000 }] as ContainerPort[],
     },
   ]));
 

@@ -98,5 +98,9 @@ export const setDeploymentRollingUpdate = (
     rollingUpdate,
   });
 
+/**
+ * Returns a functions that sets the deployment revisionHistoryLimit to the
+ * specified count.
+ */
 export const setRevisionHistory = (count: number) =>
   R.set(R.lensPath(["spec", "revisionHistoryLimit"]), count);

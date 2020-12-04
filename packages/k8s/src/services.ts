@@ -1,7 +1,9 @@
 import { ServiceSpec, Service } from "kubernetes-types/core/v1";
 import * as R from "ramda";
 import { DeepPartial } from "./common";
-import { maybeMergeResource, resource } from "./resources";
+import { maybeMergeResource, resource, IResource } from "./resources";
+import { Deployment } from "kubernetes-types/apps/v1";
+import { viewPodPorts, viewPodLabels } from "./podTemplates";
 
 /**
  * Creates a service resource
@@ -44,3 +46,24 @@ export const serviceWithPorts = (
     service(name, selector, toMerge),
     R.toPairs(ports),
   );
+
+export const serviceFromPod = <T extends IResource>(
+  name: string,
+  r: T,
+  toMerge?: DeepPartial<Service>,
+) => {
+  const ports = viewPodPorts(r);
+  const s = service(name, viewPodLabels(r), {
+    spec: {
+      ports: ports.map(({ name, containerPort, protocol }) =>
+        R.reject(R.isNil, {
+          name,
+          targetPort: containerPort,
+          port: containerPort,
+          protocol,
+        }),
+      ),
+    },
+  });
+  return maybeMergeResource<Service>(s, toMerge);
+};

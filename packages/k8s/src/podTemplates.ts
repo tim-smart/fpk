@@ -3,6 +3,7 @@ import {
   Container,
   Volume,
   VolumeMount,
+  ContainerPort,
 } from "kubernetes-types/core/v1";
 import * as R from "ramda";
 import { DeepPartial } from "./common";
@@ -62,6 +63,22 @@ export const viewPodAnnotations = viewPodPath(["metadata", "annotations"]) as <
 >(
   resource: T,
 ) => ObjectMeta["annotations"] | undefined;
+
+/**
+ * Returns the containers for the given resource pod template.
+ */
+export const viewPodContainers = R.pipe(
+  viewPodPath(["spec", "containers"]),
+  R.defaultTo([]),
+) as <T extends IResource>(resource: T) => Container[];
+
+/**
+ * Returns the aggregated ports for the given resource pod template.
+ */
+export const viewPodPorts = R.pipe(
+  viewPodContainers,
+  R.reduce((ports, c) => [...ports, ...(c.ports || [])], [] as ContainerPort[]),
+) as <T extends IResource>(resource: T) => ContainerPort[];
 
 /**
  * Returns a function that will run the given pod transformer over the supplied
