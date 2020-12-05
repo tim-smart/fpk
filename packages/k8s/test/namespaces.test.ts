@@ -73,9 +73,9 @@ describe("withNamespace", () =>
           key: "value",
         }),
       }),
-      fn: K.withNamespace("myns"),
+      fn: K.withNamespace("myns", "00-ns"),
       diff: {
-        "00-namespace": {
+        "00-ns": {
           apiVersion: "v1",
           kind: "Namespace",
           metadata: {

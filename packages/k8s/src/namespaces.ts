@@ -69,12 +69,14 @@ export const setNamespace = (namespace: string) =>
  * Returns a function that add's a `00-namespace` resource to the object, then
  * adds a matching `metadata.namespace` to each item in the object.
  */
-export const withNamespace = (name: string, toMerge?: Namespace) => <T>(
-  object: TContents<T>,
-): Promise<T> =>
+export const withNamespace = (
+  name: string,
+  filename = "00-namespace",
+  toMerge?: Namespace,
+) => <T>(object: TContents<T>): Promise<T> =>
   resolveContents({}, object).then(
     R.pipe(
       R.mapObjIndexed(setNamespace(name)) as (i: T) => T,
-      R.set(R.lensProp("00-namespace"), namespace(name, toMerge)),
+      R.set(R.lensProp(filename), namespace(name, toMerge)),
     ),
   );
