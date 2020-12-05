@@ -22,7 +22,7 @@ export interface IGenerateOpts {
 export function generate(
   inputDir: string,
   outDir: string,
-  { format = "yaml", context = {}, ignore }: Partial<IGenerateOpts> = {}
+  { format = "yaml", context = {}, ignore }: Partial<IGenerateOpts> = {},
 ) {
   inputDir = path.resolve(inputDir);
   outDir = path.resolve(outDir);
@@ -51,7 +51,7 @@ export function generate(
         comparisons,
       });
       return Rx.from(patch).pipe(executePatch(contents, outDir));
-    })
+    }),
   );
 
   return new Promise<void>((resolve, reject) => {

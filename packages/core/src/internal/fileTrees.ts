@@ -47,14 +47,12 @@ export const precalculatePatch = (outDir: string) => (
     ),
     RxOp.reduce(
       ({ contents, comparisons }, { config, match }) => ({
-        contents: {
-          ...contents,
+        contents: Object.assign(contents, {
           [config.file]: config.contents,
-        },
-        comparisons: {
-          ...comparisons,
+        }),
+        comparisons: Object.assign(comparisons, {
           [config.file]: match,
-        },
+        }),
       }),
       {
         contents: {},
