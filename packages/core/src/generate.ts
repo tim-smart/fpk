@@ -49,11 +49,10 @@ export function generate(
   return Rx.zip(inputConfigsArray$, inputFT$, outputFT$)
     .pipe(
       RxOp.flatMap(([configs, inputFT, outputFT]) => {
-        const contents = R.reduce(
-          (acc, c) => R.set(R.lensProp(c.file), c.contents, acc),
-          {} as IInputContents,
-          configs,
-        );
+        const contents = configs.reduce((acc, c) => {
+          acc[c.file] = c.contents;
+          return acc;
+        }, {} as any) as IInputContents;
 
         const patch = calculatePatch(inputFT, outputFT, {
           contents,
