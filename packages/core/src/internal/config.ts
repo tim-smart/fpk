@@ -187,8 +187,8 @@ export function resolveContents<T>(context: any, contents: TContents<T>) {
 export async function resolveContentMap<M extends { [key: string]: any }>(
   context: any,
   contentMap: M,
-) {
-  let out = {};
+): Promise<TContentsMapResolved<M>> {
+  let out: { [key: string]: any } = {};
 
   for (const key in contentMap) {
     let value: any = await Promise.resolve(contentMap[key]);
@@ -197,7 +197,7 @@ export async function resolveContentMap<M extends { [key: string]: any }>(
       value = await resolveContents(context, value);
     }
 
-    out = R.assoc(key, value, out);
+    out[key] = value;
   }
 
   return out as TContentsMapResolved<M>;
