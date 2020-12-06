@@ -1,17 +1,18 @@
-import * as Rx from "rxjs";
-import * as RxOp from "rxjs/operators";
-import yaml from "js-yaml";
 import * as fs from "fs";
 import * as Ini from "ini";
+import yaml from "js-yaml";
+import * as path from "path";
+import * as R from "ramda";
+import * as Rx from "rxjs";
+import * as RxOp from "rxjs/operators";
 import { configs$, configsToFiles } from "./internal/config";
 import {
-  toFileTree,
   calculatePatch,
   executePatch,
-  precalculatePatch,
+  IInputContents,
+  toFileTree,
 } from "./internal/fileTrees";
 import { files$ } from "./internal/fs";
-import * as path from "path";
 
 export interface IGenerateOpts {
   context: any;
@@ -41,24 +42,30 @@ export function generate(
   }
 
   const inputConfigs$ = configs$(inputDir, context, formats, format, ignore);
-  const inputPatch$ = inputConfigs$.pipe(precalculatePatch(outDir));
+  const inputConfigsArray$ = inputConfigs$.pipe(RxOp.toArray());
   const outputFT$ = files$(outDir).pipe(toFileTree(outDir));
   const inputFT$ = inputConfigs$.pipe(configsToFiles(), toFileTree(inputDir));
 
-  const pipeline = Rx.zip(inputPatch$, inputFT$, outputFT$).pipe(
-    RxOp.flatMap(([{ contents, comparisons }, inputFT, outputFT]) => {
-      const patch = calculatePatch(inputFT, outputFT, {
-        comparisons,
-      });
-      return Rx.from(patch).pipe(executePatch(contents, outDir));
-    }),
-  );
+  return Rx.zip(inputConfigsArray$, inputFT$, outputFT$)
+    .pipe(
+      RxOp.flatMap(([configs, inputFT, outputFT]) => {
+        const contents = R.reduce(
+          (acc, c) => R.set(R.lensProp(c.file), c.contents, acc),
+          {} as IInputContents,
+          configs,
+        );
 
-  return new Promise<void>((resolve, reject) => {
-    pipeline.subscribe(() => {}, reject, resolve);
-  }).finally(() => {
-    process.chdir(startDir);
-  });
+        const patch = calculatePatch(inputFT, outputFT, {
+          contents,
+          outDir,
+        });
+        return Rx.from(patch).pipe(executePatch(contents, outDir));
+      }),
+    )
+    .toPromise()
+    .finally(() => {
+      process.chdir(startDir);
+    });
 }
 
 export interface IFormat {

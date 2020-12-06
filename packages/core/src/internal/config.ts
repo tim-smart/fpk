@@ -81,10 +81,12 @@ export const resolveConfigFromExports = (
 
     // Map functions / promises to the actual configuration
     RxOp.flatMap(({ relativePath, exports }) =>
-      resolveContents(context, exports).then((contents) => ({
-        relativePath,
-        contents,
-      })),
+      Rx.from(resolveContents(context, exports)).pipe(
+        RxOp.map((contents) => ({
+          relativePath,
+          contents,
+        })),
+      ),
     ),
 
     // For each key in the configuration create a file with the correct
@@ -127,10 +129,12 @@ export const resolveConfigFromContents = (dir: string) => (
   input$.pipe(
     // Load contents from file
     RxOp.flatMap((file) =>
-      fsp.readFile(file).then((contents) => ({
-        file,
-        contents,
-      })),
+      Rx.from(fsp.readFile(file)).pipe(
+        RxOp.map((contents) => ({
+          file,
+          contents,
+        })),
+      ),
     ),
 
     // Make file path relative

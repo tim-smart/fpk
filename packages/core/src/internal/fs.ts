@@ -11,9 +11,9 @@ export function files$(dir: string, ignore?: string): Rx.Observable<string> {
     RxOp.filter((f) => !f.startsWith(".")),
     RxOp.filter((f) => (ignoreRegExp ? !ignoreRegExp.test(f) : true)),
     RxOp.flatMap((file) =>
-      fs
-        .stat(`${dir}/${file}`)
-        .then((sf) => ({ file, isDir: sf.isDirectory() })),
+      Rx.from(fs.stat(`${dir}/${file}`)).pipe(
+        RxOp.map((sf) => ({ file, isDir: sf.isDirectory() })),
+      ),
     ),
     RxOp.flatMap((f) =>
       f.isDir ? files$(`${dir}/${f.file}`, ignore) : Rx.of(`${dir}/${f.file}`),
