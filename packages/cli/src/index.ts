@@ -72,12 +72,16 @@ export default class FpkCli extends Command {
     }
 
     const generator = () => {
+      const start = Date.now();
       console.log("BUILD", "Running...");
 
       return generate(flags.source, flags.output, {
         context,
         format: flags.format,
         ignore: flags.ignore,
+      }).then(() => {
+        const diff = Date.now() - start;
+        console.log("BUILD", `Completed in ${diff}ms`);
       });
     };
 
@@ -94,13 +98,13 @@ export default class FpkCli extends Command {
         watch(flags.source, {
           ignoreInitial: true,
         }),
-        "all"
+        "all",
       )
         .pipe(
           RxOp.tap((e: any) => console.log("WATCH", e.slice(0, 2))),
           RxOp.auditTime(200),
           RxOp.tap(resetCache),
-          RxOp.concatMap(() => Rx.from(generator()))
+          RxOp.concatMap(() => Rx.from(generator())),
         )
         .subscribe();
 
