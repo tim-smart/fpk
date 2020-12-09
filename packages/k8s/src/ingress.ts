@@ -1,3 +1,4 @@
+import * as F from "fp-ts/function";
 import {
   Ingress,
   IngressSpec,
@@ -13,7 +14,7 @@ export const ingress = (
   name: string,
   spec: IngressSpec,
   toMerge?: DeepPartial<Ingress>,
-) =>
+): Ingress =>
   maybeMergeResource<Ingress>(
     resource<Ingress>("networking.k8s.io/v1beta1", "Ingress", name, { spec }),
     toMerge,
@@ -38,34 +39,34 @@ export interface IIngressRulePath {
   backend?: IngressBackend;
 }
 
-type IngressSpecTransformer = (i: IngressSpec) => IngressSpec;
+type TIngressSpecTransformer = (i: IngressSpec) => IngressSpec;
 
 const rulesToSpec = ({
   backend,
   rules,
   tlsSecretName,
-}: IIngressRules): IngressSpec => {
-  const ingress: IngressSpec = {
-    rules: R.map(
-      ({ host, paths }): IngressRule => ({
-        host,
-        http: {
-          paths: R.ifElse(
-            R.isNil,
-            () => [{ backend }],
-            R.map(({ path, backend: pathBackend }: IIngressRulePath) => ({
-              path,
-              backend: pathBackend || backend,
-            })),
-          )(paths),
-        },
-      }),
-      rules,
-    ),
-  };
+}: IIngressRules): IngressSpec =>
+  F.pipe(
+    {
+      rules: R.map(
+        ({ host, paths }): IngressRule => ({
+          host,
+          http: {
+            paths: R.ifElse(
+              R.isNil,
+              () => [{ backend }],
+              R.map(({ path, backend: pathBackend }: IIngressRulePath) => ({
+                path,
+                backend: pathBackend || backend,
+              })),
+            )(paths),
+          },
+        }),
+        rules,
+      ),
+    } as IngressSpec,
 
-  return R.pipe(
-    R.when<IngressSpec, IngressSpec>(
+    R.when(
       () => !R.isNil(tlsSecretName),
       R.set(R.lensProp("tls"), [
         {
@@ -74,8 +75,7 @@ const rulesToSpec = ({
         },
       ]),
     ),
-  )(ingress);
-};
+  );
 
 /**
  * Create an ingress with a simplier API
@@ -85,7 +85,9 @@ export const ingressSimple = (
   rules: IIngressRules,
   toMerge?: DeepPartial<Ingress>,
 ) =>
-  R.pipe(
+  F.pipe(
+    ingress(name, rulesToSpec(rules), toMerge),
+
     R.when<Ingress, Ingress>(
       () => rules.tlsAcme === true,
       annotate("kubernetes.io/tls-acme", "true"),
@@ -95,7 +97,7 @@ export const ingressSimple = (
       () => rules.tlsRedirect === true,
       annotate("ingress.kubernetes.io/force-ssl-redirect", "true"),
     ),
-  )(ingress(name, rulesToSpec(rules), toMerge));
+  );
 
 /**
  * Create an ingress from a Service
@@ -120,8 +122,8 @@ export const ingressFromService = (
 /**
  * Returns a function that sets basic auth annotations on the ingress.
  */
-export const setBasicAuth = (secretName: string) =>
-  R.pipe<Ingress, Ingress, Ingress>(
+export const setBasicAuth = (secretName: string): ((i: Ingress) => Ingress) =>
+  F.flow(
     annotate("ingress.kubernetes.io/auth-type", "basic"),
     annotate("ingress.kubernetes.io/auth-secret", secretName),
   );

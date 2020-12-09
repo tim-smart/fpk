@@ -1,19 +1,22 @@
+import * as F from "fp-ts/function";
 import {
+  ConfigMap,
   Container,
+  ContainerPort,
+  EnvFromSource,
   EnvVar,
   EnvVarSource,
-  ResourceRequirements,
-  EnvFromSource,
-  VolumeMount,
-  Probe,
   HTTPGetAction,
-  ConfigMap,
+  Probe,
+  ResourceRequirements,
   Secret,
-  ContainerPort,
+  VolumeMount,
 } from "kubernetes-types/core/v1";
 import * as R from "ramda";
 import { DeepPartial } from "./common";
 import { maybeMergeResource } from "./resources";
+
+export type TContainerTransform = (container: Container) => Container;
 
 /**
  * Creates a container with the provided name and image
@@ -38,17 +41,17 @@ export const appendPort = (
   containerPort: number,
   name?: string,
   protocol?: string,
-) =>
+): TContainerTransform =>
   R.over(
     R.lensProp("ports"),
-    R.pipe(
+    F.flow(
       R.defaultTo([]),
       R.append(
-        R.pipe(
-          R.always({ containerPort } as ContainerPort),
-          R.when(R.always(!!name), R.assoc("name", name!)),
-          R.when(R.always(!!protocol), R.assoc("protocol", protocol!)),
-        )(),
+        F.pipe(
+          { containerPort } as ContainerPort,
+          R.when(() => !!name, R.assoc("name", name!)),
+          R.when(() => !!protocol, R.assoc("protocol", protocol!)),
+        ),
       ),
     ),
   );
@@ -86,13 +89,14 @@ export interface IEnvObject {
  * Returns a function that sets the environment variables on a container from a
  * object.
  */
-export const concatEnv = (env: IEnvObject) =>
+export const concatEnv = (env: IEnvObject): TContainerTransform =>
   R.over(
     R.lensProp("env"),
-    R.pipe(R.defaultTo([]), (e: EnvVar[]) =>
+    F.flow(R.defaultTo([]), (e: EnvVar[]) =>
       R.concat(
         e,
-        R.pipe(
+        F.pipe(
+          env,
           R.keys,
           R.map(
             (name): EnvVar => {
@@ -109,48 +113,42 @@ export const concatEnv = (env: IEnvObject) =>
                   };
             },
           ),
-        )(env),
+        ),
       ),
     ),
-  ) as (c: Container) => Container;
+  );
 
 /**
  * Returns a function thats set resource requests on a container.
  */
 export const setResourceRequests = (
   requests: ResourceRequirements["requests"],
-) =>
-  R.over(
-    R.lensProp("resources"),
-    R.mergeLeft({
-      requests,
-    }),
-  );
+): TContainerTransform =>
+  R.over(R.lensProp("resources"), R.mergeLeft({ requests }));
 
 /**
  * Returns a function thats set resource limits on a container.
  */
-export const setResourceLimits = (limits: ResourceRequirements["limits"]) =>
-  R.over(
-    R.lensProp("resources"),
-    R.mergeLeft({
-      limits,
-    }),
-  );
+export const setResourceLimits = (
+  limits: ResourceRequirements["limits"],
+): TContainerTransform =>
+  R.over(R.lensProp("resources"), R.mergeLeft({ limits }));
 
 /**
  * Returns a function that sets envFrom for a container
  */
-export const appendEnvFrom = (envFrom: EnvFromSource) =>
-  R.over(R.lensProp("envFrom"), R.pipe(R.defaultTo([]), R.append(envFrom)));
+export const appendEnvFrom = (envFrom: EnvFromSource): TContainerTransform =>
+  R.over(R.lensProp("envFrom"), F.flow(R.defaultTo([]), R.append(envFrom)));
 
 /**
  * Returns a function that sets envFrom for a container from a configMap
  */
-export const appendEnvFromConfigMap = (configMap: ConfigMap) =>
+export const appendEnvFromConfigMap = (
+  configMap: ConfigMap,
+): TContainerTransform =>
   R.over(
     R.lensProp("envFrom"),
-    R.pipe(
+    F.flow(
       R.defaultTo([]),
       R.append({
         configMapRef: {
@@ -163,10 +161,10 @@ export const appendEnvFromConfigMap = (configMap: ConfigMap) =>
 /**
  * Returns a function that sets envFrom for a container from a secret
  */
-export const appendEnvFromSecret = (secret: Secret) =>
+export const appendEnvFromSecret = (secret: Secret): TContainerTransform =>
   R.over(
     R.lensProp("envFrom"),
-    R.pipe(
+    F.flow(
       R.defaultTo([]),
       R.append({
         secretRef: {
@@ -183,10 +181,10 @@ export const appendVolumeMount = (
   volumeName: string,
   mountPath: string,
   merge?: DeepPartial<VolumeMount>,
-) =>
+): TContainerTransform =>
   R.over(
     R.lensProp("volumeMounts"),
-    R.pipe(
+    F.flow(
       R.defaultTo([]),
       R.append(
         maybeMergeResource<VolumeMount>(
@@ -200,46 +198,52 @@ export const appendVolumeMount = (
     ),
   );
 
-const createProbe = (container: Container, toMerge: DeepPartial<Probe> = {}) =>
-  R.pipe(
-    R.when<Probe, Probe>(
+const createProbe = (
+  container: Container,
+  toMerge?: DeepPartial<Probe>,
+): Probe =>
+  F.pipe(
+    {},
+    R.when(
       () => !R.isEmpty(container.ports),
-      R.set(R.lensPath(["httpGet"]), {
+      R.assoc("httpGet", {
         port: container.ports![0].containerPort,
         path: "/",
       } as HTTPGetAction),
     ),
-    R.mergeDeepLeft(toMerge) as (p: Probe) => Probe,
-  )({});
+    (p) => maybeMergeResource<Probe>(p, toMerge),
+  );
 
 /**
  * Returns a function that sets the readinessProbe on a container.
  */
-export const setReadinessProbe = (probe?: DeepPartial<Probe>) => (
-  container: Container,
-) =>
-  R.set(R.lensProp("readinessProbe"), createProbe(container, probe), container);
+export const setReadinessProbe = (
+  probe?: DeepPartial<Probe>,
+): TContainerTransform => (c) =>
+  R.assoc("readinessProbe", createProbe(c, probe), c);
 
 /**
  * Returns a function that sets the livenessProbe on a container.
  */
-export const setLivenessProbe = (probe?: DeepPartial<Probe>) => (
-  container: Container,
-) =>
-  R.set(R.lensProp("livenessProbe"), createProbe(container, probe), container);
+export const setLivenessProbe = (
+  probe?: DeepPartial<Probe>,
+): TContainerTransform => (c) =>
+  R.assoc("livenessProbe", createProbe(c, probe), c);
 
 /**
  * Returns a function that sets the imagePullPolicy on a container.
  */
-export const setImagePullPolicy = (policy: string) =>
+export const setImagePullPolicy = (policy: string): TContainerTransform =>
   R.assoc("imagePullPolicy", policy);
 
 /**
  * Returns a function that sets the command on a container.
  */
-export const setCommand = (command: string[]) => R.assoc("command", command);
+export const setCommand = (command: string[]): TContainerTransform =>
+  R.assoc("command", command);
 
 /**
  * Returns a function that sets the args on a container.
  */
-export const setArgs = (args: string[]) => R.assoc("args", args);
+export const setArgs = (args: string[]): TContainerTransform =>
+  R.assoc("args", args);

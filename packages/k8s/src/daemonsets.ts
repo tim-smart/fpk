@@ -1,20 +1,13 @@
+import * as F from "fp-ts/function";
 import {
   DaemonSet,
   DaemonSetUpdateStrategy,
   RollingUpdateDaemonSet,
 } from "kubernetes-types/apps/v1";
+import { Container } from "kubernetes-types/core/v1";
 import * as R from "ramda";
-import { appendContainer } from "./podTemplates";
 import { DeepPartial } from "./common";
-import {
-  containerWithPort,
-  container,
-  IEnvObject,
-  concatEnv,
-  setResourceRequests,
-  setResourceLimits,
-} from "./containers";
-import { Container, ResourceRequirements } from "kubernetes-types/core/v1";
+import { appendContainer } from "./podTemplates";
 import { maybeMergeResource, resource } from "./resources";
 
 /**
@@ -48,43 +41,33 @@ export const daemonSet = (
     toMerge,
   );
 
-export interface IDaemonsetWithContainerOpts {
-  name: string;
-  image: string;
-  containerPort?: number;
-  env?: IEnvObject;
-  container?: DeepPartial<Container>;
-
-  resourceRequests?: ResourceRequirements["requests"];
-  resourceLimits?: ResourceRequirements["limits"];
-}
-
 /**
  * Creates a daemonset with a single container. Has a couple options to help
  * make creating daemonsets easier.
  */
 export const daemonSetWithContainer = (
+  name: string,
   container: Container,
-  toMerge: DeepPartial<DaemonSet> = {},
-) =>
-  R.pipe(
-    R.always(daemonSet(container.name)),
-    appendContainer(container),
-    R.mergeDeepLeft(toMerge) as (d: DaemonSet) => DaemonSet,
-  )();
+  toMerge?: DeepPartial<DaemonSet>,
+): DaemonSet =>
+  F.pipe(daemonSet(name), appendContainer(container), (d) =>
+    maybeMergeResource<DaemonSet>(d, toMerge),
+  );
+
+export type TDaemonSetTransform = (d: DaemonSet) => DaemonSet;
 
 /**
  * Returns a function that sets `spec.updateStrategy` to the given strategy.
  */
-export const setDaemonSetUpdateStrategy = (strategy: DaemonSetUpdateStrategy) =>
-  R.set(R.lensPath(["spec", "updateStrategy"]), strategy) as (
-    d: DaemonSet,
-  ) => DaemonSet;
+export const setDaemonSetUpdateStrategy = (
+  strategy: DaemonSetUpdateStrategy,
+): TDaemonSetTransform =>
+  R.set(R.lensPath(["spec", "updateStrategy"]), strategy);
 
 /**
  * Returns a funciton that sets `spec.updateStrategy` to type "Recreate".
  */
-export const setDaemonSetOnDelete = () =>
+export const setDaemonSetOnDelete = (): TDaemonSetTransform =>
   setDaemonSetUpdateStrategy({
     type: "OnDelete",
   });
@@ -95,7 +78,7 @@ export const setDaemonSetOnDelete = () =>
  */
 export const setDaemonSetRollingUpdate = (
   rollingUpdate: RollingUpdateDaemonSet,
-) =>
+): TDaemonSetTransform =>
   setDaemonSetUpdateStrategy({
     type: "RollingUpdate",
     rollingUpdate,

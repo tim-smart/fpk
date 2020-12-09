@@ -1,3 +1,5 @@
+import * as F from "fp-ts/function";
+import * as O from "fp-ts/Option";
 import {
   PodTemplateSpec,
   Container,
@@ -11,16 +13,18 @@ import { appendVolumeMount } from "./containers";
 import { IResource } from "./resources";
 import { ObjectMeta } from "kubernetes-types/meta/v1";
 
-const podTemplateLens = <T>(object: T) => {
+type TResourceTransformer = <T>(resource: T) => T;
+
+const podTemplateLens = <T>(object: T): O.Option<R.Lens> => {
   if ((object as any).kind === "Pod") {
-    return R.lensPath([]);
+    return O.some(R.lensPath([]));
   } else if (R.hasPath(["spec", "jobTemplate", "spec", "template"], object)) {
-    return R.lensPath(["spec", "jobTemplate", "spec", "template"]);
+    return O.some(R.lensPath(["spec", "jobTemplate", "spec", "template"]));
   } else if (R.hasPath(["spec", "template"], object)) {
-    return R.lensPath(["spec", "template"]);
+    return O.some(R.lensPath(["spec", "template"]));
   }
 
-  return undefined;
+  return O.none;
 };
 
 /**
@@ -28,10 +32,12 @@ const podTemplateLens = <T>(object: T) => {
  */
 export const viewPodTemplate = <T extends IResource>(
   object: T,
-): PodTemplateSpec | undefined => {
-  const lens = podTemplateLens(object);
-  return lens ? R.view(lens, object) : undefined;
-};
+): PodTemplateSpec | undefined =>
+  F.pipe(
+    podTemplateLens(object),
+    O.map((lens) => R.view(lens, object) as PodTemplateSpec),
+    O.toUndefined,
+  );
 
 /**
  * Returns the property at the specified path for the given resource pod
@@ -94,10 +100,14 @@ export const viewPodPorts = R.pipe(
  */
 export const overPodTemplate = (
   fn: (pod: PodTemplateSpec) => PodTemplateSpec,
-) => <T>(object: T) => {
-  const lens = podTemplateLens(object);
-  return lens ? R.over(lens, fn, object) : object;
-};
+): TResourceTransformer => (object) =>
+  F.pipe(
+    podTemplateLens(object),
+    O.fold(
+      () => object,
+      (lens) => R.over(lens, fn, object),
+    ),
+  );
 
 /**
  * Returns a function that concats a list of containers to the given resource.
@@ -172,7 +182,8 @@ export const overContainers = (fn: (containers: Container[]) => Container[]) =>
  */
 export const overContainer = (name: string) => (
   fn: (container: Container) => Container,
-) => overContainers(R.map(R.when(R.propEq("name", name), fn)));
+): TResourceTransformer =>
+  overContainers(R.map(R.when(R.propEq("name", name), fn)));
 
 /**
  * Returns a function that finds the first container, and runs the transformer
@@ -233,7 +244,7 @@ export const appendVolumeAndMount = ({
   volume: Volume;
   mountPath: string;
   mount?: DeepPartial<VolumeMount>;
-}) =>
+}): TResourceTransformer =>
   R.pipe(
     appendVolume(volume),
     overContainer(appendVolumeMount(volume.name, mountPath, mount)),

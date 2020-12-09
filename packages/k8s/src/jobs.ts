@@ -1,9 +1,9 @@
-import * as R from "ramda";
+import * as F from "fp-ts/function";
 import { Job } from "kubernetes-types/batch/v1";
-import { maybeMergeResource, resource } from "./resources";
-import { DeepPartial } from "./common";
 import { Container } from "kubernetes-types/core/v1";
+import { DeepPartial } from "./common";
 import { appendContainer, setRestartPolicy } from "./podTemplates";
+import { maybeMergeResource, resource } from "./resources";
 
 /**
  * Creates a job resource
@@ -29,19 +29,18 @@ export const job = (name: string, toMerge?: DeepPartial<Job>): Job =>
  * make creating jobs easier.
  */
 export const jobWithContainer = (
+  name: string,
   container: Container,
   toMerge?: DeepPartial<Job>,
-) =>
-  R.pipe(
-    (j: Job) => j,
-    appendContainer(container),
-    setRestartPolicy("OnFailure"),
-    (j) => maybeMergeResource<Job>(j, toMerge),
-  )(
-    job(container.name, {
+): Job =>
+  F.pipe(
+    job(name, {
       spec: {
         parallelism: 1,
         completions: 1,
       },
     }),
+    appendContainer(container),
+    setRestartPolicy("OnFailure"),
+    (j) => maybeMergeResource<Job>(j, toMerge),
   );

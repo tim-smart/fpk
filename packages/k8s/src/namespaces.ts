@@ -1,9 +1,9 @@
+import { resolveContents } from "@fpk/core";
+import { TContents } from "@fpk/core/dist/internal/config";
 import { Namespace } from "kubernetes-types/core/v1";
 import * as R from "ramda";
 import { DeepPartial } from "./common";
-import { resolveContents } from "@fpk/core";
 import { maybeMergeResource, resource } from "./resources";
-import { TContents } from "@fpk/core/dist/internal/config";
 
 /**
  * A list of non namespaced resource kinds.

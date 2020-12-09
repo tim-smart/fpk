@@ -1,21 +1,13 @@
+import * as F from "fp-ts/function";
 import {
   Deployment,
   DeploymentStrategy,
   RollingUpdateDeployment,
 } from "kubernetes-types/apps/v1";
-import * as R from "ramda";
-import { appendContainer } from "./podTemplates";
-import { DeepPartial } from "./common";
-import {
-  containerWithPort,
-  container,
-  IEnvObject,
-  concatEnv,
-  setResourceRequests,
-  setResourceLimits,
-  containerWithPorts,
-} from "./containers";
 import { Container } from "kubernetes-types/core/v1";
+import * as R from "ramda";
+import { DeepPartial } from "./common";
+import { appendContainer } from "./podTemplates";
 import { maybeMergeResource, resource } from "./resources";
 
 /**
@@ -58,31 +50,30 @@ export const deploymentWithContainer = (
   name: string,
   container: Container,
   toMerge?: DeepPartial<Deployment>,
-) =>
-  R.pipe(
-    R.always(deployment(name)),
-    appendContainer(container),
-    (d: Deployment) => maybeMergeResource<Deployment>(d, toMerge),
-  )();
+): Deployment =>
+  F.pipe(deployment(name), appendContainer(container), (d) =>
+    maybeMergeResource<Deployment>(d, toMerge),
+  );
+
+export type TDeploymentTransform = (d: Deployment) => Deployment;
 
 /**
  * Returns a funciton that sets `spec.replicas` to the given number.
  */
-export const setReplicas = (replicas: number) =>
+export const setReplicas = (replicas: number): TDeploymentTransform =>
   R.set(R.lensPath(["spec", "replicas"]), replicas);
 
 /**
  * Returns a function that sets `spec.strategy` to the given strategy.
  */
-export const setDeploymentStrategy = (strategy: DeploymentStrategy) =>
-  R.set(R.lensPath(["spec", "strategy"]), strategy) as (
-    deployment: Deployment,
-  ) => Deployment;
+export const setDeploymentStrategy = (
+  strategy: DeploymentStrategy,
+): TDeploymentTransform => R.set(R.lensPath(["spec", "strategy"]), strategy);
 
 /**
  * Returns a funciton that sets `spec.strategy` to type "Recreate".
  */
-export const setDeploymentRecreate = () =>
+export const setDeploymentRecreate = (): TDeploymentTransform =>
   setDeploymentStrategy({
     type: "Recreate",
   });
@@ -93,7 +84,7 @@ export const setDeploymentRecreate = () =>
  */
 export const setDeploymentRollingUpdate = (
   rollingUpdate: RollingUpdateDeployment,
-) =>
+): TDeploymentTransform =>
   setDeploymentStrategy({
     type: "RollingUpdate",
     rollingUpdate,
@@ -103,5 +94,5 @@ export const setDeploymentRollingUpdate = (
  * Returns a functions that sets the deployment revisionHistoryLimit to the
  * specified count.
  */
-export const setRevisionHistory = (count: number) =>
+export const setRevisionHistory = (count: number): TDeploymentTransform =>
   R.set(R.lensPath(["spec", "revisionHistoryLimit"]), count);

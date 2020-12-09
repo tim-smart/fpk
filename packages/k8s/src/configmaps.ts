@@ -27,7 +27,8 @@ export const configMapFromFile = (
 ) => configMap(name, createConfigFromFile(file, filename), toMerge);
 
 /**
- * Create a configmap from a file
+ * Create a configmap from a directory. Each file in the directory will have its
+ * own entry
  */
 export const configMapFromDir = (
   name: string,
