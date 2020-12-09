@@ -71,9 +71,9 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Interfaces</h3>
+							<h3>Type aliases</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/_daemonsets_.idaemonsetwithcontaineropts.html" class="tsd-kind-icon">IDaemonset<wbr>With<wbr>Container<wbr>Opts</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="_daemonsets_.html#tdaemonsettransform" class="tsd-kind-icon">TDaemon<wbr>Set<wbr>Transform</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -90,6 +90,40 @@
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Type aliases</h2>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module">
+					<a name="tdaemonsettransform" class="tsd-anchor"></a>
+					<h3>TDaemon<wbr>Set<wbr>Transform</h3>
+					<div class="tsd-signature tsd-kind-icon">TDaemon<wbr>Set<wbr>Transform<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>d<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">DaemonSet</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">DaemonSet</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/daemonsets.ts#L57">packages/k8s/src/daemonsets.ts:57</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-signature">
+								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-alias">
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>d<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">DaemonSet</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">DaemonSet</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>d: <span class="tsd-signature-type">DaemonSet</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">DaemonSet</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Functions</h2>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
 					<a name="daemonset" class="tsd-anchor"></a>
@@ -101,7 +135,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/daemonsets.ts#L24">packages/k8s/src/daemonsets.ts:24</a></li>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/daemonsets.ts#L17">packages/k8s/src/daemonsets.ts:17</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -127,13 +161,13 @@
 					<a name="daemonsetwithcontainer" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> daemon<wbr>Set<wbr>With<wbr>Container</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">daemon<wbr>Set<wbr>With<wbr>Container<span class="tsd-signature-symbol">(</span>container<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Container</span>, toMerge<span class="tsd-signature-symbol">?: </span><a href="_common_.html#deeppartial" class="tsd-signature-type">DeepPartial</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">DaemonSet</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">DaemonSet</span></li>
+						<li class="tsd-signature tsd-kind-icon">daemon<wbr>Set<wbr>With<wbr>Container<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, container<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Container</span>, toMerge<span class="tsd-signature-symbol">?: </span><a href="_common_.html#deeppartial" class="tsd-signature-type">DeepPartial</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">DaemonSet</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">DaemonSet</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/daemonsets.ts#L66">packages/k8s/src/daemonsets.ts:66</a></li>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/daemonsets.ts#L48">packages/k8s/src/daemonsets.ts:48</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -145,10 +179,13 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
+									<h5>name: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
 									<h5>container: <span class="tsd-signature-type">Container</span></h5>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> toMerge: <a href="_common_.html#deeppartial" class="tsd-signature-type">DeepPartial</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">DaemonSet</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = {}</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> toMerge: <a href="_common_.html#deeppartial" class="tsd-signature-type">DeepPartial</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">DaemonSet</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">DaemonSet</span></h4>
@@ -159,13 +196,13 @@
 					<a name="setdaemonsetondelete" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> set<wbr>Daemon<wbr>Set<wbr>OnDelete</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">set<wbr>Daemon<wbr>Set<wbr>OnDelete<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>d<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">DaemonSet</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">DaemonSet</span></li>
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Daemon<wbr>Set<wbr>OnDelete<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_daemonsets_.html#tdaemonsettransform" class="tsd-signature-type">TDaemonSetTransform</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/daemonsets.ts#L87">packages/k8s/src/daemonsets.ts:87</a></li>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/daemonsets.ts#L70">packages/k8s/src/daemonsets.ts:70</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -173,25 +210,7 @@
 									<p>Returns a funciton that sets <code>spec.updateStrategy</code> to type &quot;Recreate&quot;.</p>
 								</div>
 							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">(</span>d<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">DaemonSet</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">DaemonSet</span></h4>
-							<ul class="tsd-parameters">
-								<li class="tsd-parameter-signature">
-									<ul class="tsd-signatures tsd-kind-type-literal">
-										<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>d<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">DaemonSet</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">DaemonSet</span></li>
-									</ul>
-									<ul class="tsd-descriptions">
-										<li class="tsd-description">
-											<h4 class="tsd-parameters-title">Parameters</h4>
-											<ul class="tsd-parameters">
-												<li>
-													<h5>d: <span class="tsd-signature-type">DaemonSet</span></h5>
-												</li>
-											</ul>
-											<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">DaemonSet</span></h4>
-										</li>
-									</ul>
-								</li>
-							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="_daemonsets_.html#tdaemonsettransform" class="tsd-signature-type">TDaemonSetTransform</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -199,13 +218,13 @@
 					<a name="setdaemonsetrollingupdate" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> set<wbr>Daemon<wbr>Set<wbr>Rolling<wbr>Update</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">set<wbr>Daemon<wbr>Set<wbr>Rolling<wbr>Update<span class="tsd-signature-symbol">(</span>rollingUpdate<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">RollingUpdateDaemonSet</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>d<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">DaemonSet</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">DaemonSet</span></li>
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Daemon<wbr>Set<wbr>Rolling<wbr>Update<span class="tsd-signature-symbol">(</span>rollingUpdate<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">RollingUpdateDaemonSet</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_daemonsets_.html#tdaemonsettransform" class="tsd-signature-type">TDaemonSetTransform</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/daemonsets.ts#L96">packages/k8s/src/daemonsets.ts:96</a></li>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/daemonsets.ts#L79">packages/k8s/src/daemonsets.ts:79</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -220,25 +239,7 @@
 									<h5>rollingUpdate: <span class="tsd-signature-type">RollingUpdateDaemonSet</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">(</span>d<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">DaemonSet</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">DaemonSet</span></h4>
-							<ul class="tsd-parameters">
-								<li class="tsd-parameter-signature">
-									<ul class="tsd-signatures tsd-kind-type-literal">
-										<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>d<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">DaemonSet</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">DaemonSet</span></li>
-									</ul>
-									<ul class="tsd-descriptions">
-										<li class="tsd-description">
-											<h4 class="tsd-parameters-title">Parameters</h4>
-											<ul class="tsd-parameters">
-												<li>
-													<h5>d: <span class="tsd-signature-type">DaemonSet</span></h5>
-												</li>
-											</ul>
-											<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">DaemonSet</span></h4>
-										</li>
-									</ul>
-								</li>
-							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="_daemonsets_.html#tdaemonsettransform" class="tsd-signature-type">TDaemonSetTransform</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -246,13 +247,13 @@
 					<a name="setdaemonsetupdatestrategy" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> set<wbr>Daemon<wbr>Set<wbr>Update<wbr>Strategy</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">set<wbr>Daemon<wbr>Set<wbr>Update<wbr>Strategy<span class="tsd-signature-symbol">(</span>strategy<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">DaemonSetUpdateStrategy</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>d<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">DaemonSet</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">DaemonSet</span></li>
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Daemon<wbr>Set<wbr>Update<wbr>Strategy<span class="tsd-signature-symbol">(</span>strategy<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">DaemonSetUpdateStrategy</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_daemonsets_.html#tdaemonsettransform" class="tsd-signature-type">TDaemonSetTransform</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/daemonsets.ts#L79">packages/k8s/src/daemonsets.ts:79</a></li>
+									<li>Defined in <a href="https://github.com/tim-smart/fpk/blob/master/packages/k8s/src/daemonsets.ts#L62">packages/k8s/src/daemonsets.ts:62</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -266,25 +267,7 @@
 									<h5>strategy: <span class="tsd-signature-type">DaemonSetUpdateStrategy</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">(</span>d<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">DaemonSet</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">DaemonSet</span></h4>
-							<ul class="tsd-parameters">
-								<li class="tsd-parameter-signature">
-									<ul class="tsd-signatures tsd-kind-type-literal">
-										<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>d<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">DaemonSet</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">DaemonSet</span></li>
-									</ul>
-									<ul class="tsd-descriptions">
-										<li class="tsd-description">
-											<h4 class="tsd-parameters-title">Parameters</h4>
-											<ul class="tsd-parameters">
-												<li>
-													<h5>d: <span class="tsd-signature-type">DaemonSet</span></h5>
-												</li>
-											</ul>
-											<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">DaemonSet</span></h4>
-										</li>
-									</ul>
-								</li>
-							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="_daemonsets_.html#tdaemonsettransform" class="tsd-signature-type">TDaemonSetTransform</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -363,8 +346,8 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-interface tsd-parent-kind-module">
-						<a href="../interfaces/_daemonsets_.idaemonsetwithcontaineropts.html" class="tsd-kind-icon">IDaemonset<wbr>With<wbr>Container<wbr>Opts</a>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+						<a href="_daemonsets_.html#tdaemonsettransform" class="tsd-kind-icon">TDaemon<wbr>Set<wbr>Transform</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
 						<a href="_daemonsets_.html#daemonset" class="tsd-kind-icon">daemon<wbr>Set</a>

@@ -1,5 +1,6 @@
 import * as K from "../src/index";
 import * as R from "ramda";
+import * as F from "fp-ts/function";
 import { describe } from "mocha";
 import { runCases } from "./helpers";
 import { DaemonSet } from "kubernetes-types/apps/v1";
@@ -77,14 +78,15 @@ describe("daemonSetWithContainer", () =>
   runCases([
     {
       it: "creates a daemonSet with a container",
-      in: K.daemonSet("fancyapp"),
+      in: K.daemonSet("myds"),
       fn: (_) =>
         K.daemonSetWithContainer(
-          R.pipe(
-            R.always(K.containerWithPort("fancyapp", "fancyimage", 3000)),
+          "myds",
+          F.pipe(
+            K.containerWithPort("fancyapp", "fancyimage", 3000),
             K.concatEnv({ FOO: "bar" }),
             K.setResourceRequests({ cpu: "1", memory: "100M" }),
-          )(),
+          ),
         ),
       diff: {
         spec: {

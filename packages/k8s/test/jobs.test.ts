@@ -1,3 +1,4 @@
+import * as F from "fp-ts/function";
 import * as K from "../src/index";
 import * as R from "ramda";
 import { describe } from "mocha";
@@ -39,13 +40,14 @@ describe("jobWithContainer", () =>
   runCases([
     {
       it: "creates a basic job",
-      in: K.job("fancyjob"),
+      in: K.job("myjob"),
       fn: (_) =>
         K.jobWithContainer(
-          R.pipe(
-            R.always(K.container("fancyjob", "fancyimage")),
+          "myjob",
+          F.pipe(
+            K.container("fancyjob", "fancyimage"),
             K.concatEnv({ FOO: "bar" }),
-          )(),
+          ),
         ),
       diff: {
         spec: {
