@@ -8,13 +8,15 @@ import {
   ContainerPort,
 } from "kubernetes-types/core/v1";
 import { Deployment } from "kubernetes-types/apps/v1";
+import * as F from "fp-ts/function";
+import * as O from "fp-ts/Option";
 
 describe("getPodTemplate", () =>
   runCases([
     {
       it: "gets the pod template in the deployment",
       in: {},
-      fn: () => K.viewPodTemplate(K.deployment("myapp")),
+      fn: () => O.toUndefined(K.viewPodTemplate(K.deployment("myapp"))),
       diff: {
         metadata: { labels: { app: "myapp" } },
         spec: { containers: [] },
@@ -27,7 +29,8 @@ describe("getPodPath", () =>
     {
       it: "gets at the path for the deployment",
       in: {},
-      fn: () => K.viewPodPath(["spec"])(K.deployment("myapp")),
+      fn: () =>
+        F.pipe(K.deployment("myapp"), K.viewPodPath(["spec"]), O.toUndefined),
       diff: { containers: [] },
     },
   ]));

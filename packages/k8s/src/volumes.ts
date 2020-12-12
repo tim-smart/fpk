@@ -1,12 +1,12 @@
 import {
-  Secret,
-  Volume,
   ConfigMap,
-  PersistentVolumeClaim,
-  SecretVolumeSource,
   ConfigMapVolumeSource,
-  PersistentVolumeClaimVolumeSource,
   HostPathVolumeSource,
+  PersistentVolumeClaim,
+  PersistentVolumeClaimVolumeSource,
+  Secret,
+  SecretVolumeSource,
+  Volume,
 } from "kubernetes-types/core/v1";
 import { DeepPartial } from "./common";
 import { maybeMergeResource } from "./resources";

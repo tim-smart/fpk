@@ -1,17 +1,17 @@
 import * as F from "fp-ts/function";
 import * as O from "fp-ts/Option";
 import {
-  PodTemplateSpec,
   Container,
+  ContainerPort,
+  PodTemplateSpec,
   Volume,
   VolumeMount,
-  ContainerPort,
 } from "kubernetes-types/core/v1";
+import { ObjectMeta } from "kubernetes-types/meta/v1";
 import * as R from "ramda";
 import { DeepPartial } from "./common";
 import { appendVolumeMount } from "./containers";
 import { IResource } from "./resources";
-import { ObjectMeta } from "kubernetes-types/meta/v1";
 
 type TResourceTransformer = <T>(resource: T) => T;
 
@@ -30,61 +30,57 @@ const podTemplateLens = <T>(object: T): O.Option<R.Lens> => {
 /**
  * Returns the pod template for a resource if it exists.
  */
-export const viewPodTemplate = <T extends IResource>(
-  object: T,
-): PodTemplateSpec | undefined =>
+export const viewPodTemplate = <T extends IResource>(object: T) =>
   F.pipe(
     podTemplateLens(object),
     O.map((lens) => R.view(lens, object) as PodTemplateSpec),
-    O.toUndefined,
   );
 
 /**
  * Returns the property at the specified path for the given resource pod
  * template.
  */
-export const viewPodPath = (path: string[]) => <T extends IResource>(
-  resource: T,
-) => {
-  const pod = viewPodTemplate(resource);
-  return pod ? R.path(path, pod) : undefined;
-};
+export const viewPodPath = <R = unknown>(
+  path: string[],
+): ((resource: IResource) => O.Option<NonNullable<R>>) =>
+  F.flow(
+    viewPodTemplate,
+    O.mapNullable((pod) => R.path(path, pod)),
+  );
 
 /**
  * Returns the metadata labels for the given resource pod
  * template.
  */
-export const viewPodLabels = viewPodPath(["metadata", "labels"]) as <
-  T extends IResource
->(
-  resource: T,
-) => ObjectMeta["labels"] | undefined;
+export const viewPodLabels = F.flow(
+  viewPodPath(["metadata", "labels"]),
+  O.getOrElse<NonNullable<ObjectMeta["labels"]>>(() => ({})),
+);
 
 /**
  * Returns the metadata annotations for the given resource pod
  * template.
  */
-export const viewPodAnnotations = viewPodPath(["metadata", "annotations"]) as <
-  T extends IResource
->(
-  resource: T,
-) => ObjectMeta["annotations"] | undefined;
+export const viewPodAnnotations = F.flow(
+  viewPodPath(["metadata", "annotations"]),
+  O.getOrElse<NonNullable<ObjectMeta["annotations"]>>(() => ({})),
+);
 
 /**
  * Returns the containers for the given resource pod template.
  */
-export const viewPodContainers = R.pipe(
+export const viewPodContainers = F.flow(
   viewPodPath(["spec", "containers"]),
-  R.defaultTo([]),
-) as <T extends IResource>(resource: T) => Container[];
+  O.getOrElse<Container[]>(() => []),
+);
 
 /**
  * Returns the aggregated ports for the given resource pod template.
  */
-export const viewPodPorts = R.pipe(
+export const viewPodPorts = F.flow(
   viewPodContainers,
   R.reduce((ports, c) => [...ports, ...(c.ports || [])], [] as ContainerPort[]),
-) as <T extends IResource>(resource: T) => ContainerPort[];
+);
 
 /**
  * Returns a function that will run the given pod transformer over the supplied

@@ -1,9 +1,8 @@
-import { ServiceSpec, Service } from "kubernetes-types/core/v1";
+import { Service, ServiceSpec } from "kubernetes-types/core/v1";
 import * as R from "ramda";
 import { DeepPartial } from "./common";
-import { maybeMergeResource, resource, IResource } from "./resources";
-import { Deployment } from "kubernetes-types/apps/v1";
-import { viewPodPorts, viewPodLabels } from "./podTemplates";
+import { viewPodLabels, viewPodPorts } from "./podTemplates";
+import { IResource, maybeMergeResource, resource } from "./resources";
 
 /**
  * Creates a service resource
