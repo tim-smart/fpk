@@ -39,7 +39,7 @@ export interface IIngressRulePath {
   backend?: IngressBackend;
 }
 
-type TIngressSpecTransformer = (i: IngressSpec) => IngressSpec;
+export type TIngressSpecTransformer = (i: IngressSpec) => IngressSpec;
 
 const rulesToSpec = ({
   backend,

@@ -13,8 +13,8 @@ import { DeepPartial } from "./common";
 import { appendVolumeMount } from "./containers";
 import { IResource } from "./resources";
 
-type TResourceTransformer = <T>(resource: T) => T;
-type TResourceViewer<T> = (resource: IResource) => T;
+export type TResourceTransformer = <T>(resource: T) => T;
+export type TResourceViewer<T> = (resource: IResource) => T;
 
 const podTemplateLens = <T>(object: T): O.Option<R.Lens> => {
   if ((object as any).kind === "Pod") {
