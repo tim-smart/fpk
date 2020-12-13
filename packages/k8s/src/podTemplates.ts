@@ -14,6 +14,7 @@ import { appendVolumeMount } from "./containers";
 import { IResource } from "./resources";
 
 type TResourceTransformer = <T>(resource: T) => T;
+type TResourceViewer<T> = (resource: IResource) => T;
 
 const podTemplateLens = <T>(object: T): O.Option<R.Lens> => {
   if ((object as any).kind === "Pod") {
@@ -42,7 +43,7 @@ export const viewPodTemplate = <T extends IResource>(object: T) =>
  */
 export const viewPodPath = <R = unknown>(
   path: string[],
-): ((resource: IResource) => O.Option<NonNullable<R>>) =>
+): TResourceViewer<O.Option<NonNullable<R>>> =>
   F.flow(
     viewPodTemplate,
     O.mapNullable((pod) => R.path(path, pod)),
@@ -52,7 +53,9 @@ export const viewPodPath = <R = unknown>(
  * Returns the metadata labels for the given resource pod
  * template.
  */
-export const viewPodLabels = F.flow(
+export const viewPodLabels: TResourceViewer<
+  NonNullable<ObjectMeta["labels"]>
+> = F.flow(
   viewPodPath(["metadata", "labels"]),
   O.getOrElse<NonNullable<ObjectMeta["labels"]>>(() => ({})),
 );
@@ -61,7 +64,9 @@ export const viewPodLabels = F.flow(
  * Returns the metadata annotations for the given resource pod
  * template.
  */
-export const viewPodAnnotations = F.flow(
+export const viewPodAnnotations: TResourceViewer<
+  NonNullable<ObjectMeta["annotations"]>
+> = F.flow(
   viewPodPath(["metadata", "annotations"]),
   O.getOrElse<NonNullable<ObjectMeta["annotations"]>>(() => ({})),
 );
@@ -69,7 +74,7 @@ export const viewPodAnnotations = F.flow(
 /**
  * Returns the containers for the given resource pod template.
  */
-export const viewPodContainers = F.flow(
+export const viewPodContainers: TResourceViewer<Container[]> = F.flow(
   viewPodPath(["spec", "containers"]),
   O.getOrElse<Container[]>(() => []),
 );
@@ -77,7 +82,7 @@ export const viewPodContainers = F.flow(
 /**
  * Returns the aggregated ports for the given resource pod template.
  */
-export const viewPodPorts = F.flow(
+export const viewPodPorts: TResourceViewer<ContainerPort[]> = F.flow(
   viewPodContainers,
   R.reduce((ports, c) => [...ports, ...(c.ports || [])], [] as ContainerPort[]),
 );
