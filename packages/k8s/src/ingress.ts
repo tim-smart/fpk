@@ -127,3 +127,11 @@ export const setBasicAuth = (secretName: string): ((i: Ingress) => Ingress) =>
     annotate("ingress.kubernetes.io/auth-type", "basic"),
     annotate("ingress.kubernetes.io/auth-secret", secretName),
   );
+
+/**
+ * Returns a function that sets the ingress class annotation.
+ */
+export const setIngressClass = (
+  ingressClass: string,
+): ((i: Ingress) => Ingress) =>
+  annotate("kubernetes.io/ingress.class", ingressClass);

@@ -230,3 +230,19 @@ describe("setBasicAuth", () =>
       } as Ingress,
     },
   ]));
+
+describe("setIngressClass", () =>
+  runCases([
+    {
+      it: "annotates the ingress with a class",
+      in: K.ingress("myingress", {}),
+      fn: K.setIngressClass("gcp"),
+      diff: {
+        metadata: {
+          annotations: {
+            "kubernetes.io/ingress.class": "gcp",
+          },
+        },
+      } as Ingress,
+    },
+  ]));
