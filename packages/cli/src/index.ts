@@ -3,7 +3,7 @@ import "@swc-node/register";
 import { availableFormats, generate } from "@fpk/core";
 import { Command, flags } from "@oclif/command";
 import { promises as fs } from "fs";
-import { safeLoad } from "js-yaml";
+import * as Yaml from "js-yaml";
 import * as path from "path";
 import { watch } from "chokidar";
 import * as Rx from "rxjs";
@@ -62,7 +62,7 @@ export default class FpkCli extends Command {
 
         case ".yaml":
         case ".yml":
-          context = safeLoad(contextBlob.toString("utf8")) as object;
+          context = Yaml.load(contextBlob.toString("utf8")) as object;
           break;
 
         default:
