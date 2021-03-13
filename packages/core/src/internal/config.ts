@@ -66,11 +66,9 @@ export const resolveConfigFromExports = (
 
     // If we have an "index" file, don't create a directory for it
     RxOp.map(
-      R.when<
-        { relativePath: string; exports: any },
-        { relativePath: string; exports: any }
-      >(
+      R.when(
         R.pipe(
+          (s: { relativePath: string; exports: any }) => s,
           R.view(R.lensProp("relativePath")),
           path.basename,
           R.equals("index"),
@@ -188,7 +186,7 @@ export async function resolveContentMap<M extends { [key: string]: any }>(
   context: any,
   contentMap: M,
 ): Promise<TContentsMapResolved<M>> {
-  let out: { [key: string]: any } = {};
+  const out: { [key: string]: any } = {};
 
   for (const key in contentMap) {
     let value: any = await Promise.resolve(contentMap[key]);

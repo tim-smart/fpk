@@ -124,7 +124,10 @@ export const concatEnv = (env: IEnvObject): TContainerTransform =>
 export const setResourceRequests = (
   requests: ResourceRequirements["requests"],
 ): TContainerTransform =>
-  R.over(R.lensProp("resources"), R.mergeLeft({ requests }));
+  R.over(
+    R.lensProp("resources"),
+    R.pipe(R.defaultTo({}), R.mergeLeft({ requests })),
+  );
 
 /**
  * Returns a function thats set resource limits on a container.
@@ -132,7 +135,10 @@ export const setResourceRequests = (
 export const setResourceLimits = (
   limits: ResourceRequirements["limits"],
 ): TContainerTransform =>
-  R.over(R.lensProp("resources"), R.mergeLeft({ limits }));
+  R.over(
+    R.lensProp("resources"),
+    R.pipe(R.defaultTo({}), R.mergeLeft({ limits })),
+  );
 
 /**
  * Returns a function that sets envFrom for a container

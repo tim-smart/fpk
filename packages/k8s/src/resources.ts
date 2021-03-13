@@ -11,6 +11,8 @@ export interface IResource {
   metadata?: ObjectMeta;
 }
 
+export type TResourceTransformer = <T extends IResource>(resource: T) => T;
+
 /**
  * Create a kubernetes resource with the given apiVersion, kind and name.
  */

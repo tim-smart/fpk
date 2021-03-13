@@ -11,12 +11,13 @@ import { ObjectMeta } from "kubernetes-types/meta/v1";
 import * as R from "ramda";
 import { DeepPartial } from "./common";
 import { appendVolumeMount } from "./containers";
-import { IResource } from "./resources";
+import { IResource, TResourceTransformer } from "./resources";
 
-export type TResourceTransformer = <T>(resource: T) => T;
 export type TResourceViewer<T> = (resource: IResource) => T;
 
-const podTemplateLens = <T>(object: T): O.Option<R.Lens> => {
+const podTemplateLens = <T>(
+  object: T,
+): O.Option<R.Lens<T, PodTemplateSpec>> => {
   if ((object as any).kind === "Pod") {
     return O.some(R.lensPath([]));
   } else if (R.hasPath(["spec", "jobTemplate", "spec", "template"], object)) {

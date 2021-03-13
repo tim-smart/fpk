@@ -74,8 +74,8 @@ export interface IFormat {
 
 const yamlFormat: IFormat = {
   dump: (js) =>
-    yaml.safeDump(js, { skipInvalid: true, noRefs: true, lineWidth: -1 }),
-  load: yaml.safeLoad,
+    yaml.dump(js, { skipInvalid: true, noRefs: true, lineWidth: -1 }),
+  load: yaml.load,
 };
 
 const formats = new Map<string, IFormat>([
