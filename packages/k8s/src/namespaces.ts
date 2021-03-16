@@ -81,9 +81,7 @@ export const withNamespace = (
   name: string,
   filename = "00-namespace",
   toMerge?: Namespace,
-) => <M extends { [key: string]: IResource }>(
-  object: TContents<M>,
-): Promise<M> =>
+) => <M extends { [key: string]: any }>(object: TContents<M>): Promise<M> =>
   resolveContents({}, object).then<any, never>(
     R.pipe(
       (map: any) => map,
