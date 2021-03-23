@@ -97,12 +97,12 @@ export const resolveConfigFromExports = (
           let formatOverride = fileFormat(formats)(file);
           return formatOverride
             ? {
-                file: `${relativePath}/${file}`,
+                file: path.join(`${relativePath}`, `${file}`),
                 format: formatOverride,
                 contents: fileContents,
               }
             : {
-                file: `${relativePath}/${file}.${format}`,
+                file: path.join(`${relativePath}`, `${file}.${format}`),
                 format,
                 contents: fileContents,
               };

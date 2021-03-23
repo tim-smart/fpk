@@ -28,6 +28,7 @@ function testCase(
     generate(inDir, genDir, { format, context, ignore })
       .then(() => compare(genDir, outDir, { compareContent: true }))
       .then((r) => {
+        if (!r.same) console.error(r.diffSet);
         expect(r.same).to.equal(true);
         done();
       })

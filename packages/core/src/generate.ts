@@ -2,7 +2,6 @@ import * as fs from "fs";
 import * as Ini from "ini";
 import yaml from "js-yaml";
 import * as path from "path";
-import * as R from "ramda";
 import * as Rx from "rxjs";
 import * as RxOp from "rxjs/operators";
 import { configs$, configsToFiles } from "./internal/config";
