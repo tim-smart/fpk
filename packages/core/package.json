@@ -32,10 +32,11 @@
   "dependencies": {
     "fs-tree-diff": "^2.0.1",
     "glob-to-regexp": "^0.4.1",
+    "husky": "5",
     "ini": "^2.0.0",
     "js-yaml": "^4.0.0",
     "ramda": "^0.27.1",
-    "rxjs": "^7.0.0-beta.12"
+    "rxjs": "^7.0.0-beta.13"
   },
   "gitHead": "a5aa6a6e10b62a957de11c4bc55ac4d3ee9a2ece"
 }
