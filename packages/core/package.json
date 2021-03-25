@@ -9,7 +9,8 @@
   "repository": "tim-smart/fpk",
   "scripts": {
     "build": "rm -rf dist/ && tsc",
-    "test": "mocha -r ts-node/register test/**/*.test.ts"
+    "test": "mocha -r ts-node/register test/**/*.test.ts",
+    "bench": "time ts-node test/benchmark/run.ts"
   },
   "devDependencies": {
     "@types/chai": "^4.2.14",
