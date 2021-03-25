@@ -5,7 +5,8 @@ import * as path from "path";
 import * as fs from "fs";
 import { sync as rmrf } from "rimraf";
 import { compare } from "dir-compare";
-import ncp from "ncp";
+
+const ncp = require("ncp");
 
 const examples = fs.readdirSync(path.join(__dirname, "examples"));
 
@@ -58,7 +59,7 @@ describe("generate", () => {
     const outDir = path.join(__dirname, "examples/_remove-test/out");
 
     rmrf(genDir);
-    ncp(basicOutDir, genDir, (err) => {
+    ncp(basicOutDir, genDir, (err: any) => {
       if (err) throw err;
 
       generate(inDir, genDir)

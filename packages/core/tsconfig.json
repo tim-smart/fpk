@@ -6,7 +6,7 @@
     "lib": ["ESNext"],
     "module": "commonjs",
     "strict": true,
-    "esModuleInterop": true
+    "skipLibCheck": true
   },
   "include": ["src/**/*"]
 }

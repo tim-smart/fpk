@@ -1,10 +1,12 @@
 import * as Rx from "rxjs";
 import * as RxOp from "rxjs/operators";
-import FSTree, { Operation } from "fs-tree-diff";
+import { Operation } from "fs-tree-diff";
 import * as fs from "fs";
 import { promises as fsp } from "fs";
 import * as path from "path";
 import { bufferUntil } from "./operators";
+
+import FSTree = require("fs-tree-diff");
 
 export function toFileTree(dir: string) {
   return (input$: Rx.Observable<string>) =>

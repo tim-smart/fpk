@@ -1,7 +1,8 @@
 import * as Rx from "rxjs";
 import * as RxOp from "rxjs/operators";
 import { promises as fs } from "fs";
-import glob from "glob-to-regexp";
+
+const glob = require("glob-to-regexp");
 
 export function files$(dir: string, ignore?: string): Rx.Observable<string> {
   const ignoreRegExp = ignore ? glob(ignore) : undefined;

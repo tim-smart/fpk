@@ -1,6 +1,6 @@
 import * as fs from "fs";
 import * as Ini from "ini";
-import yaml from "js-yaml";
+import * as Yaml from "js-yaml";
 import * as path from "path";
 import * as Rx from "rxjs";
 import * as RxOp from "rxjs/operators";
@@ -73,8 +73,8 @@ export interface IFormat {
 
 const yamlFormat: IFormat = {
   dump: (js) =>
-    yaml.dump(js, { skipInvalid: true, noRefs: true, lineWidth: -1 }),
-  load: yaml.load,
+    Yaml.dump(js, { skipInvalid: true, noRefs: true, lineWidth: -1 }),
+  load: Yaml.load,
 };
 
 const formats = new Map<string, IFormat>([
