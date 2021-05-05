@@ -8,7 +8,11 @@ import { Container } from "kubernetes-types/core/v1";
 import * as R from "ramda";
 import { DeepPartial } from "./common";
 import { appendContainer } from "./podTemplates";
-import { maybeMergeResource, resource } from "./resources";
+import {
+  maybeMergeResource,
+  resource,
+  TResourceTransformer,
+} from "./resources";
 
 /**
  * Create a deployment resource with the given name. The second argument is deep
@@ -60,7 +64,7 @@ export type TDeploymentTransform = (d: Deployment) => Deployment;
 /**
  * Returns a funciton that sets `spec.replicas` to the given number.
  */
-export const setReplicas = (replicas: number): TDeploymentTransform =>
+export const setReplicas = (replicas: number): TResourceTransformer =>
   R.set(R.lensPath(["spec", "replicas"]), replicas);
 
 /**
@@ -94,5 +98,5 @@ export const setDeploymentRollingUpdate = (
  * Returns a functions that sets the deployment revisionHistoryLimit to the
  * specified count.
  */
-export const setRevisionHistory = (count: number): TDeploymentTransform =>
+export const setRevisionHistory = (count: number): TResourceTransformer =>
   R.set(R.lensPath(["spec", "revisionHistoryLimit"]), count);

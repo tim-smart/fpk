@@ -14,6 +14,7 @@ export * from "./rbac";
 export * from "./resources";
 export * from "./secrets";
 export * from "./services";
+export * from "./statefulSets";
 export * from "./units";
 export * from "./volumes";
 export * from "./vpa";
