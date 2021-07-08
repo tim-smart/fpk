@@ -33,7 +33,6 @@
   "dependencies": {
     "fs-tree-diff": "^2.0.1",
     "glob-to-regexp": "^0.4.1",
-    "husky": "5",
     "ini": "^2.0.0",
     "js-yaml": "^4.0.0",
     "ramda": "^0.27.1",

@@ -1,0 +1,41 @@
+name: gh-pages
+
+on:
+  push:
+    branches:
+      - master
+
+  workflow_dispatch:
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2.1.5
+        with:
+          node-version: 16.x
+
+      - name: yarn
+        run: yarn install
+
+      - name: build
+        run: lerna run prepare
+
+      - name: typedoc
+        run: yarn docs
+
+      - name: mkdir-docs
+        run: mkdir docs
+
+      - name: mv-fpk-k8s-docs
+        run: mv packages/k8s/docs docs/k8s
+
+      - name: GitHub Pages
+        uses: crazy-max/ghaction-github-pages@v2.5.0
+        with:
+          build_dir: docs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
