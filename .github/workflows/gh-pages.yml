@@ -22,7 +22,7 @@ jobs:
         run: yarn install
 
       - name: build
-        run: lerna run prepare
+        run: lerna run build
 
       - name: typedoc
         run: yarn docs
