@@ -49,7 +49,7 @@ export const maybeMergeResource = <T extends object>(
 /**
  * Returns a function that adds a metadata label to a resource
  */
-export const label = (key: string, value: string) =>
+export const label = (key: string, value: string): TResourceTransformer =>
   R.over(
     R.lensPath(["metadata", "labels"]),
     R.pipe(R.defaultTo({}), R.set(R.lensProp(key), value)),
@@ -78,16 +78,17 @@ export const objectRef = (
 /**
  * Returns a function that can be used to find matching resources.
  */
-export const matches = <R extends IResource>(kind: string, name?: string) => (
-  r: R,
-): boolean => r.kind === kind && (name ? r.metadata?.name === name : true);
+export const matches =
+  <R extends IResource>(kind: string, name?: string) =>
+  (r: R): boolean =>
+    r.kind === kind && (name ? r.metadata?.name === name : true);
 
 /**
  * Returns a function that finds a matching resource, then runs the transform
  * function over it.
  */
-export const overResource = <R extends IResource>(
-  kind: R["kind"],
-  name?: string,
-) => (fn: (resource: R) => R) => (obj: { [key: string]: any }) =>
-  R.mapObjIndexed(R.when(matches(kind!, name), fn), obj);
+export const overResource =
+  <R extends IResource>(kind: R["kind"], name?: string) =>
+  (fn: (resource: R) => R) =>
+  (obj: { [key: string]: any }) =>
+    R.mapObjIndexed(R.when(matches(kind!, name), fn), obj);
