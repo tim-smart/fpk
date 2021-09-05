@@ -3005,10 +3005,10 @@ kind-of@^6.0.2, kind-of@^6.0.3:
   resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-6.0.3.tgz#07c05034a6c349fa06e24fa35aa76db4580ce4dd"
   integrity sha512-dcS1ul+9tmeD95T+x28/ehLgd9mENa3LsvDTtzm3vyBEO7RPptvAD+t44WVXaUjTBRcrpFeFlC8WCruUR456hw==
 
-kubernetes-types@^1.17.0-beta.1:
-  version "1.17.0-beta.1"
-  resolved "https://registry.yarnpkg.com/kubernetes-types/-/kubernetes-types-1.17.0-beta.1.tgz#b51a5ba081cb08b48d163050ce7e69aa279c0b7f"
-  integrity sha512-GO4J2pX9hiHPz5vAyH4RSb3iKPjhpHHO3RV7cLxjEbOgtasP0Nz/fqIs3ZVPH/sObsmS86p76+/dm4Ao2k/L8w==
+kubernetes-types@^1.21.0-beta.1:
+  version "1.21.0-beta.1"
+  resolved "https://registry.yarnpkg.com/kubernetes-types/-/kubernetes-types-1.21.0-beta.1.tgz#13e054075b434494bd463d8b154554bd9e3fb890"
+  integrity sha512-dwT/D2Gs9feqCl1EP8fQ7utyML8XQCYd38bPuU8ZA3MqF74Bfz/sWcUnFtR/IQRuUIKYruQkhVKXw5GlP+CLsw==
 
 lerna@^4.0.0:
   version "4.0.0"

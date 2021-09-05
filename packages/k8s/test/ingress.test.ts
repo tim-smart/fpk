@@ -1,7 +1,7 @@
 import * as K from "../src/index";
 import { describe } from "mocha";
 import { runCases } from "./helpers";
-import { Ingress } from "kubernetes-types/networking/v1beta1";
+import { Ingress } from "kubernetes-types/networking/v1";
 
 describe("ingress", () =>
   runCases([
@@ -17,8 +17,10 @@ describe("ingress", () =>
                 paths: [
                   {
                     backend: {
-                      serviceName: "myapp",
-                      servicePort: 3000,
+                      service: {
+                        name: "myapp",
+                        port: { number: 3000 },
+                      },
                     },
                   },
                 ],
@@ -33,7 +35,7 @@ describe("ingress", () =>
           ],
         }),
       diff: {
-        apiVersion: "networking.k8s.io/v1beta1",
+        apiVersion: "networking.k8s.io/v1",
         kind: "Ingress",
         metadata: {
           name: "myingress",
@@ -46,8 +48,10 @@ describe("ingress", () =>
                 paths: [
                   {
                     backend: {
-                      serviceName: "myapp",
-                      servicePort: 3000,
+                      service: {
+                        name: "myapp",
+                        port: { number: 3000 },
+                      },
                     },
                   },
                 ],
@@ -76,8 +80,10 @@ describe("ingressSimple", () =>
           tlsRedirect: true,
           tlsSecretName: "myapp-tls-secret",
           backend: {
-            serviceName: "myapp",
-            servicePort: 3000,
+            service: {
+              name: "myapp",
+              port: { number: 3000 },
+            },
           },
           rules: [
             { host: "simple.example.com" },
@@ -90,8 +96,10 @@ describe("ingressSimple", () =>
                 {
                   path: "/b",
                   backend: {
-                    serviceName: "myapp2",
-                    servicePort: 4000,
+                    service: {
+                      name: "myapp2",
+                      port: { number: 4000 },
+                    },
                   },
                 },
               ],
@@ -99,7 +107,7 @@ describe("ingressSimple", () =>
           ],
         }),
       diff: {
-        apiVersion: "networking.k8s.io/v1beta1",
+        apiVersion: "networking.k8s.io/v1",
         kind: "Ingress",
         metadata: {
           name: "myingress",
@@ -116,8 +124,10 @@ describe("ingressSimple", () =>
                 paths: [
                   {
                     backend: {
-                      serviceName: "myapp",
-                      servicePort: 3000,
+                      service: {
+                        name: "myapp",
+                        port: { number: 3000 },
+                      },
                     },
                   },
                 ],
@@ -130,15 +140,19 @@ describe("ingressSimple", () =>
                   {
                     path: "/",
                     backend: {
-                      serviceName: "myapp",
-                      servicePort: 3000,
+                      service: {
+                        name: "myapp",
+                        port: { number: 3000 },
+                      },
                     },
                   },
                   {
                     path: "/b",
                     backend: {
-                      serviceName: "myapp2",
-                      servicePort: 4000,
+                      service: {
+                        name: "myapp2",
+                        port: { number: 4000 },
+                      },
                     },
                   },
                 ],
@@ -182,8 +196,10 @@ describe("ingressFromService", () =>
                 paths: [
                   {
                     backend: {
-                      serviceName: "myapp",
-                      servicePort: 1337,
+                      service: {
+                        name: "myapp",
+                        port: { number: 1337 },
+                      },
                     },
                   },
                 ],
@@ -195,8 +211,10 @@ describe("ingressFromService", () =>
                 paths: [
                   {
                     backend: {
-                      serviceName: "myapp",
-                      servicePort: 1337,
+                      service: {
+                        name: "myapp",
+                        port: { number: 1337 },
+                      },
                     },
                   },
                 ],

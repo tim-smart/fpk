@@ -4,7 +4,7 @@ import {
   IngressSpec,
   IngressBackend,
   IngressRule,
-} from "kubernetes-types/networking/v1beta1";
+} from "kubernetes-types/networking/v1";
 import * as R from "ramda";
 import { DeepPartial } from "./common";
 import { annotate, maybeMergeResource, resource } from "./resources";
@@ -16,7 +16,7 @@ export const ingress = (
   toMerge?: DeepPartial<Ingress>,
 ): Ingress =>
   maybeMergeResource<Ingress>(
-    resource<Ingress>("networking.k8s.io/v1beta1", "Ingress", name, { spec }),
+    resource<Ingress>("networking.k8s.io/v1", "Ingress", name, { spec }),
     toMerge,
   );
 
@@ -110,8 +110,10 @@ export const ingressFromService = (
 ) =>
   ingressSimple(name, {
     backend: {
-      serviceName: svc.metadata!.name!,
-      servicePort: svc.spec!.ports![0].port,
+      service: {
+        name: svc.metadata!.name!,
+        port: { number: svc.spec!.ports![0].port },
+      },
     },
     tlsRedirect: tls,
     tlsAcme: tls,
