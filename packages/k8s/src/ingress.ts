@@ -4,6 +4,7 @@ import {
   IngressSpec,
   IngressBackend,
   IngressRule,
+  HTTPIngressPath,
 } from "kubernetes-types/networking/v1";
 import * as R from "ramda";
 import { DeepPartial } from "./common";
@@ -54,11 +55,17 @@ const rulesToSpec = ({
           http: {
             paths: R.ifElse(
               R.isNil,
-              () => [{ backend }],
-              R.map(({ path, backend: pathBackend }: IIngressRulePath) => ({
-                path,
-                backend: pathBackend || backend,
-              })),
+              () => [{ pathType: "Prefix", backend }],
+              R.map(
+                ({
+                  path,
+                  backend: pathBackend,
+                }: IIngressRulePath): HTTPIngressPath => ({
+                  path,
+                  pathType: "Prefix",
+                  backend: pathBackend || backend,
+                }),
+              ),
             )(paths),
           },
         }),

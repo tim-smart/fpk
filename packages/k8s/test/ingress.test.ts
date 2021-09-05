@@ -16,6 +16,7 @@ describe("ingress", () =>
               http: {
                 paths: [
                   {
+                    pathType: "Prefix",
                     backend: {
                       service: {
                         name: "myapp",
@@ -47,6 +48,7 @@ describe("ingress", () =>
               http: {
                 paths: [
                   {
+                    pathType: "Prefix",
                     backend: {
                       service: {
                         name: "myapp",
@@ -123,6 +125,7 @@ describe("ingressSimple", () =>
               http: {
                 paths: [
                   {
+                    pathType: "Prefix",
                     backend: {
                       service: {
                         name: "myapp",
@@ -139,6 +142,7 @@ describe("ingressSimple", () =>
                 paths: [
                   {
                     path: "/",
+                    pathType: "Prefix",
                     backend: {
                       service: {
                         name: "myapp",
@@ -148,6 +152,7 @@ describe("ingressSimple", () =>
                   },
                   {
                     path: "/b",
+                    pathType: "Prefix",
                     backend: {
                       service: {
                         name: "myapp2",
@@ -195,6 +200,7 @@ describe("ingressFromService", () =>
               http: {
                 paths: [
                   {
+                    pathType: "Prefix",
                     backend: {
                       service: {
                         name: "myapp",
@@ -210,6 +216,7 @@ describe("ingressFromService", () =>
               http: {
                 paths: [
                   {
+                    pathType: "Prefix",
                     backend: {
                       service: {
                         name: "myapp",
