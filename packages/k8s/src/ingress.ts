@@ -55,7 +55,7 @@ const rulesToSpec = ({
           http: {
             paths: R.ifElse(
               R.isNil,
-              () => [{ pathType: "Prefix", backend }],
+              () => [{ path: "/", pathType: "Prefix", backend }],
               R.map(
                 ({
                   path,
