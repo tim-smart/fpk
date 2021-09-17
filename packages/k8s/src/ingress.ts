@@ -143,4 +143,4 @@ export const setBasicAuth = (secretName: string): ((i: Ingress) => Ingress) =>
 export const setIngressClass = (
   ingressClass: string,
 ): ((i: Ingress) => Ingress) =>
-  annotate("kubernetes.io/ingress.class", ingressClass);
+  R.assocPath(["spec", "ingressClassName"], ingressClass);

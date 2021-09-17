@@ -268,10 +268,8 @@ describe("setIngressClass", () =>
       in: K.ingress("myingress", {}),
       fn: K.setIngressClass("gcp"),
       diff: {
-        metadata: {
-          annotations: {
-            "kubernetes.io/ingress.class": "gcp",
-          },
+        spec: {
+          ingressClassName: "gcp",
         },
       } as Ingress,
     },
