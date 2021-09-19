@@ -21,7 +21,8 @@
   },
   "devDependencies": {
     "@types/js-yaml": "^4.0.0",
-    "@types/node": "^14.14.2"
+    "@types/node": "^16.9.4",
+    "mocha": "^9.1.1"
   },
   "engines": {
     "node": ">=10.0.0"
@@ -40,7 +41,7 @@
   },
   "repository": "tim-smart/fpk",
   "scripts": {
-    "build": "rm -rf lib && tsc -b",
+    "prepare": "rm -rf lib && tsc -b",
     "test": "echo NO TESTS"
   },
   "types": "lib/index.d.ts",

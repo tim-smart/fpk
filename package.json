@@ -7,16 +7,9 @@
     "packages/*"
   ],
   "devDependencies": {
-    "husky": "5",
     "lerna": "^4.0.0"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lerna run test"
-    }
-  },
   "scripts": {
-    "prepare": "husky install",
     "docs": "lerna run docs"
   }
 }

@@ -8,7 +8,7 @@
   "homepage": "https://github.com/tim-smart/fpk",
   "repository": "tim-smart/fpk",
   "scripts": {
-    "build": "rm -rf dist/ && tsc",
+    "prepare": "rm -rf dist/ && tsc",
     "test": "mocha -r ts-node/register test/**/*.test.ts",
     "bench": "time ts-node test/benchmark/run.ts"
   },
@@ -17,8 +17,9 @@
     "@types/glob-to-regexp": "^0.4.0",
     "@types/ini": "^1.3.30",
     "@types/js-yaml": "^4.0.0",
-    "@types/mocha": "^8.0.3",
+    "@types/mocha": "^9.0.0",
     "@types/ncp": "^2.0.4",
+    "@types/node": "^16.9.4",
     "@types/ramda": "^0.27.29",
     "@types/rimraf": "^3.0.0",
     "chai": "^4.2.0",
@@ -27,7 +28,7 @@
     "ncp": "^2.0.0",
     "prettier": "^2.2.1",
     "rimraf": "^3.0.2",
-    "ts-node": "^9.0.0",
+    "ts-node": "^10.2.1",
     "typescript": "^4.2.3"
   },
   "dependencies": {
