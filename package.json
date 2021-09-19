@@ -7,9 +7,16 @@
     "packages/*"
   ],
   "devDependencies": {
-    "lerna": "^4.0.0"
+    "husky": ">=6",
+    "lerna": "^4.0.0",
+    "lint-staged": ">=10",
+    "prettier": "^2.4.1"
   },
   "scripts": {
-    "docs": "lerna run docs"
+    "docs": "lerna run docs",
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "*.{ts,md}": "prettier --write"
   }
 }
