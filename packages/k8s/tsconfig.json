@@ -13,7 +13,6 @@
   "typedocOptions": {
     "out": "docs",
     "gitRevision": "master",
-    "readme": "none",
-    "theme": "minimal"
+    "readme": "none"
   }
 }
