@@ -1,16 +1,6 @@
-import { Job } from "kubernetes-types/batch/v1";
-import { CronJob } from "kubernetes-types/batch/v1beta1";
-import { maybeMergeResource, resource } from "./resources";
+import { CronJob, Job } from "kubernetes-types/batch/v1";
 import { DeepPartial } from "./common";
-import {
-  IEnvObject,
-  concatEnv,
-  setResourceRequests,
-  setResourceLimits,
-  containerWithPort,
-  container,
-} from "./containers";
-import { Container, ResourceRequirements } from "kubernetes-types/core/v1";
+import { maybeMergeResource, resource } from "./resources";
 
 /**
  * Create a cron job from a job
@@ -22,7 +12,7 @@ export const cronJob = (
   toMerge?: DeepPartial<CronJob>,
 ) =>
   maybeMergeResource<CronJob>(
-    resource<CronJob>("batch/v1beta1", "CronJob", name, {
+    resource<CronJob>("batch/v1", "CronJob", name, {
       spec: {
         schedule,
         jobTemplate: { spec: job.spec || { template: {} } },
