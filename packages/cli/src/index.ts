@@ -1,4 +1,5 @@
-import "@swc-node/register";
+import * as TSNode from "ts-node";
+TSNode.register({ transpileOnly: true });
 
 import { availableFormats, generate } from "@fpk/core";
 import { Command, flags } from "@oclif/command";

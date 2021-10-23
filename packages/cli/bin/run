@@ -6,7 +6,7 @@ const project = path.join(__dirname, "../tsconfig.json");
 const dev = fs.existsSync(project);
 
 if (dev) {
-  require("@swc-node/register");
+  require("ts-node").register();
 }
 
 require(`../${dev ? "src" : "lib"}`)
