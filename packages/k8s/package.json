@@ -19,7 +19,7 @@
     "@types/chai": "^4.2.14",
     "@types/mocha": "^9.0.0",
     "@types/node": "^16.9.4",
-    "@types/ramda": "^0.27.38",
+    "@types/ramda": "^0.27.46",
     "chai": "^4.2.0",
     "deep-object-diff": "^1.1.0",
     "kubernetes-types": "^1.21.0-beta.1",
