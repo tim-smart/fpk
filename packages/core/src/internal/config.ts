@@ -1,10 +1,9 @@
-import * as Rx from "rxjs";
-import * as RxOp from "rxjs/operators";
+import * as Fs from "fs";
 import * as path from "path";
 import * as R from "ramda";
-import { files$ } from "./fs";
+import * as CB from "strict-callbag-basics";
 import { IFormat } from "../generate";
-import { promises as fsp } from "fs";
+import { filesSource } from "./fs";
 
 export interface IConfig
   extends Readonly<{
@@ -15,23 +14,24 @@ export interface IConfig
 /**
  * Streams a list of configuration files from a source directory.
  */
-export function configs$(
+export function configs(
   dir: string,
   context: any,
   formats: Map<string, IFormat>,
   format: string,
   ignore?: string,
-): Rx.Observable<IConfig> {
-  return files$(dir, ignore).pipe(
-    RxOp.flatMap((file) => {
-      if ([".js", ".ts"].includes(path.extname(file))) {
-        return Rx.of(file).pipe(
-          resolveConfigFromExports(dir, context, formats, format),
-        );
-      }
-
-      return Rx.of(file).pipe(resolveConfigFromContents(dir));
-    }),
+): CB.Source<IConfig> {
+  return CB.pipe(
+    filesSource(dir, ignore),
+    CB.groupBy((file) => [".js", ".ts"].includes(path.extname(file))),
+    CB.chainPar(([source, isScript]) =>
+      isScript
+        ? CB.pipe(
+            source,
+            resolveConfigFromExports(dir, context, formats, format),
+          )
+        : CB.pipe(source, resolveConfigFromContents(dir)),
+    ),
   );
 }
 
@@ -40,19 +40,20 @@ export function configs$(
  */
 export const resolveConfigFromExports =
   (dir: string, context: any, formats: Map<string, IFormat>, format: string) =>
-  (input$: Rx.Observable<string>) =>
-    input$.pipe(
+  (inputSource: CB.Source<string>): CB.Source<IConfig> =>
+    CB.pipe(
+      inputSource,
       // For each file, require() it and load its exports
-      RxOp.map((file) => ({
+      CB.map((file) => ({
         file,
         exports: resolveFile(file),
       })),
 
       // We only want files with a "default" export
-      RxOp.filter(R.hasPath(["exports", "default"])),
+      CB.filter(R.hasPath(["exports", "default"])),
 
       // Remove file extensions and de-nest "default" exports
-      RxOp.map(({ file, exports }) => ({
+      CB.map(({ file, exports }) => ({
         relativePath: R.pipe(
           R.split("."),
           R.remove(-1, 1),
@@ -62,7 +63,7 @@ export const resolveConfigFromExports =
       })),
 
       // If we have an "index" file, don't create a directory for it
-      RxOp.map(
+      CB.map(
         R.when(
           R.pipe(
             (s: { relativePath: string; exports: any }) => s,
@@ -75,9 +76,13 @@ export const resolveConfigFromExports =
       ),
 
       // Map functions / promises to the actual configuration
-      RxOp.flatMap(({ relativePath, exports }) =>
-        Rx.from(resolveContents(context, exports)).pipe(
-          RxOp.map((contents) => ({
+      CB.chainPar(({ relativePath, exports }) =>
+        CB.pipe(
+          CB.fromPromise_(
+            () => resolveContents(context, exports),
+            (e) => e,
+          ),
+          CB.map((contents) => ({
             relativePath,
             contents,
           })),
@@ -86,10 +91,9 @@ export const resolveConfigFromExports =
 
       // For each key in the configuration create a file with the correct
       // extension for the format.
-      RxOp.flatMap(({ relativePath, contents }) =>
-        Rx.from(Object.keys(contents)).pipe(
-          // Determine the format for the file
-          RxOp.map((file) => {
+      CB.chain(({ relativePath, contents }) =>
+        CB.fromIter(
+          Object.keys(contents).map((file) => {
             const fileContents = contents[file];
             let formatOverride = fileFormat(formats)(file);
             return formatOverride
@@ -109,7 +113,7 @@ export const resolveConfigFromExports =
 
       // Map functions / promises for file contents, then encode it to the correct
       // format.
-      RxOp.map(({ file, format, contents }) => ({
+      CB.map(({ file, format, contents }) => ({
         file,
         contents: encodeContents(formats, format, contents),
       })),
@@ -119,12 +123,15 @@ export const resolveConfigFromExports =
  * Streams configuration files from non-module files.
  */
 export const resolveConfigFromContents =
-  (dir: string) => (input$: Rx.Observable<string>) =>
-    input$.pipe(
+  (dir: string) =>
+  (inputSource: CB.Source<string>): CB.Source<IConfig> =>
+    CB.pipe(
+      inputSource,
       // Load contents from file
-      RxOp.flatMap((file) =>
-        Rx.from(fsp.readFile(file)).pipe(
-          RxOp.map((contents) => ({
+      CB.chainPar((file) =>
+        CB.pipe(
+          CB.fromCallback<Buffer>((cb) => Fs.readFile(file, cb)),
+          CB.map((contents) => ({
             file,
             contents,
           })),
@@ -132,7 +139,7 @@ export const resolveConfigFromContents =
       ),
 
       // Make file path relative
-      RxOp.map(({ file, contents }) => ({
+      CB.map(({ file, contents }) => ({
         file: path.relative(dir, file),
         contents,
       })),
@@ -142,8 +149,8 @@ export const resolveConfigFromContents =
  * Transforms config objects to file paths
  */
 export function configsToFiles() {
-  return (input$: Rx.Observable<IConfig>) =>
-    input$.pipe(RxOp.map((config) => config.file));
+  return (inputSource: CB.Source<IConfig>) =>
+    CB.map_(inputSource, (c) => c.file);
 }
 
 function resolveFile(file: string) {

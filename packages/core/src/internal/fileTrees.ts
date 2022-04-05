@@ -1,19 +1,17 @@
-import * as Rx from "rxjs";
-import * as RxOp from "rxjs/operators";
+import * as Fs from "fs";
 import { Operation } from "fs-tree-diff";
-import * as fs from "fs";
-import { promises as fsp } from "fs";
 import * as path from "path";
-import { bufferUntil } from "./operators";
+import * as CB from "strict-callbag-basics";
 
 import FSTree = require("fs-tree-diff");
 
 export function toFileTree(dir: string) {
-  return (input$: Rx.Observable<string>) =>
-    input$.pipe(
-      RxOp.map((file) => path.relative(dir, file)),
-      RxOp.toArray(),
-      RxOp.map((files) => FSTree.fromPaths(files, { sortAndExpand: true })),
+  return (inputSource: CB.Source<string>) =>
+    CB.pipe(
+      inputSource,
+      CB.map((file) => path.relative(dir, file)),
+      CB.toArray,
+      CB.map((files) => FSTree.fromPaths(files, { sortAndExpand: true })),
     );
 }
 
@@ -36,36 +34,38 @@ export function calculatePatch(
       typeof contents[a.relativePath] === "string"
         ? Buffer.from(contents[a.relativePath])
         : (contents[a.relativePath] as Buffer);
-    const bContent = fs.readFileSync(path.join(outDir, b.relativePath));
+    const bContent = Fs.readFileSync(path.join(outDir, b.relativePath));
 
     return aContent.compare(bContent) === 0;
   });
 }
 
 export function executePatch(contents: IInputContents, outDir: string) {
-  return (input$: Rx.Observable<Operation>) =>
-    input$.pipe(
-      bufferUntil(([op]) => op === "mkdir" || op === "rmdir"),
-      RxOp.concatMap((ops) =>
-        Rx.from(ops).pipe(
-          RxOp.mergeMap(([op, file, _entry]) => {
-            const path = `${outDir}/${file}`;
+  return (source: CB.Source<Operation>) =>
+    CB.pipe(
+      source,
+      CB.batchUntil(([op]) => op === "mkdir" || op === "rmdir"),
+      CB.tap((e) => console.error(e)),
+      CB.chain((ops) =>
+        CB.chainPar_(CB.fromIter(ops), ([op, file, _entry]) => {
+          const path = `${outDir}/${file}`;
 
-            console.log(op.toUpperCase(), file);
+          console.log(op.toUpperCase(), file);
 
-            switch (op) {
-              case "mkdir":
-                return Rx.from(fsp.mkdir(path));
-              case "rmdir":
-                return Rx.from(fsp.rmdir(path));
-              case "change":
-              case "create":
-                return Rx.from(fsp.writeFile(path, contents[file]));
-              case "unlink":
-                return Rx.from(fsp.unlink(path));
-            }
-          }),
-        ),
+          switch (op) {
+            case "mkdir":
+              return CB.fromCallback((cb) => Fs.mkdir(path, cb));
+            case "rmdir":
+              return CB.fromCallback((cb) => Fs.rmdir(path, cb));
+            case "change":
+            case "create":
+              return CB.fromCallback((cb) =>
+                Fs.writeFile(path, contents[file], cb),
+              );
+            case "unlink":
+              return CB.fromCallback((cb) => Fs.unlink(path, cb));
+          }
+        }),
       ),
     );
 }
