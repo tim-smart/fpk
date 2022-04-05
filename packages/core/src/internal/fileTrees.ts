@@ -2,7 +2,6 @@ import * as Rx from "rxjs";
 import * as RxOp from "rxjs/operators";
 import { Operation } from "fs-tree-diff";
 import * as fs from "fs";
-import { promises as fsp } from "fs";
 import * as path from "path";
 import { bufferUntil } from "./operators";
 
@@ -46,26 +45,24 @@ export function executePatch(contents: IInputContents, outDir: string) {
   return (input$: Rx.Observable<Operation>) =>
     input$.pipe(
       bufferUntil(([op]) => op === "mkdir" || op === "rmdir"),
-      RxOp.concatMap((ops) =>
-        Rx.from(ops).pipe(
-          RxOp.mergeMap(([op, file, _entry]) => {
-            const path = `${outDir}/${file}`;
+      RxOp.tap((ops) =>
+        ops.forEach(([op, file, _entry]) => {
+          const path = `${outDir}/${file}`;
 
-            console.log(op.toUpperCase(), file);
+          console.log(op.toUpperCase(), file);
 
-            switch (op) {
-              case "mkdir":
-                return Rx.from(fsp.mkdir(path));
-              case "rmdir":
-                return Rx.from(fsp.rmdir(path));
-              case "change":
-              case "create":
-                return Rx.from(fsp.writeFile(path, contents[file]));
-              case "unlink":
-                return Rx.from(fsp.unlink(path));
-            }
-          }),
-        ),
+          switch (op) {
+            case "mkdir":
+              return Rx.of(fs.mkdirSync(path));
+            case "rmdir":
+              return Rx.of(fs.rmdirSync(path));
+            case "change":
+            case "create":
+              return Rx.of(fs.writeFileSync(path, contents[file]));
+            case "unlink":
+              return Rx.of(fs.unlinkSync(path));
+          }
+        }),
       ),
     );
 }

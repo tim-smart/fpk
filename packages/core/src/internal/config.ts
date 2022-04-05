@@ -4,7 +4,7 @@ import * as path from "path";
 import * as R from "ramda";
 import { files$ } from "./fs";
 import { IFormat } from "../generate";
-import { promises as fsp } from "fs";
+import * as fs from "fs";
 
 export interface IConfig
   extends Readonly<{
@@ -38,109 +38,101 @@ export function configs$(
 /**
  * Streams configuration files from a module.
  */
-export const resolveConfigFromExports = (
-  dir: string,
-  context: any,
-  formats: Map<string, IFormat>,
-  format: string,
-) => (input$: Rx.Observable<string>) =>
-  input$.pipe(
-    // For each file, require() it and load its exports
-    RxOp.map((file) => ({
-      file,
-      exports: resolveFile(file),
-    })),
+export const resolveConfigFromExports =
+  (dir: string, context: any, formats: Map<string, IFormat>, format: string) =>
+  (input$: Rx.Observable<string>) =>
+    input$.pipe(
+      // For each file, require() it and load its exports
+      RxOp.map((file) => ({
+        file,
+        exports: resolveFile(file),
+      })),
 
-    // We only want files with a "default" export
-    RxOp.filter(R.hasPath(["exports", "default"])),
+      // We only want files with a "default" export
+      RxOp.filter(R.hasPath(["exports", "default"])),
 
-    // Remove file extensions and de-nest "default" exports
-    RxOp.map(({ file, exports }) => ({
-      relativePath: R.pipe(
-        R.split("."),
-        R.remove(-1, 1),
-        R.join("."),
-      )(path.relative(dir, file)),
-      exports: exports.default,
-    })),
+      // Remove file extensions and de-nest "default" exports
+      RxOp.map(({ file, exports }) => ({
+        relativePath: R.pipe(
+          R.split("."),
+          R.remove(-1, 1),
+          R.join("."),
+        )(path.relative(dir, file)),
+        exports: exports.default,
+      })),
 
-    // If we have an "index" file, don't create a directory for it
-    RxOp.map(
-      R.when(
-        R.pipe(
-          (s: { relativePath: string; exports: any }) => s,
-          R.view(R.lensProp("relativePath")),
-          path.basename,
-          R.equals("index"),
+      // If we have an "index" file, don't create a directory for it
+      RxOp.map(
+        R.when(
+          R.pipe(
+            (s: { relativePath: string; exports: any }) => s,
+            R.view(R.lensProp("relativePath")),
+            path.basename,
+            R.equals("index"),
+          ),
+          R.over(R.lensProp("relativePath"), (f) => path.join(f, "..")),
         ),
-        R.over(R.lensProp("relativePath"), (f) => path.join(f, "..")),
       ),
-    ),
 
-    // Map functions / promises to the actual configuration
-    RxOp.flatMap(({ relativePath, exports }) =>
-      Rx.from(resolveContents(context, exports)).pipe(
-        RxOp.map((contents) => ({
-          relativePath,
-          contents,
-        })),
+      // Map functions / promises to the actual configuration
+      RxOp.flatMap(({ relativePath, exports }) =>
+        Rx.from(resolveContents(context, exports)).pipe(
+          RxOp.map((contents) => ({
+            relativePath,
+            contents,
+          })),
+        ),
       ),
-    ),
 
-    // For each key in the configuration create a file with the correct
-    // extension for the format.
-    RxOp.flatMap(({ relativePath, contents }) =>
-      Rx.from(Object.keys(contents)).pipe(
-        // Determine the format for the file
-        RxOp.map((file) => {
-          const fileContents = contents[file];
-          let formatOverride = fileFormat(formats)(file);
-          return formatOverride
-            ? {
-                file: path.join(`${relativePath}`, `${file}`),
-                format: formatOverride,
-                contents: fileContents,
-              }
-            : {
-                file: path.join(`${relativePath}`, `${file}.${format}`),
-                format,
-                contents: fileContents,
-              };
-        }),
+      // For each key in the configuration create a file with the correct
+      // extension for the format.
+      RxOp.flatMap(({ relativePath, contents }) =>
+        Rx.from(Object.keys(contents)).pipe(
+          // Determine the format for the file
+          RxOp.map((file) => {
+            const fileContents = contents[file];
+            let formatOverride = fileFormat(formats)(file);
+            return formatOverride
+              ? {
+                  file: path.join(`${relativePath}`, `${file}`),
+                  format: formatOverride,
+                  contents: fileContents,
+                }
+              : {
+                  file: path.join(`${relativePath}`, `${file}.${format}`),
+                  format,
+                  contents: fileContents,
+                };
+          }),
+        ),
       ),
-    ),
 
-    // Map functions / promises for file contents, then encode it to the correct
-    // format.
-    RxOp.map(({ file, format, contents }) => ({
-      file,
-      contents: encodeContents(formats, format, contents),
-    })),
-  );
+      // Map functions / promises for file contents, then encode it to the correct
+      // format.
+      RxOp.map(({ file, format, contents }) => ({
+        file,
+        contents: encodeContents(formats, format, contents),
+      })),
+    );
 
 /**
  * Streams configuration files from non-module files.
  */
-export const resolveConfigFromContents = (dir: string) => (
-  input$: Rx.Observable<string>,
-) =>
-  input$.pipe(
-    // Load contents from file
-    RxOp.flatMap((file) =>
-      Rx.from(fsp.readFile(file)).pipe(
-        RxOp.map((contents) => ({
-          file,
-          contents,
-        })),
-      ),
-    ),
+export const resolveConfigFromContents =
+  (dir: string) => (input$: Rx.Observable<string>) =>
+    input$.pipe(
+      // Load contents from file
+      RxOp.map((file) => ({
+        file,
+        contents: fs.readFileSync(file),
+      })),
 
-    // Make file path relative
-    RxOp.map(({ file, contents }) => ({
-      file: path.relative(dir, file),
-      contents,
-    })),
-  );
+      // Make file path relative
+      RxOp.map(({ file, contents }) => ({
+        file: path.relative(dir, file),
+        contents,
+      })),
+    );
 
 /**
  * Transforms config objects to file paths
