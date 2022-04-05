@@ -53,20 +53,13 @@ const rulesToSpec = ({
         ({ host, paths }): IngressRule => ({
           host,
           http: {
-            paths: R.ifElse(
-              R.isNil,
-              () => [{ path: "/", pathType: "Prefix", backend }],
-              R.map(
-                ({
-                  path,
-                  backend: pathBackend,
-                }: IIngressRulePath): HTTPIngressPath => ({
+            paths: paths
+              ? paths.map(({ path, backend: pathBackend }) => ({
                   path,
                   pathType: "Prefix",
-                  backend: pathBackend || backend,
-                }),
-              ),
-            )(paths),
+                  backend: pathBackend ?? backend,
+                }))
+              : [{ path: "/", pathType: "Prefix", backend }],
           },
         }),
         rules,

@@ -211,12 +211,8 @@ function encodeContents(
 }
 
 function fileFormat(formats: Map<string, IFormat>) {
-  return R.pipe<string, string, string, string | undefined>(
-    path.extname,
-    R.slice(1, Infinity),
-    R.when(
-      R.either(R.isEmpty, (ext) => !formats.has(ext)),
-      R.always(undefined),
-    ),
-  );
+  return (file: string) => {
+    const ext = path.extname(file).slice(1);
+    return formats.has(ext) ? ext : undefined;
+  };
 }
