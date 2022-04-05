@@ -13,8 +13,7 @@
     "prettier": "^2.4.1"
   },
   "scripts": {
-    "docs": "lerna run docs",
-    "prepare": "husky install"
+    "docs": "lerna run docs"
   },
   "lint-staged": {
     "*.{ts,md}": "prettier --write"
