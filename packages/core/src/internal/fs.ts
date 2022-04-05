@@ -7,17 +7,14 @@ const glob = require("glob-to-regexp");
 export function files$(dir: string, ignore?: string): Rx.Observable<string> {
   const ignoreRegExp = ignore ? glob(ignore) : undefined;
 
-  return Rx.from(fs.readdir(dir)).pipe(
+  return Rx.from(fs.readdir(dir, { withFileTypes: true })).pipe(
     RxOp.flatMap((f) => f),
-    RxOp.filter((f) => !f.startsWith(".")),
-    RxOp.filter((f) => (ignoreRegExp ? !ignoreRegExp.test(f) : true)),
-    RxOp.flatMap((file) =>
-      Rx.from(fs.stat(`${dir}/${file}`)).pipe(
-        RxOp.map((sf) => ({ file, isDir: sf.isDirectory() })),
-      ),
-    ),
+    RxOp.filter((f) => !f.name.startsWith(".")),
+    RxOp.filter((f) => (ignoreRegExp ? !ignoreRegExp.test(f.name) : true)),
     RxOp.flatMap((f) =>
-      f.isDir ? files$(`${dir}/${f.file}`, ignore) : Rx.of(`${dir}/${f.file}`),
+      f.isDirectory()
+        ? files$(`${dir}/${f.name}`, ignore)
+        : Rx.of(`${dir}/${f.name}`),
     ),
   );
 }
