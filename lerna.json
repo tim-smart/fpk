@@ -5,7 +5,7 @@
   "useWorkspaces": true,
   "command": {
     "version": {
-      "allowBranch": "main",
+      "allowBranch": "master",
       "conventionalCommits": true,
       "createRelease": "github"
     }
