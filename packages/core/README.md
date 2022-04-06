@@ -2,7 +2,7 @@
 
 Functional configuration management.
 
-Use Typescript / Javascript to generate yaml or json configuration. Could be
+Use Typescript / JavaScript to generate yaml or json configuration. Could be
 used for:
 
 - Generating configuration for Kubernetes
