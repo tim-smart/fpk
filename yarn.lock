@@ -4840,33 +4840,10 @@ ssri@^8.0.0, ssri@^8.0.1:
   dependencies:
     minipass "^3.1.1"
 
-strict-callbag-basics@^0.25.0:
-  version "0.25.0"
-  resolved "https://registry.yarnpkg.com/strict-callbag-basics/-/strict-callbag-basics-0.25.0.tgz#bd4596b0031604c1927727d8c0044dcd5fc9d0c9"
-  integrity sha512-AhIaxOOA0upuZrdvBBZKNx4dx7oPkIYzfne2OyNorjW9wc0HcOwCtB+ZQRTJxul7wsN2kb+fW9Gyz6oR0f5H9Q==
-  dependencies:
-    callbag-buffer "^1.0.0"
-    callbag-buffer-time "^1.0.0"
-    callbag-concat "^1.2.1"
-    callbag-filter "^1.1.0"
-    callbag-flatten "^1.7.0"
-    callbag-from-iter "^1.3.0"
-    callbag-from-obs "^1.2.0"
-    callbag-interval "^1.2.0"
-    callbag-map "^1.1.0"
-    callbag-scan "^1.1.0"
-    callbag-share "^1.3.0"
-    callbag-start-with "^3.1.0"
-    callbag-take "^1.5.0"
-    callbag-take-while "^2.0.0"
-    callbag-to-async-iterable "^1.0.0"
-    strict-callbag "^0.9.0"
-    symbol-observable "^4.0.0"
-
-strict-callbag-basics@^0.25.1:
-  version "0.25.1"
-  resolved "https://registry.yarnpkg.com/strict-callbag-basics/-/strict-callbag-basics-0.25.1.tgz#aa5457a1296059c1286bc2c73c111edccf4b61f4"
-  integrity sha512-uwqd4HaSVRFbhU8wTW+pfiI1gZsu6Q19cWsikuwYucuE1VQCU5pfLS4XFX3F5pMGyi/sSeLBNZ02LSWEzZxGBA==
+strict-callbag-basics@^0.25.1, strict-callbag-basics@^0.25.2:
+  version "0.25.2"
+  resolved "https://registry.yarnpkg.com/strict-callbag-basics/-/strict-callbag-basics-0.25.2.tgz#152d502f413d00c6bd6cb016a3020834e6ee12bf"
+  integrity sha512-fyWPzIJSJGK/WUcilDtUoRsmtSWBnH9fLd9pdJNzQC7HKiFzHwPht7OecHHxG/M8DfAStzQmQZsZ9cUKbSX+9g==
   dependencies:
     callbag-buffer "^1.0.0"
     callbag-buffer-time "^1.0.0"
