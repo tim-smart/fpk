@@ -1,14 +1,14 @@
 {
   "name": "@fpk/cli",
   "description": "CLI for fpk - functional configuration tool",
-  "version": "0.1.50-alpha.1",
+  "version": "0.1.50-alpha.2",
   "author": "Tim Smart <hello@timsmart.co>",
   "bin": {
     "fpk": "./bin/run"
   },
   "bugs": "https://github.com/tim-smart/fpk/issues",
   "dependencies": {
-    "@fpk/core": "^0.1.43-alpha.0",
+    "@fpk/core": "^0.1.43-alpha.1",
     "@oclif/command": "^1.8.0",
     "@oclif/config": "^1.17.0",
     "@oclif/plugin-help": "^3.2.0",
