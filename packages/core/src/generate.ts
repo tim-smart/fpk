@@ -2,16 +2,15 @@ import * as fs from "fs";
 import * as Ini from "ini";
 import * as Yaml from "js-yaml";
 import * as path from "path";
-import * as Rx from "rxjs";
-import * as RxOp from "rxjs/operators";
-import { configs$, configsToFiles } from "./internal/config";
+import { configs, configsToFiles } from "./internal/config";
 import {
   calculatePatch,
   executePatch,
   IInputContents,
   toFileTree,
 } from "./internal/fileTrees";
-import { files$ } from "./internal/fs";
+import { filesSource } from "./internal/fs";
+import * as CB from "strict-callbag-basics";
 
 export interface IGenerateOpts {
   context: any;
@@ -40,30 +39,37 @@ export function generate(
     fs.mkdirSync(outDir);
   }
 
-  const inputConfigs$ = configs$(inputDir, context, formats, format, ignore);
-  const inputConfigsArray$ = inputConfigs$.pipe(RxOp.toArray());
-  const outputFT$ = files$(outDir).pipe(toFileTree(outDir));
-  const inputFT$ = inputConfigs$.pipe(configsToFiles(), toFileTree(inputDir));
+  const inputConfigs = CB.share(
+    configs(inputDir, context, formats, format, ignore),
+  );
+  const inputConfigsArray = CB.toArray(inputConfigs);
+  const outputFT = CB.pipe(filesSource(outDir), toFileTree(outDir));
+  const inputFT = CB.pipe(inputConfigs, configsToFiles(), toFileTree(inputDir));
 
-  return Rx.zip(inputConfigsArray$, inputFT$, outputFT$)
-    .pipe(
-      RxOp.flatMap(([configs, inputFT, outputFT]) => {
-        const contents = configs.reduce((acc, c) => {
-          acc[c.file] = c.contents;
-          return acc;
-        }, {} as any) as IInputContents;
+  return CB.pipe(
+    inputConfigsArray,
 
-        const patch = calculatePatch(inputFT, outputFT, {
-          contents,
-          outDir,
-        });
-        return Rx.from(patch).pipe(executePatch(contents, outDir));
-      }),
-    )
-    .toPromise()
-    .finally(() => {
-      process.chdir(startDir);
-    });
+    CB.zip(inputFT),
+    CB.zip(outputFT),
+
+    CB.chain(([[configs, inputFT], outputFT]) => {
+      const contents = configs.reduce((acc, c) => {
+        acc[c.file] = c.contents;
+        return acc;
+      }, {} as any) as IInputContents;
+
+      const patch = calculatePatch(inputFT, outputFT, {
+        contents,
+        outDir,
+      });
+
+      return CB.pipe(CB.fromIter(patch), executePatch(contents, outDir));
+    }),
+
+    CB.run_,
+  ).finally(() => {
+    process.chdir(startDir);
+  });
 }
 
 export interface IFormat {
