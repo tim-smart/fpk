@@ -1,14 +1,13 @@
-import * as TSNode from "ts-node";
-TSNode.register({ transpileOnly: true });
-
 import { availableFormats, generate } from "@fpk/core";
 import { Command, flags } from "@oclif/command";
+import { watch } from "chokidar";
 import { promises as fs } from "fs";
 import * as Yaml from "js-yaml";
 import * as path from "path";
-import { watch } from "chokidar";
-import * as Rx from "rxjs";
-import * as RxOp from "rxjs/operators";
+import * as CB from "strict-callbag-basics";
+import * as TSNode from "ts-node";
+
+TSNode.register({ transpileOnly: true });
 
 export default class FpkCli extends Command {
   static description = "Generate configuration from an fpk config tree";
@@ -95,19 +94,14 @@ export default class FpkCli extends Command {
     await generator();
 
     if (flags.watch) {
-      Rx.fromEvent(
-        watch(flags.source, {
-          ignoreInitial: true,
-        }),
-        "all",
-      )
-        .pipe(
-          RxOp.tap((e: any) => console.log("WATCH", e.slice(0, 2))),
-          RxOp.auditTime(200),
-          RxOp.tap(resetCache),
-          RxOp.concatMap(() => Rx.from(generator())),
-        )
-        .subscribe();
+      CB.pipe(
+        CB.fromEventP(watch(flags.source, { ignoreInitial: true }), "all"),
+        CB.tap((e: any) => console.log("WATCH", e.slice(0, 2))),
+        CB.auditTimeP(200),
+        CB.tap(resetCache),
+        CB.chain(() => CB.fromPromise_(generator, (e) => e)),
+        CB.run_,
+      );
 
       console.log("WATCH", "Started");
     }
