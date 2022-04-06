@@ -4840,29 +4840,6 @@ ssri@^8.0.0, ssri@^8.0.1:
   dependencies:
     minipass "^3.1.1"
 
-strict-callbag-basics@^0.24.2:
-  version "0.24.2"
-  resolved "https://registry.yarnpkg.com/strict-callbag-basics/-/strict-callbag-basics-0.24.2.tgz#b7eb5b28877180214db912ab197438317af63072"
-  integrity sha512-YtP3eKy/C9sDTfLIkGNQoXUPd8FvhsXCDg67WJHkcs19N5MjmHlKTr70hWXQaq8ccIMdiYLJb3ghtj7b7bOj6A==
-  dependencies:
-    callbag-buffer "^1.0.0"
-    callbag-buffer-time "^1.0.0"
-    callbag-concat "^1.2.1"
-    callbag-filter "^1.1.0"
-    callbag-flatten "^1.7.0"
-    callbag-from-iter "^1.3.0"
-    callbag-from-obs "^1.2.0"
-    callbag-interval "^1.2.0"
-    callbag-map "^1.1.0"
-    callbag-scan "^1.1.0"
-    callbag-share "^1.3.0"
-    callbag-start-with "^3.1.0"
-    callbag-take "^1.5.0"
-    callbag-take-while "^2.0.0"
-    callbag-to-async-iterable "^1.0.0"
-    strict-callbag "^0.9.0"
-    symbol-observable "^4.0.0"
-
 strict-callbag-basics@^0.25.0:
   version "0.25.0"
   resolved "https://registry.yarnpkg.com/strict-callbag-basics/-/strict-callbag-basics-0.25.0.tgz#bd4596b0031604c1927727d8c0044dcd5fc9d0c9"
