@@ -16,6 +16,7 @@ export function filesSource(
       FS.readdir(dir, { withFileTypes: true }, cb),
     ),
     CB.mapError((cause): FilesError => ({ _tag: "readdir", cause })),
+
     CB.chain((f) => CB.fromIter(f)),
     CB.filter((f) => !f.name.startsWith(".")),
     CB.filter((f) => (ignoreRegExp ? !ignoreRegExp.test(f.name) : true)),

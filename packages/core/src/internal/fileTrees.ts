@@ -40,32 +40,52 @@ export function calculatePatch(
   });
 }
 
+export type ExecutePatchError = {
+  _tag: "fs";
+  op: string;
+  cause: unknown;
+};
+
+const runFs = (op: string, f: (cb: CB.Callback<void, unknown>) => void) =>
+  CB.pipe(
+    CB.fromCallback(f),
+    CB.mapError(
+      (cause): ExecutePatchError => ({
+        _tag: "fs",
+        op,
+        cause,
+      }),
+    ),
+  );
+
 export function executePatch(contents: IInputContents, outDir: string) {
   return (source: CB.Source<Operation>) =>
     CB.pipe(
       source,
-      CB.batchUntil(([op]) => op === "mkdir" || op === "rmdir"),
-      CB.tap((e) => console.error(e)),
+      CB.batchUntil(([op]) => op === "mkdir" || op === "rmdir", true),
       CB.chain((ops) =>
-        CB.chainPar_(CB.fromIter(ops), ([op, file, _entry]) => {
-          const path = `${outDir}/${file}`;
+        CB.chainPar_(
+          CB.fromIter(ops),
+          ([op, file, _entry]): CB.Source<void, ExecutePatchError> => {
+            const path = `${outDir}/${file}`;
 
-          console.log(op.toUpperCase(), file);
+            console.log(op.toUpperCase(), file);
 
-          switch (op) {
-            case "mkdir":
-              return CB.fromCallback((cb) => Fs.mkdir(path, cb));
-            case "rmdir":
-              return CB.fromCallback((cb) => Fs.rmdir(path, cb));
-            case "change":
-            case "create":
-              return CB.fromCallback((cb) =>
-                Fs.writeFile(path, contents[file], cb),
-              );
-            case "unlink":
-              return CB.fromCallback((cb) => Fs.unlink(path, cb));
-          }
-        }),
+            switch (op) {
+              case "mkdir":
+                return runFs(op, (cb) => Fs.mkdir(path, cb));
+              case "rmdir":
+                return runFs(op, (cb) => Fs.rmdir(path, cb));
+              case "change":
+              case "create":
+                return runFs(op, (cb) =>
+                  Fs.writeFile(path, contents[file], cb),
+                );
+              case "unlink":
+                return runFs(op, (cb) => Fs.unlink(path, cb));
+            }
+          },
+        ),
       ),
     );
 }
