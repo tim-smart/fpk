@@ -15,9 +15,9 @@
   integrity sha512-hsEnFemeiW4D08A5gUAZxLBTXpZ39P+a+DGDsHw1yxqyQ/jzFEnxf5uTEGp+3bzAbNOxU1paTgYS4ECU/IgfDw==
 
 "@babel/highlight@^7.16.7":
-  version "7.16.10"
-  resolved "https://registry.yarnpkg.com/@babel/highlight/-/highlight-7.16.10.tgz#744f2eb81579d6eea753c227b0f570ad785aba88"
-  integrity sha512-5FnTQLSLswEj6IkgVw5KusNUUFY9ZGqe/TRFnP/BKYHYgfh7tc+C7mwiy95/yNP7Dh9x580Vv8r7u7ZfTBFxdw==
+  version "7.17.9"
+  resolved "https://registry.yarnpkg.com/@babel/highlight/-/highlight-7.17.9.tgz#61b2ee7f32ea0454612def4fccdae0de232b73e3"
+  integrity sha512-J9PfEKCbFIv2X5bjTMiZu6Vf341N05QIY+d6FvVKynkG1S7G0j3I0QoRtWIrXhZ+/Nlb5Q0MzqL7TokEJ5BNHg==
   dependencies:
     "@babel/helper-validator-identifier" "^7.16.7"
     chalk "^2.0.0"
@@ -2053,9 +2053,9 @@ detect-indent@^6.0.0:
   integrity sha512-reYkTUJAZb9gUuZ2RvVCNhVHdg62RHnJ7WJl8ftMi4diZ6NWlciOzQN88pUhSELEwflJht4oQDv0F0BMlwaYtA==
 
 dezalgo@^1.0.0:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/dezalgo/-/dezalgo-1.0.3.tgz#7f742de066fc748bc8db820569dddce49bf0d456"
-  integrity sha1-f3Qt4Gb8dIvI24IFad3c5Jvw1FY=
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/dezalgo/-/dezalgo-1.0.4.tgz#751235260469084c132157dfa857f386d4c33d81"
+  integrity sha512-rXSP0bf+5n0Qonsb+SVVfNfIsimO4HEtmnIpPHY8Q1UCzKlQrDMfdobr8nJOOsRgWCyMRqeSBQzmWUMq7zvVig==
   dependencies:
     asap "^2.0.0"
     wrappy "1"
@@ -3350,6 +3350,11 @@ lru-cache@^6.0.0:
   dependencies:
     yallist "^4.0.0"
 
+lru-cache@^7.4.0:
+  version "7.7.3"
+  resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-7.7.3.tgz#98cd19eef89ce6a4a3c4502c17c833888677c252"
+  integrity sha512-WY9wjJNQt9+PZilnLbuFKM+SwDull9+6IAguOrarOMoOHTcJ9GnXSO11+Gw6c7xtDkBkthR57OZMtZKYr+1CEw==
+
 lunr@^2.3.9:
   version "2.3.9"
   resolved "https://registry.yarnpkg.com/lunr/-/lunr-2.3.9.tgz#18b123142832337dd6e964df1a5a7707b25d35e1"
@@ -4627,11 +4632,11 @@ semver@^6.0.0:
   integrity sha512-b39TBaTSfV6yBrapU89p5fKekE2m/NwnDocOVruQFS1/veMgdzuPcnOM34M6CwxW8jH/lxEa5rBoDeUwu5HHTw==
 
 semver@^7.1.1, semver@^7.1.3, semver@^7.3.2, semver@^7.3.4, semver@^7.3.5:
-  version "7.3.5"
-  resolved "https://registry.yarnpkg.com/semver/-/semver-7.3.5.tgz#0b621c879348d8998e4b0e4be94b3f12e6018ef7"
-  integrity sha512-PoeGJYh8HK4BTO/a9Tf6ZG3veo/A7ZVsYrSA6J8ny9nb3B1VrpkuN+z9OE5wfE5p6H4LchYZsegiQgbJD94ZFQ==
+  version "7.3.6"
+  resolved "https://registry.yarnpkg.com/semver/-/semver-7.3.6.tgz#5d73886fb9c0c6602e79440b97165c29581cbb2b"
+  integrity sha512-HZWqcgwLsjaX1HBD31msI/rXktuIhS+lWvdE4kN9z+8IVT4Itc7vqU2WvYsyD6/sjYCt4dEKH/m1M3dwI9CC5w==
   dependencies:
-    lru-cache "^6.0.0"
+    lru-cache "^7.4.0"
 
 serialize-javascript@6.0.0:
   version "6.0.0"
@@ -4840,10 +4845,10 @@ ssri@^8.0.0, ssri@^8.0.1:
   dependencies:
     minipass "^3.1.1"
 
-strict-callbag-basics@^0.25.0:
-  version "0.25.0"
-  resolved "https://registry.yarnpkg.com/strict-callbag-basics/-/strict-callbag-basics-0.25.0.tgz#bd4596b0031604c1927727d8c0044dcd5fc9d0c9"
-  integrity sha512-AhIaxOOA0upuZrdvBBZKNx4dx7oPkIYzfne2OyNorjW9wc0HcOwCtB+ZQRTJxul7wsN2kb+fW9Gyz6oR0f5H9Q==
+strict-callbag-basics@^0.25.1:
+  version "0.25.5"
+  resolved "https://registry.yarnpkg.com/strict-callbag-basics/-/strict-callbag-basics-0.25.5.tgz#bae4aa29b2edfe04bfcad8a8cd59e3520842b1fc"
+  integrity sha512-Ye6vIIacSAkl9IxB4PJtZhM6txljszR4pARXUQlo83d8sj081dGMScoFxRg8wSuxj5ViiXqqql4yK069vqzMPA==
   dependencies:
     callbag-buffer "^1.0.0"
     callbag-buffer-time "^1.0.0"
@@ -4863,10 +4868,10 @@ strict-callbag-basics@^0.25.0:
     strict-callbag "^0.9.0"
     symbol-observable "^4.0.0"
 
-strict-callbag-basics@^0.25.1:
-  version "0.25.1"
-  resolved "https://registry.yarnpkg.com/strict-callbag-basics/-/strict-callbag-basics-0.25.1.tgz#aa5457a1296059c1286bc2c73c111edccf4b61f4"
-  integrity sha512-uwqd4HaSVRFbhU8wTW+pfiI1gZsu6Q19cWsikuwYucuE1VQCU5pfLS4XFX3F5pMGyi/sSeLBNZ02LSWEzZxGBA==
+strict-callbag-basics@^0.27.1:
+  version "0.27.1"
+  resolved "https://registry.yarnpkg.com/strict-callbag-basics/-/strict-callbag-basics-0.27.1.tgz#7b5d6dea20e9f428eeefe7a37fd3844beb85b144"
+  integrity sha512-zxOoQQP1nd44iLCFimbVfd7cHPshst76zxR7hGpqOHJFWq2o8kgH3xTY8iFhx66CFIs2yaBMQQ33UUBktA68yA==
   dependencies:
     callbag-buffer "^1.0.0"
     callbag-buffer-time "^1.0.0"
@@ -5255,9 +5260,9 @@ typedarray@^0.0.6:
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
 typedoc@^0.22.4:
-  version "0.22.13"
-  resolved "https://registry.yarnpkg.com/typedoc/-/typedoc-0.22.13.tgz#d061f8f0fb7c9d686e48814f245bddeea4564e66"
-  integrity sha512-NHNI7Dr6JHa/I3+c62gdRNXBIyX7P33O9TafGLd07ur3MqzcKgwTvpg18EtvCLHJyfeSthAtCLpM7WkStUmDuQ==
+  version "0.22.14"
+  resolved "https://registry.yarnpkg.com/typedoc/-/typedoc-0.22.14.tgz#c690677c31bc1dd5618caffc001bfa8554c4c02f"
+  integrity sha512-tlf9wIcsrnQSjetStrnRutuy2RjZkG5PK2umwveZLTkuC2K9VywOZTdu2G19BdOPzGrhZjf9WK7pthXqnFQejg==
   dependencies:
     glob "^7.2.0"
     lunr "^2.3.9"
