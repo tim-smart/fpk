@@ -64,7 +64,7 @@ export function executePatch(contents: IInputContents, outDir: string) {
       source,
       CB.batchUntil(([op]) => op === "mkdir" || op === "rmdir", true),
       CB.chain((ops) =>
-        CB.chainPar_(
+        CB.chainParP_(
           CB.fromIter(ops),
           ([op, file, _entry]): CB.Source<void, ExecutePatchError> => {
             const path = `${outDir}/${file}`;

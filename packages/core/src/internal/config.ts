@@ -23,8 +23,8 @@ export function configs(
 ): CB.Source<IConfig> {
   return CB.pipe(
     filesSource(dir, ignore),
-    CB.groupBy((file) => [".js", ".ts"].includes(path.extname(file))),
-    CB.chainPar(([source, isScript]) =>
+    CB.groupBy((file) => [".js", ".ts"].includes(path.extname(file)), 0),
+    CB.chainParP(([source, isScript]) =>
       isScript
         ? CB.pipe(
             source,
@@ -76,7 +76,7 @@ export const resolveConfigFromExports =
       ),
 
       // Map functions / promises to the actual configuration
-      CB.chainPar(({ relativePath, exports }) =>
+      CB.chainParP(({ relativePath, exports }) =>
         CB.pipe(
           CB.fromPromise_(
             () => resolveContents(context, exports),
@@ -111,8 +111,7 @@ export const resolveConfigFromExports =
         ),
       ),
 
-      // Map functions / promises for file contents, then encode it to the correct
-      // format.
+      // encode it to the correct format.
       CB.map(({ file, format, contents }) => ({
         file,
         contents: encodeContents(formats, format, contents),
@@ -127,8 +126,9 @@ export const resolveConfigFromContents =
   (inputSource: CB.Source<string>): CB.Source<IConfig> =>
     CB.pipe(
       inputSource,
+
       // Load contents from file
-      CB.chainPar((file) =>
+      CB.chainParP((file) =>
         CB.pipe(
           CB.fromCallback<Buffer>((cb) => Fs.readFile(file, cb)),
           CB.map((contents) => ({
