@@ -37,7 +37,7 @@
     "ini": "^2.0.0",
     "js-yaml": "^4.0.0",
     "ramda": "^0.27.1",
-    "strict-callbag-basics": "^0.27.2"
+    "strict-callbag-basics": "^0.28.0"
   },
   "gitHead": "a5aa6a6e10b62a957de11c4bc55ac4d3ee9a2ece"
 }
