@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.46](https://github.com/tim-smart/fpk/compare/@fpk/core@0.1.45...@fpk/core@0.1.46) (2022-04-08)
+
+**Note:** Version bump only for package @fpk/core
+
+
+
+
+
 ## [0.1.45](https://github.com/tim-smart/fpk/compare/@fpk/core@0.1.44...@fpk/core@0.1.45) (2022-04-07)
 
 **Note:** Version bump only for package @fpk/core
