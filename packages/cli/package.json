@@ -1,20 +1,20 @@
 {
   "name": "@fpk/cli",
   "description": "CLI for fpk - functional configuration tool",
-  "version": "0.1.52",
+  "version": "0.1.53",
   "author": "Tim Smart <hello@timsmart.co>",
   "bin": {
     "fpk": "./bin/run"
   },
   "bugs": "https://github.com/tim-smart/fpk/issues",
   "dependencies": {
-    "@fpk/core": "^0.1.45",
+    "@fpk/core": "^0.1.46",
     "@oclif/command": "^1.8.0",
     "@oclif/config": "^1.17.0",
     "@oclif/plugin-help": "^3.2.0",
     "chokidar": "^3.4.3",
     "js-yaml": "^4.0.0",
-    "strict-callbag-basics": "^0.27.1",
+    "strict-callbag-basics": "^0.28.0",
     "ts-node": "^10.4.0",
     "tslib": "^2.0.3",
     "typescript": "^4.2.3"
