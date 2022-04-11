@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.56](https://github.com/tim-smart/fpk/compare/@fpk/cli@0.1.55...@fpk/cli@0.1.56) (2022-04-11)
+
+**Note:** Version bump only for package @fpk/cli
+
 ## [0.1.55](https://github.com/tim-smart/fpk/compare/@fpk/cli@0.1.54...@fpk/cli@0.1.55) (2022-04-10)
 
 **Note:** Version bump only for package @fpk/cli
