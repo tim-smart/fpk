@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0](https://github.com/tim-smart/fpk/compare/@fpk/k8s@0.5.17...@fpk/k8s@0.6.0) (2022-04-22)
+
+### Features
+
+- helper for parsing bundle yaml ([17e6206](https://github.com/tim-smart/fpk/commit/17e62065a34170942816a4abcbad8c28af03e2b4))
+
 ## [0.5.17](https://github.com/tim-smart/fpk/compare/@fpk/k8s@0.5.16...@fpk/k8s@0.5.17) (2022-04-11)
 
 **Note:** Version bump only for package @fpk/k8s
