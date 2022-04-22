@@ -1,3 +1,4 @@
+export * from "./bundles";
 export * from "./common";
 export * from "./configmaps";
 export * from "./containers";
