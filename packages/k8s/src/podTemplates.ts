@@ -54,12 +54,11 @@ export const viewPodPath = <R = unknown>(
  * Returns the metadata labels for the given resource pod
  * template.
  */
-export const viewPodLabels: TResourceViewer<
-  NonNullable<ObjectMeta["labels"]>
-> = F.flow(
-  viewPodPath(["metadata", "labels"]),
-  O.getOrElse<NonNullable<ObjectMeta["labels"]>>(() => ({})),
-);
+export const viewPodLabels: TResourceViewer<NonNullable<ObjectMeta["labels"]>> =
+  F.flow(
+    viewPodPath(["metadata", "labels"]),
+    O.getOrElse<NonNullable<ObjectMeta["labels"]>>(() => ({})),
+  );
 
 /**
  * Returns the metadata annotations for the given resource pod
@@ -100,16 +99,16 @@ export const viewPodPorts: TResourceViewer<ContainerPort[]> = F.flow(
  * setEmptyContainers(cronjob)
  * ```
  */
-export const overPodTemplate = (
-  fn: (pod: PodTemplateSpec) => PodTemplateSpec,
-): TResourceTransformer => (object) =>
-  F.pipe(
-    podTemplateLens(object),
-    O.fold(
-      () => object,
-      (lens) => R.over(lens, fn, object),
-    ),
-  );
+export const overPodTemplate =
+  (fn: (pod: PodTemplateSpec) => PodTemplateSpec): TResourceTransformer =>
+  (object) =>
+    F.pipe(
+      podTemplateLens(object),
+      O.fold(
+        () => object,
+        (lens) => R.over(lens, fn, object),
+      ),
+    );
 
 /**
  * Returns a function that concats a list of containers to the given resource.
@@ -166,9 +165,10 @@ export const appendInitContainer = (container: Container) =>
 /**
  * Return a function that runs the transform function over the given path.
  */
-export const overPodTemplatePath = <R>(path: string[]) => (
-  fn: (input: R) => R,
-) => overPodTemplate(R.over(R.lensPath(path), fn));
+export const overPodTemplatePath =
+  <R>(path: string[]) =>
+  (fn: (input: R) => R) =>
+    overPodTemplate(R.over(R.lensPath(path), fn));
 
 /**
  * Returns a function that runs the given containers transformer in a resource.
@@ -182,10 +182,10 @@ export const overContainers = (fn: (containers: Container[]) => Container[]) =>
  * Returns a function that finds a container by name, and runs the transformer
  * over it in a resource.
  */
-export const overContainer = (name: string) => (
-  fn: (container: Container) => Container,
-): TResourceTransformer =>
-  overContainers(R.map(R.when(R.propEq("name", name), fn)));
+export const overContainer =
+  (name: string) =>
+  (fn: (container: Container) => Container): TResourceTransformer =>
+    overContainers(R.map(R.when(R.propEq("name", name), fn)));
 
 /**
  * Returns a function that finds the first container, and runs the transformer
@@ -209,9 +209,9 @@ export const overInitContainers = (
  * Returns a function that finds an init container by name, and runs the
  * transformer over it in a resource.
  */
-export const overInitContainer = (name: string) => (
-  fn: (container: Container) => Container,
-) => overInitContainers(R.map(R.when(R.propEq("name", name), fn)));
+export const overInitContainer =
+  (name: string) => (fn: (container: Container) => Container) =>
+    overInitContainers(R.map(R.when(R.propEq("name", name), fn)));
 
 /**
  * Returns a function that finds the first init container, and runs the
@@ -231,7 +231,7 @@ export const appendVolume = (volume: Volume) =>
 
 export type TContainerSelector = (
   fn: (c: Container) => Container,
-) => <R>(resource: R) => R;
+) => TResourceTransformer;
 
 /**
  * Returns a function that adds a volume and mounts it to a container.

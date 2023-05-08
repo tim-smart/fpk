@@ -4,7 +4,7 @@ import {
   HorizontalPodAutoscaler,
   MetricSpec,
   MetricTarget,
-} from "kubernetes-types/autoscaling/v2beta2";
+} from "kubernetes-types/autoscaling/v2";
 import * as R from "ramda";
 import { DeepPartial } from "./common";
 import { maybeMergeResource, resource } from "./resources";
@@ -16,7 +16,7 @@ export const hpa = (
 ): HorizontalPodAutoscaler =>
   maybeMergeResource<HorizontalPodAutoscaler>(
     resource<HorizontalPodAutoscaler>(
-      "autoscaling/v2beta2",
+      "autoscaling/v2",
       "HorizontalPodAutoscaler",
       name,
       { spec: { scaleTargetRef: targetRef, maxReplicas: 1 } },

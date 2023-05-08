@@ -1,7 +1,7 @@
 import * as K from "../src/index";
 import { describe } from "mocha";
 import { runCases } from "./helpers";
-import { CrossVersionObjectReference } from "kubernetes-types/autoscaling/v2beta2";
+import { CrossVersionObjectReference } from "kubernetes-types/autoscaling/v2";
 import { Deployment } from "kubernetes-types/apps/v1";
 
 describe("label", () =>

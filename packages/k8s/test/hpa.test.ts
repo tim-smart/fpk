@@ -1,7 +1,7 @@
 import * as K from "../src/index";
 import { describe } from "mocha";
 import { runCases } from "./helpers";
-import { HorizontalPodAutoscaler } from "kubernetes-types/autoscaling/v2beta2";
+import { HorizontalPodAutoscaler } from "kubernetes-types/autoscaling/v2";
 
 describe("hpa", () =>
   runCases([
@@ -27,7 +27,7 @@ describe("hpa", () =>
           },
         ),
       diff: {
-        apiVersion: "autoscaling/v2beta2",
+        apiVersion: "autoscaling/v2",
         kind: "HorizontalPodAutoscaler",
         metadata: {
           name: "myhpa",

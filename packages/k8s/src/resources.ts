@@ -3,7 +3,7 @@ import * as O from "fp-ts/Option";
 import * as R from "ramda";
 import { ObjectMeta } from "kubernetes-types/meta/v1";
 import { DeepPartial } from "./common";
-import { CrossVersionObjectReference } from "kubernetes-types/autoscaling/v2beta2";
+import { CrossVersionObjectReference } from "kubernetes-types/autoscaling/v2";
 
 export interface IResource {
   apiVersion?: string;

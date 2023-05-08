@@ -170,7 +170,10 @@ type TContentsMapResolved<M> = { [K in keyof M]: TExtractContentType<M[K]> };
 /**
  * Turn functions/promises etc. into the actual configuration.
  */
-export function resolveContents<T>(context: any, contents: TContents<T>) {
+export function resolveContents<T extends Record<string, any>>(
+  context: any,
+  contents: TContents<T>,
+) {
   if (typeof contents === "function") {
     const fn = contents as TContentsFn<T>;
     const retContents = fn(context);
