@@ -96,7 +96,7 @@ export default class FpkCli extends Command {
     if (flags.watch) {
       CB.pipe(
         CB.fromEventP(watch(flags.source, { ignoreInitial: true }), "all"),
-        CB.tap((e: any) => console.log("WATCH", e.slice(0, 2))),
+        CB.tap((e) => console.log("WATCH", e)),
         CB.auditTimeP(200),
         CB.tap(resetCache),
         CB.chain(() => CB.fromPromise_(generator, (e) => e)),
