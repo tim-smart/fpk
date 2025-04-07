@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0](https://github.com/tim-smart/fpk/compare/@fpk/k8s@0.6.1...@fpk/k8s@0.7.0) (2025-04-07)
+
+**Note:** Version bump only for package @fpk/k8s
+
+
+
+
+
 ## [0.6.1](https://github.com/tim-smart/fpk/compare/@fpk/k8s@0.6.0...@fpk/k8s@0.6.1) (2023-05-08)
 
 **Note:** Version bump only for package @fpk/k8s
