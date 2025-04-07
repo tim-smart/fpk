@@ -4,7 +4,7 @@ import { DeepPartial } from "./common";
 import { maybeMergeResource, resource } from "./resources";
 
 export interface IVerticalPodAutoscaler {
-  apiVersion?: "autoscaling.k8s.io/v1beta2";
+  apiVersion?: "autoscaling.k8s.io/v1";
   kind?: "VerticalPodAutoscaler";
   metadata?: ObjectMeta;
   spec: {
@@ -28,7 +28,7 @@ export const vpa = (
 ): IVerticalPodAutoscaler =>
   maybeMergeResource<IVerticalPodAutoscaler>(
     resource<IVerticalPodAutoscaler>(
-      "autoscaling.k8s.io/v1beta2",
+      "autoscaling.k8s.io/v1",
       "VerticalPodAutoscaler",
       name,
       {
